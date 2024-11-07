@@ -1,0 +1,23 @@
+Class 2 
+
+Problem statement :
+Check the number is prime or not.
+Solution :
+Pseudocode :
+
+START
+INPUT n
+TAKE INPUT FROM USER
+FOR i=1 TO n DO
+IF n MOD i = 0 
+INCREMENT THE COUNT
+END IF CONDITION
+END FOR LOOP
+IF count =2
+PRINT Prime Number
+ELSE
+PRINT Not Prime Number
+END IF CONDITION
+END
+
+
