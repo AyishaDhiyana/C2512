@@ -14,4 +14,15 @@ solution :
    number = number/10
 5.check the original number and reverse number is same using if condition.
 
+Problem statement 1 :
+Check the number is greater than 25
+solution :
+1.Input a number
+2.Check the number is greater than 25 using if condition.
+ if number is greater than 25 :
+ print number is greater
+ otherwise
+ print number is not greater 
+ 
+
    
