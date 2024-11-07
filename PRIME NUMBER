@@ -8,12 +8,16 @@ Pseudocode :
 START
 INPUT n
 TAKE INPUT FROM USER
-FOR i=1 TO n DO
+IF num<=1 
+PRINT Not Prime 
+END IF
+SET isPrime=1
+FOR i=2 TO n-1 DO
 IF n MOD i = 0 
-INCREMENT THE COUNT
+SET isPrime =0
 END IF CONDITION
 END FOR LOOP
-IF count =2
+IF isPRIME
 PRINT Prime Number
 ELSE
 PRINT Not Prime Number
@@ -27,13 +31,18 @@ int main()
 int n;
 printf("enter n :");
 scanf("%d",&n);
-for(i=1;i<=n;i++)
+if(num<=1)
+is Prime==0;
+else
+{
+for(i=2;i<=n-1;i++)
 {
 if(n%i==0)
 {
-count++;
+isPrime==0
+break;
 }
-if(count==2)
+if(isPrime)
 printf("prime number");
 else
 printf("not prime number");
