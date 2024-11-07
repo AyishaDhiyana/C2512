@@ -1,0 +1,87 @@
+PRIME NUMBER :
+
+Pseudofunction :
+
+function isPrime(int number)->int
+if(number <= 0)
+return false
+end if
+if(number <= 3)
+return true
+end if
+if(number % 2== 0 || number % 3 == 0)
+return false
+end if
+
+for(int i=5;i<=sqrt(number);i+6)
+if(number % i == 0)
+return false
+end if
+end for 
+return true
+
+function isPrimeTest()
+input number
+bool result = isPrime()
+if result = prime
+print " Prime "
+else
+print "Not Prime"
+
+pseudocode :
+isPrimeTest()
+
+C++ CODE :
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+bool isPrime(int number)
+{
+    if(number<=0)
+    {
+        return false; 
+    }
+    if(number<=3)
+    {
+        return true;
+    }
+    if(number % 2 == 0 || number % 3 == 0)
+    {
+       return false; 
+    }
+    for(int i=5;i<=sqrt(number);i+6)
+    {
+        if(number % i ==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void isPrimeTest()
+{
+    int number;
+    cout << "Enter a number :";
+    cin >> number;
+    bool result = isPrime(number);
+    
+    if(result)
+    {
+        cout<<"Prime";
+    }
+    else
+    {
+        cout<<"Not Prime";
+    }
+    
+}
+
+int main()
+{
+   isPrimeTest();
+   return 0;
+}
