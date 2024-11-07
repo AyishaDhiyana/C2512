@@ -15,6 +15,7 @@ SET isPrime=1
 FOR i=2 TO n/2 DO
 IF n MOD i = 0 
 SET isPrime =0
+BREAK
 END IF CONDITION
 END FOR LOOP
 IF isPRIME
