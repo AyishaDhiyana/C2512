@@ -1,5 +1,7 @@
 pseudofunctions :
 
+-------------------------Vinayak--------------------------
+
 function readSalaries(salaries -> [int], size -> int& )->int
     salary=0
     size = 0
@@ -7,16 +9,15 @@ function readSalaries(salaries -> [int], size -> int& )->int
     print "Enter salaries (-1 to stop):"
 
     while (true)
-        cin >> salary;
         if (salary == -1) 
-            break;
+            break
         end if
         if (size < MAX_SALARIES) 
-            salaries[size] = (salary); 
-            size++; 
+            salaries[size] = (salary)
+            size++
         else            
-	    cout << "Maximum number of salaries reached." <<endl;
-            break;
+	    Print "Maximum number of salaries reached."
+            break
         end if
     end while
   
@@ -28,8 +29,14 @@ function findSum(salaries -> [int], size -> int) -> int
   return sum
   
 function findAverage(salaries -> [int], size -> int) -> float
-  return findSum()/size
-    
+if(size == 0)
+   return 0
+   average = findSum((salaries,size)/size)
+   return average
+end if
+
+--------------------------Ayisha---------------------------
+
 function isPrime(number -> int) -> bool 
  for I = 2 to sqrt(number)
     if number[I] % I == 0
@@ -44,7 +51,9 @@ function findPrimeSalariesCount(salaries -> [int], size -> int) -> int
         end if
       end for
  return  primeCount
-  
+
+-------------------------Nimisha--------------------------
+
 function isNumberMinimum4Digit(number -> int) -> bool 
   while number > 999
        return true
@@ -59,7 +68,9 @@ function findMin4DigitSalariesCount(salaries -> [int], size -> int) -> int
         end if
       end for
  return count
-  
+
+-------------------------Vishak-----------------------------
+
 function findMaxSalary(salaries -> [int], size -> int) -> int 
 
 maxSalary = INT_MIN
@@ -73,16 +84,18 @@ return maxSalary
 function isOdd(number -> int) -> bool
  
     if number % 2 != 0
-    
       return true
     end if
+    else
     return false
-  
+
+  ---------------------------Sana--------------------------------
+
 function findSumOfOddSalaries(salaries -> [int], size -> int) -> int
   sum = 0
+
       for I = 0 to size - 1
         if isOdd(salaries[I])
-            
             sum += salaries[I]
         end if
       end for
