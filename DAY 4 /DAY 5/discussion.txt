@@ -1,1 +1,18 @@
+Without array :
+
+function findSum()
+sum = 0 ->int
+avearge = 0 ->float
+Print "Enter salaries"
+for I = 0 to number - 1
+input salary
+average = sum / number->float
+return average
+
+function findMaxSalary(number->int)
+maximum_salary = INT_MIN
+for(I = 0; I < number; I ++)
+if(salary > maximum_salary)
+maximum_salary = salary
+return maximum_salary
 
