@@ -85,3 +85,49 @@ int main()
    isPrimeTest();
    return 0;
 }
+----------------------------------------------------------------
+
+    AVERAGE OF TWO NUMBERS : 
+
+Pseudofunction :
+
+function calculateAverage(number1,number2)
+average = (number1+number2)/2
+return average
+
+function calculateAvarageTest()
+input number1,number2
+calculate average(number1,number2)
+print "average"
+
+pseudocode :
+calculateAverageTest()
+
+Code :
+#include <iostream>
+using namespace std;
+
+double calculateAverage(double number1,double number2)
+{
+    return (number1+number2)/2;
+}
+
+void calculateAverageTest()
+{
+    int number1,number2;
+    cout << "Enter the number1: ";
+    cin >> number1;
+    cout << "Enter the number2: ";
+    cin >> number2;
+    
+    int average = calculateAverage(number1, number2);
+    cout << "The average is: " << average << endl;
+}
+
+
+int main()
+{
+    calculateAverageTest();
+
+    return 0;
+}
