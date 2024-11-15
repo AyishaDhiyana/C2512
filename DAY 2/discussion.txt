@@ -87,7 +87,7 @@ int main()
 }
 ----------------------------------------------------------------
 
-    AVERAGE OF TWO NUMBERS : 
+AVERAGE OF TWO NUMBERS : 
 
 Pseudofunction :
 
@@ -128,6 +128,85 @@ void calculateAverageTest()
 int main()
 {
     calculateAverageTest();
+
+    return 0;
+}
+-----------------------------------------------------------------
+
+CUBE 
+pseudofunction :
+
+function calculateCube(number)-> int
+return number*number*number
+
+function calculateCubeTest()
+input number
+cube = calculateCube(number)
+print "cube"
+
+pseudocode :
+calculateCubeTest()
+
+code :
+#include <iostream>
+using namespace std;
+
+int calculateCube(int number)
+{
+    return (number*number*number);
+}
+
+void calculateCubeTest()
+{
+    int number;
+    cout<<"Enter number :";
+    cin>>number;
+    int cube = calculateCube(number);
+    cout<<"cube of the number "<<cube<<endl;
+    
+}
+int main()
+{
+    calculateCubeTest();
+
+    return 0;
+}
+------------------------------------------------------------------------
+
+PRINT N NATURAL NUMBERS
+pseudocode :
+
+function printNaturalNumbers(number)
+for(int i=1;i<=number;i++)
+
+function printNaturalNumversTest()
+input number
+print "Numbers"
+
+pseudocode :
+
+printNaturalNumversTest()
+
+code :
+#include <iostream>
+using namespace std;
+
+void printNaturalNumbers(int number)
+{
+    for(int i=1;i<=number;i++)
+    cout<<i<<endl;
+}
+
+void printNaturalNumbersTest()
+{
+    int number;
+    cout<<"Enter number : ";
+    cin>>number;
+    printNaturalNumbers(number);
+}
+int main()
+{
+    printNaturalNumbersTest();
 
     return 0;
 }
