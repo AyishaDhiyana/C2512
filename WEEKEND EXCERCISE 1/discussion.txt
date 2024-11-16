@@ -6,7 +6,7 @@ function findAverage(number1->int, number2->int)-->float
     average =  = ((float)(number1 + number2) / 2);
     return average
 
-function findAverageTest()
+function findAverageTest()-->void
       input number1,number2
       result = findaAverage(number1, number2);
       print result
@@ -45,3 +45,412 @@ int main()
     findaAverageTest();
 }
 
+------------------------------------------------------------
+2) FIND THE CUBE OF THE NUMBER
+
+pseudofunctions :
+
+function findCubeNumber(number -> int)--> int
+    return (number * number * number)
+
+function findCubeNumberTest()-->void
+    input number
+    cube = findCubeNumber()
+    print "Cube"
+
+pseudocode :
+
+findCubeNumberTest()
+
+C++ CODE :
+
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//finding cube 
+
+int findCubeNumber(int number)
+{
+    return (number * number * number);
+}
+
+void findCubeNumberTest(void)
+{
+    int number;
+    cout << "Enter the number: ";
+    cin >> number;
+    int cube = findCubeNumber(number);
+    cout << "Cube is " << cube;
+    
+}
+
+int main(void)
+{
+    findCubeNumberTest();
+    
+    return 0;
+}
+-------------------------------------------------------
+3) FIND SQUARE OF NUMBER
+
+pseudofunctions :
+
+function findSquareNumber(number -> int)--> int
+    return (number * number)
+
+function findSquareNumberTest()-->void
+    input number
+    cube = findSquareNumber()
+    print "Square"
+
+pseudocode :
+
+findSquareNumberTest()
+
+C++ CODE :
+
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//finding square 
+
+int findSquareNumber(int number)
+{
+    return (number * number);
+}
+
+void findSquareNumberTest(void)
+{
+    int number;
+    cout << "Enter the number: ";
+    cin >> number;
+    int cube = findSquareNumber(number);
+    cout << "Square is " << cube;
+    
+}
+
+int main(void)
+{
+    findSquareNumberTest();
+    
+    return 0;
+}
+-----------------------------------------------------------
+4) SWAP 2 NUMBERS
+
+pseudofunctions :
+
+#include <iostream>
+using namespace std;
+
+//swap 2 numbers 
+
+function swap2Numbers(number1->int ,number2-.int)-->void
+
+    temp = number1;
+    number1 = number2;
+    number2 = temp;
+
+
+function swap2NumbersTest()-->void
+
+    input number1,number2;
+    
+    swap2Numbers(number1, number2);
+
+pseudocode :
+
+    swap2NumbersTest()
+
+C++ CODE :
+
+#include <iostream>
+using namespace std;
+
+//swap 2 numbers 
+
+void swap2Numbers(int& number1, int& number2)
+{
+    int temp = number1;
+    number1 = number2;
+    number2 = temp;
+}
+
+void swap2NumbersTest(void)
+{
+    int number1,number2;
+    
+    cout << "Enter number1:";
+    cin >> number1;
+    cout << "Enter number2:";
+    cin >> number2;
+    
+    swap2Numbers(number1, number2);
+    
+    cout << "Number after swapping is" << number1  << number2 << endl; 
+}
+
+int main(void)
+{
+    swap2NumbersTest();
+    
+    return 0;
+}
+--------------------------------------------------------------------------
+5) TO CHECK THE NUMBER IS DIVISIBLE BY 3
+
+pseudofunctions :
+
+function isDivisibleByThree(number-> int)-->bool
+
+    return (number % 3 == 0)
+
+function isDivisibleByThreeTest()--> void
+{
+    input number
+    
+    isDivisibleByThree(number)
+    
+    if(isDivisibleByThree(number))
+    
+        Print " Numberis divisible by 3";
+    
+    else
+    
+        Print"Number is not divisible by 3";
+        
+    end if    
+    
+pseudocode :
+
+    isDivisibleByThreeTest();
+
+C++ CODE :
+
+#include <iostream>
+#include <cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//number is divisible by 3
+
+bool isDivisibleByThree(int number)
+{
+    return (number % 3 == 0);
+}
+
+void isDivisibleByThreeTest()
+{
+    int number;
+    
+    cout << "Enter the number: ";
+    cin >> number;
+    
+    isDivisibleByThree(number);
+    
+    if(isDivisibleByThree(number))
+    {
+        cout << number << " is divisible by 3";
+    }
+    else
+    {
+        cout << number << " is not divisible by 3";
+    }
+}
+
+int main()
+{
+    isDivisibleByThreeTest();
+    
+    return EXIT_SUCCESS;
+}
+---------------------------------------------------------------------
+6) CHECK THE NUMBER IS DIVISIBLE BY 27
+
+pseudofunctions :
+
+function isDivisibleByTwentySeven(number-> int)-->bool
+
+    return (number % 27 == 0)
+
+function isDivisibleByTwentySevenTest()--> void
+{
+    input number
+    
+    isDivisibleByTwentySeven(number)
+    
+    if(isDivisibleByTwentySeven(number))
+    
+        Print " Numberis divisible by 27";
+    
+    else
+    
+        Print"Number is not divisible by 27";
+        
+    end if    
+    
+pseudocode :
+
+    isDivisibleByTwentySevenTest();
+
+C++ CODE :
+#include <iostream>
+#include <cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//number is divisible by 27
+
+bool isDivisibleByTwentySeven(int number)
+{
+    return (number % 27 == 0);
+}
+
+void isDivisibleByTwentySevenTest()
+{
+    int number;
+    
+    cout << "Enter the number: ";
+    cin >> number;
+    
+    isDivisibleByTwentySeven(number);
+    
+    if(isDivisibleByTwentySeven(number))
+    {
+        cout << number << " is divisible by 27";
+    }
+    else
+    {
+        cout << number << " is not divisible by 27";
+    }
+}
+
+int main()
+{
+    isDivisibleByTwentySevenTest();
+    
+    return EXIT_SUCCESS;
+}
+----------------------------------------------------------------
+7) PRINT N NATURAL NUMBERS
+
+pseudofunctions :
+
+#include <iostream>
+#include <cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//priny N natural numbers
+function printNaturalNumbers(numbers->int)-->void
+
+    for(int i = 1; i <= numbers; i++)
+    
+function printNaturalNumbersTest()-->void
+{
+    input numbers
+    
+    printNaturalNumbers(numbers)
+
+pseudocode :
+
+    printNaturalNumbersTest(void)
+
+C++ CODE :
+
+#include <iostream>
+#include <cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//priny N natural numbers
+void printNaturalNumbers(int numbers)
+{
+    for(int i = 1; i <= numbers; i++)
+    {
+        cout << i << endl;
+    }
+}
+
+void printNaturalNumbersTest(void)
+{
+    int numbers;
+    
+    cout << "Enter numbers:";
+    cin >> numbers;
+    
+    printNaturalNumbers(numbers);
+    
+}
+
+int main(void)
+{
+    printNaturalNumbersTest(void);
+    
+    return EXIT_SUCCESS;
+}
+-------------------------------------------------------------
+8)CHECK A NUMBER PALINDROME 
+
+
+
+C++ code :
+
+#include <iostream>
+#include <cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//CHECK NUMBER PALINDROME
+int reverseNumber(int number)
+{
+    int reverse = 0;
+    
+    while(number != 0)
+    {   
+        int reminder = (number % 10);
+        reverse = ((reverse * 10) + reminder);
+        number = (number / 10);
+    }
+    return reverse;
+}
+
+bool isNumberPalindrome(int number)
+{
+    int reverse = reverseNumber(number);
+    
+    return (number == reverse);
+}
+
+void isNumberPalindromeTest(void)
+{
+    int number;
+    
+    cout << "Enter number:";
+    cin >> number;
+    
+    if(isNumberPalindrome(number))
+    {
+        cout << number << " is Palindrome";
+    }
+    else
+    {
+        cout << number << " is not Palindrome";
+    }
+}
+    
+int main(void)
+{
+    isNumberPalindromeTest();
+    
+    return EXIT_SUCCESS;
+}
