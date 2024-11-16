@@ -400,7 +400,35 @@ int main(void)
 -------------------------------------------------------------
 8)CHECK A NUMBER PALINDROME 
 
+function reverseNumber(number-->int)-->int
 
+    reverse = 0
+    
+    while(number != 0)
+      
+        int reminder = (number % 10)
+        reverse = ((reverse * 10) + reminder)
+        number = (number / 10)
+    end while
+    return reverse;
+
+function isNumberPalindrome(number->int)-->bool
+
+    int reverse = reverseNumber(number)
+    
+    return (number == reverse)
+
+function isNumberPalindromeTest()-->void
+
+    int number
+    
+    if(isNumberPalindrome(number))
+    else
+    end if
+    
+pseudocode :
+
+    isNumberPalindromeTest()
 
 C++ code :
 
@@ -454,3 +482,670 @@ int main(void)
     
     return EXIT_SUCCESS;
 }
+-----------------------------------------------------------
+9) 9. CHECK THE NUMBER IS AMSTRONG
+
+function isArmstrong(number -> int) -> bool
+	copyNumber = number
+	int counter = 0
+	while copyNumber > 0
+		copyNumber = copyNumber/10
+		counter = counter + 1
+	end while
+	copyNumber = number
+	int sum = 0
+	while copyNumber > 0
+		temp = copyNumber % 10
+		sum = sum + temp^counter
+		copyNumber = copyNumber / 10
+	end while
+	if sum == number
+		return true
+	return false
+
+function isArmstrongTest(){
+	input number
+	bool result = isArmStrong(number)
+	if result == true
+		print "Armstrong"
+	else
+		print "Not Armstrong"
+	end if
+}
+
+pseudocode:
+
+isArmStrongTest()
+
+C++ CODE:
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+bool swapNums(int number){
+    int copyNumber=number;
+    int counter=0;
+    while (copyNumber>0){
+        copyNumber = copyNumber/10;
+		counter = counter + 1;
+    }
+    copyNumber = number;
+	int sum = 0;
+	while (copyNumber > 0){
+		int temp = copyNumber % 10;
+		sum = sum + (int)pow(temp,counter);
+		copyNumber = copyNumber / 10;
+	}
+	if (sum == number){
+		return true;
+	}
+	return false;
+}
+
+void isArmstrongTest(){
+    int num;
+    cout << "Enter number:";
+    cin >> num;
+    bool result=swapNums(num);
+    if (result ==true){
+        cout << "Armstrong number";
+    }
+    else{
+        cout << "Not Armstrong";
+    }
+}
+
+int main()
+{
+    isArmstrongTest();
+    return 0;
+}
+------------------------------------------------------------
+10)CHECK THE NUMBER PRIME
+
+pseudofunction:
+
+function isPrime(number -> int) -> bool
+	if (number < 2)
+		return false
+	end if
+
+	int squareRoot = sqrt(number)
+
+	for i in (2..squareRoot)
+		if (number % i) == 0
+			return false
+		end if
+	end for
+	
+	return true
+	
+function isPrimeTest(void) -> void
+	input number
+
+	if (isPrime(number))
+		print "Number is prime"
+	else
+		print "Number isn't prime"
+	end if
+
+pseudocode:
+
+isPrimeTest()
+
+-----cpp-----
+
+#include<iostream>
+#include<cmath>
+using std::cout;
+using std::cin;
+
+bool isPrime(int number)
+{
+	if (number < 2)
+	{
+		return false;
+	}
+	
+	int squareRoot = (int)sqrt(number);
+
+	for (int i = 2; i <= squareRoot; i ++)
+	{
+		if ((number % i) == 0)
+		{
+			return false;
+		}
+	}
+	
+	return true;
+}
+	
+void isPrimeTest(void)
+{
+    int number;
+    
+	cout << "Enter a number: ";
+	cin >> number;
+
+	if (isPrime(number))
+	{
+		cout << number << " is prime";
+	}
+	else
+	{
+		cout << number << " isn't prime";
+	}
+}
+
+int main(void)
+{
+    isPrimeTest();
+    
+    return 0;
+}
+--------------------------------------------------------
+11)CHECK A NUMBER PERFECT NUMBER
+
+Pseudofunctions:
+
+function isPerfectNumber(number->int)->bool
+  sum = 0
+    
+  half = (number / 2)
+ 	
+  for i from 1 ..half
+ 	if (number % i == 0)
+ 	    sum = (sum + i)
+      endif
+  endfor
+ 	
+  return (sum == number)
+ 	
+function isPerfectNumberTest()
+ 
+    input number
+ 	  bool result = isPerfectNumber(number)
+ 	
+ 	  if (result)
+ 	      print "The number is perfect"
+ 	  else
+ 	      print "The number is not perfect"
+ 	  endif
+ 	
+Pseudocode:
+
+    isPerfectNumberTest()
+
+
+#include<iostream>
+using std::cout;
+using std::cin;
+
+
+bool isPerfectNumber(int number)
+{
+    int sum = 0;
+    
+    int half = (number / 2);
+ 	
+ 	for (int i = 1 ; i <= half ; i++)
+ 	{
+ 	    if (number % i == 0)
+ 	    {
+ 	       sum = (sum + i);
+ 	    }
+ 	}
+ 	
+ 	return (sum == number);
+}
+
+void isPerfectNumberTest(void)
+{
+    int number;
+    
+    cout << "Enter a number:";
+    cin >> number;
+    
+ 	bool result = isPerfectNumber(number);
+ 	
+ 	if (result)
+ 	{
+ 	    cout << number << " is a perfect number";
+ 	}
+ 	else
+ 	{
+ 	    cout << number << " is not a perfect number";
+ 	}
+}
+
+int main(void)
+{
+    isPerfectNumberTest();
+ 
+    return 0;
+}
+
+------------------------------------------------------------------
+
+12) CHECK NUMBER IS ODD OR EVEN
+
+//check odd or even
+
+Pseudo functions:
+
+function isEven(number->int)->bool
+    return (number % 2 == 0) 
+	
+function isEvenTest()
+
+    input number
+
+    if (isEven(number))
+	print "The number is even"
+    else
+	print "The number is odd"
+    endif
+	
+pseudocode:
+
+isEvenTest()
+
+CODE:
+
+#include<iostream>
+using std::cin;
+using std::cout;
+
+bool isEven(int number)
+{
+    return ((number % 2) == 0);
+}
+
+void isEvenTest(void)
+{
+    int number;
+    
+    cout << "Enter a number:";
+    cin >> number;
+    
+    if (isEven(number))
+    {
+	cout << number << " is even";
+    }
+    else
+    {
+	cout << number << " is odd";
+    }
+}
+
+int main(void)
+{
+    isEvenTest();
+    
+    return 0;
+}
+
+-------------------------------------------------------------
+13) CHECK A YEAR LEAP
+
+//leap year
+
+pseudofunctions :
+
+function isLeapYear(year -> int) -> bool
+        return ((year % 4 == 0 && year % 100 !=0) || (year % 400 == 0))
+           
+function isLeapYearTest()
+        input year
+        if (isLeapYear(year))
+           print "Leap Year"
+        else
+           print "Not Leap Year"
+        end if
+
+pseudocode :
+
+isLeapYearTest()
+
+#include <iostream>
+using std::cout;
+using std::cin;
+
+bool isLeapYear(int year)
+{
+    return ((((year % 4) == 0) && ((year % 100) !=0)) || (((year % 400) == 0)));
+}
+        
+void isLeapYearTest(void)
+{
+   int year;
+   
+   cout << "Enter Year: "; 
+   cin >> year;
+   
+   if (isLeapYear(year))
+   {
+       cout << year << " is Leap Year";
+   }
+   else
+   {
+       cout << year << " Not Leap Year";
+   }
+}
+
+int main(void)
+{
+    isLeapYearTest();
+    
+    return 0;
+}
+---------------------------------------------------------
+
+14) CHECK A NUMBER PERFECT SQUARE OR NOT 
+
+//to check a number perfect square or not. 
+
+pseudo function
+
+function isPerfectSquare(number -> int) -> bool
+    root = integer part of sqrt(number)
+    if (root * root == number)
+        return true
+    return false
+
+function isPerfectSquareTest()
+    input number
+    result = isPerfectSquare(number)
+    if (result == true)
+        print "Entered number is a perfect square"
+    else
+        print "Entered number is not a perfect square"
+        
+pseudo code
+
+isPerfectSquareTest()
+
+#include <iostream>
+#include <cmath> 
+using namespace std;
+using std::endl;
+
+bool isPerfectSquare(int number) {
+    int root = (sqrt(number)); 
+    return (root * root == number); 
+}
+
+
+void isPerfectSquareTest() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+
+    bool result = isPerfectSquare(number);
+    if (result) {
+       cout << "Entered number is a perfect square.";
+    } else {
+        cout << "Entered number is not a perfect square.";
+    }
+}
+
+int main() {
+    isPerfectSquareTest(); 
+    return 0;
+}
+
+--------------------------------------------------------------------
+
+15)  REVERSE THE NUMBER
+
+pseudofunction :
+
+function  reverseNumber(number->int)-->int
+
+    reverse = 0
+    
+    while(number != 0)
+    
+        int reminder = (number % 10)
+        reverse = ((reverse * 10) + reminder)
+        number = (number / 10)
+    end while
+    return reverse; 
+
+function reverseNumberTest()
+
+    int number;
+
+    reverse = reverseNumber(number)
+    if(reverse)
+    Print "Reverse Number"
+    end if
+    
+pseudocode :
+
+    reverseNumberTest();
+
+C++ CODE :
+
+#include <iostream>
+#include <cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+//CHECK REVERSE NUMBER 
+int  reverseNumber(int number)
+{
+    int reverse = 0;
+    
+    while(number != 0)
+    {
+        int reminder = (number % 10);
+        reverse = ((reverse * 10) + reminder);
+        number = (number / 10);
+    }   
+    return reverse; 
+}
+
+void reverseNumberTest()
+{
+    int number;
+    
+    cout << "Enter number: ";
+    cin >> number;
+    
+    int reverse = reverseNumber(number);
+    if(reverse)
+    {
+        cout << reverse << " is the reverse of number";
+    }
+}
+int main()
+{
+    reverseNumberTest();
+    
+    return EXIT_SUCCESS;
+}
+--------------------------------------------------------------------
+16) FACTORIAL OF THE NUMBER 
+
+pseudo functions:
+
+function factorial(number-> int) -> int
+    if (number < 0)
+        return -1
+
+    int result = 1
+
+    for int i = 1...number              
+        result= (result * i)            
+    end for
+    
+    return result
+
+function factorialTest(void) -> void
+    input number
+    int result = factorial(number)
+
+    if (result == -1)
+        print("Invalid number")
+    else
+        print("Factorial is" result)
+
+pseudo code:
+
+factorialTest()
+
+C++ CODE:
+
+#include <iostream>
+using namespace std;
+
+int factorial(int number) {
+    if (number < 0) {
+        return -1; 
+    }
+
+    int result = 1;
+
+    for (int i = 1; i <= number; i++) {
+        result *= i;
+    }
+
+    return result;
+}
+
+void factorialTest() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+
+    int result = factorial(number);
+
+    if (result == -1) {
+        cout << "Invalid number" << endl;
+    } else {
+        cout << "Factorial is " << result << endl;
+    }
+}
+
+int main() {
+    factorialTest(); 
+    return 0;
+}
+---------------------------------------------------------------
+17) FIBONACCI NUMBER
+
+function fibonacciNumbers(n -> [int], arrStore -> [int]) -> null
+    if (n >= 1)
+        arrStore[0] = 0
+    end if
+    
+    if (n >= 2)
+        arrStore[1] = 1
+    end if
+    
+    first = 0
+    second = 1
+    next
+    
+    for (i = 3; i <= n; i++)
+        next = first + second
+        arrStore[i-1] = next
+        first = second
+        second = next
+    end for
+end fibonacciNumbers
+
+function fibonacciNumbersTest(void)
+    input n
+    
+    if (n < 1)
+        print "Please enter a positive integer." 
+        return
+    end if
+    
+    if (n > MAX_SIZE)
+        print "Please enter a number less than or equal to " << MAX_SIZE << "." 
+        return
+    end if
+    
+    int arrStore[MAX_SIZE] = {}
+    
+    fibonacciNumbers(n, arrStore)
+    
+    for (i = 0; i < n; i++)
+        print arrStore[i] 
+    end for
+end fibonacciNumbersTest
+
+start 
+main()
+    fibonacciNumbersTest()
+
+    return EXIT_SUCCESS
+end 
+
+ C++ CODE :
+
+// c++ code for fibonacci series
+#include <iostream>
+#include<cstdlib>
+#define MAX_SIZE 100
+using std::cout;
+using std::cin;
+using std::endl;
+
+void fibonacciNumbers(int n, int arrStore[]) 
+{
+    if (n >= 1) {
+        arrStore[0] = 0;
+    }
+    if (n >= 2) {
+        arrStore[1] = 1;
+    }
+
+    int first = 0, second = 1, next;
+
+    for (int i = 3; i <= n; i++) {
+        next = first + second;
+        arrStore[i-1] = next;
+        first = second;
+        second = next;
+    }
+}
+
+void fibonacciNumbersTest(void) 
+{
+    int n;
+    cout << "Enter the number of terms : ";
+    cin >> n;
+
+    if (n < 1) {
+        cout << "Please enter a positive integer." << endl;
+        return;
+    }
+    if (n > MAX_SIZE) {
+        cout << "Please enter a number less than or equal to " << MAX_SIZE << "." << endl;
+        return;
+    }
+    
+    int arrStore[MAX_SIZE] = {};
+
+    fibonacciNumbers(n, arrStore);
+
+    for (int i = 0; i < n; i++) 
+    {
+        cout << arrStore[i] << endl;
+    }
+    
+}
+
+int main(void) {
+    fibonacciNumbersTest();
+
+    return EXIT_SUCCESS;
+}
+--------------------------------------------------------------
+18)
