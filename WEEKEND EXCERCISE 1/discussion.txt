@@ -1,0 +1,47 @@
+1) FIND AVERAGE OF 2 NUMBERS : 
+
+pseudofunctions:
+
+function findAverage(number1->int, number2->int)-->float
+    average =  = ((float)(number1 + number2) / 2);
+    return average
+
+function findAverageTest()
+      input number1,number2
+      result = findaAverage(number1, number2);
+      print result
+
+pseudocode :
+findAverageTest()
+        
+#include <iostream>
+using std::cin;
+using std::cout;
+
+//find average of 2 numbers
+float findaAverage(int number1, int number2)
+{
+    float average = ((float)(number1 + number2) / 2.0f);
+    return average;
+}
+
+void findaAverageTest(void)
+{
+    int number1, number2;
+    float average;
+    
+    cout << "Enter numbers: ";
+    cin >> number1;
+    cin >> number2;
+    
+    float result = findaAverage(number1, number2);
+    
+    cout << "Average = " << result;
+    
+}
+
+int main()
+{
+    findaAverageTest();
+}
+
