@@ -1,1 +1,180 @@
+Given UNF  : 
 
+    booking_id ,booking_number ,bus_id,bus_number,bus_type,
+    route_start_location,route_end_location, departure_time ,arrival_time ,departure_location, arrival_location
+    customer_id ,customer_name ,customer_gender ,customer_city ,
+    number_of_tickets ,total_ticket_amount ,payment_mode.
+
+    ticket1_seat_number ,ticket1_seat_price,
+    ticket2_seat_number,ticket2_seat_price,
+    ticket3_seat_number, ticket3_seat_price 
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Formed 1NF :
+
+Customers : CustomerID, Customer_Name, ContactNumber, Email, RegisteredDate
+Bus Details : BusID, BusNumber, Capacity, BusType
+Bus Route : RouteID, StartLocation, EndLocation, Distance
+Bus Schedules : ScheduleID, BusID, RouteID, DepartureTime, ArrivalTime, DepartureLocation, ArrivalLocation
+Bus Bookings : BookingID, CustomerID, ScheduleID, SeatNumber, BookingDate, Status
+Bus Payments : PaymentID, BookingID, Amount, PaymentMethod, PaymentDate
+
+---------------------------------------------------------------------------------------------------------------------------
+prompt solution:
+````````````````````````````````````````````````````````````````````````````````
+Oracle SQL Script
+
+1. Table Creation Script
+
+   -- Table for customers
+    CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+    Customer_Name VARCHAR(50),
+    ContactNumber VARCHAR(15),
+    Email VARCHAR(100),
+    RegisteredDate DATE DEFAULT CURRENT_DATE
+);
+
+-- Table for bus details
+CREATE TABLE Buses (
+    BusID INT PRIMARY KEY AUTO_INCREMENT,
+    BusNumber VARCHAR(20) UNIQUE,
+    Capacity INT,
+    BusType VARCHAR(20)
+);
+
+-- Table for routes
+CREATE TABLE Routes (
+    RouteID INT PRIMARY KEY AUTO_INCREMENT,
+    StartLocation VARCHAR(100),
+    EndLocation VARCHAR(100),
+    Distance INT
+);
+
+-- Table for bus schedules
+CREATE TABLE BusSchedules (
+    ScheduleID INT PRIMARY KEY AUTO_INCREMENT,
+    BusID INT,
+    RouteID INT,
+    DepartureTime DATETIME,
+    ArrivalTime DATETIME,
+    DepartureLocation VARCHAR(100),
+    ArrivalLocation VARCHAR(100),
+    FOREIGN KEY (BusID) REFERENCES Buses(BusID),
+    FOREIGN KEY (RouteID) REFERENCES Routes(RouteID)
+);
+
+-- Table for bookings
+CREATE TABLE Bookings (
+    BookingID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT,
+    ScheduleID INT,
+    SeatNumber INT,
+    BookingDate DATE DEFAULT CURRENT_DATE,
+    Status VARCHAR(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ScheduleID) REFERENCES BusSchedules(ScheduleID)
+);
+
+-- Table for payments
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    BookingID INT,
+    Amount DECIMAL(8, 2),
+    PaymentMethod VARCHAR(20),
+    PaymentDate DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (BookingID) REFERENCES Bookings(BookingID)
+);
+
+--------------------------------------------------------------------
+DATA IN TABULAR FORM :
+
+CUSTOMERS TABLE :
+
+BUS DETAILS TABLE :
+
+ BUSID  BUSNUMBER TYPE
+---------- ---------- --------------------------------------------------
+         1        201 Sleeper
+         2        202 Semi-Sleeper
+         3        203 Luxury
+         4        204 Semi-Sleeper
+         5        205 Sleeper
+
+BUS ROUTE TABLE :
+
+BUS SCHEDULES TABLE :
+
+BUS BOOKINGS :
+
+BUS PAYMENTS :
+
+---------------------------------------------------------------------------------------------------------------------------------
+INSERTION STATEMENTS :
+
+--CUSTOMERS
+
+INSERT INTO Customers (CustomerID, Customer_Name, ContactNumber, Email, RegisteredDate) VALUES (1, 'Nimisha ', '555-1234', 'nimisha@example.com', '2024-11-01');
+INSERT INTO Customers (CustomerID, Customer_Name, ContactNumber, Email, RegisteredDate) VALUES(2, 'Ayisha', '555-5678', 'ayisha@example.com', '2024-10-15');
+INSERT INTO Customers (CustomerID, Customer_Name, ContactNumber, Email, RegisteredDate) VALUES(3, 'Sana', '555-8765', 'sana@example.com', '2024-09-20');
+INSERT INTO Customers (CustomerID, Customer_Name, ContactNumber, Email, RegisteredDate) VALUES(4, 'Vinayak', '555-4321', 'vinayak@example.com', '2024-08-05');
+INSERT INTO Customers (CustomerID, Customer_Name, ContactNumber, Email, RegisteredDate) VALUES(5, 'Vishakh', '555-7890', 'vishakh@example.com', '2024-11-10');
+
+--BUS DETAILS
+
+INSERT INTO Bus_details (BusID, BusNumber, Type)
+VALUES (1, 201, 'Sleeper');
+INSERT INTO Bus_details (BusID, BusNumber, Type)
+VALUES (2, 202, 'Semi-Sleeper');
+INSERT INTO Bus_details (BusID, BusNumber, Type)
+VALUES (3, 203, 'Luxury');
+INSERT INTO Bus_details (BusID, BusNumber, Type)
+VALUES (4, 204, 'Semi-Sleeper');
+INSERT INTO Bus_details (BusID, BusNumber, Type)
+VALUES (5, 205, 'Sleeper');
+
+--BUS ROUTE
+
+INSERT INTO BUS_ROUTES (RouteID, START_LOCATION, END_LOCATION, DISTANCE)
+VALUES (40, 'New York', 'Boston',1650);
+INSERT INTO BUS_ROUTES (RouteID, START_LOCATION, END_LOCATION, DISTANCE)
+VALUES (42, 'Chicago', 'Detroit',800);
+INSERT INTO BUS_ROUTES (RouteID, START_LOCATION, END_LOCATION, DISTANCE)
+VALUES (44, 'Los Angeles', 'San Francisco',1350);
+INSERT INTO BUS_ROUTES (RouteID, START_LOCATION, END_LOCATION, DISTANCE)
+VALUES (46, 'San Diego', 'Phoenix',3000);
+INSERT INTO BUS_ROUTES (RouteID, START_LOCATION, END_LOCATION, DISTANCE)
+VALUES (48, 'Miami', 'Orlando',750);
+
+--BUS SCHEDULES
+
+INSERT INTO BusSchedules (BusID, RouteID, DepartureTime, ArrivalTime, DepartureLocation, ArrivalLocation) 
+VALUES (101, 201, TO_DATE('2024-11-20 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-20 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'New York', 'Boston');
+
+INSERT INTO BusSchedules (BusID, RouteID, DepartureTime, ArrivalTime, DepartureLocation, ArrivalLocation) 
+VALUES (102, 202, TO_DATE('2024-11-21 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-21 13:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Chicago', 'Detroit');
+
+INSERT INTO BusSchedules (BusID, RouteID, DepartureTime, ArrivalTime, DepartureLocation, ArrivalLocation) 
+VALUES(103, 203, TO_DATE('2024-11-22 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-22 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Los Angeles', 'San Francisco');
+
+INSERT INTO BusSchedules ( BusID, RouteID, DepartureTime, ArrivalTime, DepartureLocation, ArrivalLocation) 
+VALUES (104, 204, TO_DATE('2024-11-23 10:15:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-23 14:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'San Diego', 'Phoenix');
+
+INSERT INTO BusSchedules (BusID, RouteID, DepartureTime, ArrivalTime, DepartureLocation, ArrivalLocation) 
+VALUES (105, 205, TO_DATE('2024-11-24 06:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-24 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Miami', 'Orlando');
+
+--BUS BOOKINGS
+
+INSERT INTO Bookings(BookingId, CustomerID, SeatNumber, BookingDate, Status)
+VALUES(10, A1, L1, '2024-11-16', 'Booked');
+INSERT INTO Bookings(BookingId, CustomerID, SeatNumber, BookingDate, Status)
+VALUES(20, A2, L2, '2024-11-10', 'Not Booked');
+INSERT INTO Bookings(BookingId, CustomerID, SeatNumber, BookingDate, Status)
+VALUES(30, A4, U1, '2024-11-05', 'Booked');
+INSERT INTO Bookings(BookingId, CustomerID, SeatNumber, BookingDate, Status)
+VALUES(40, A3, U1, '2024-11-03', 'Not Booked');
+INSERT INTO Bookings(BookingId, CustomerID, SeatNumber, BookingDate, Status)
+VALUES(50, A5, U2, '2024-10-21', 'Booked');
+
+--BUS PAYMENTS
