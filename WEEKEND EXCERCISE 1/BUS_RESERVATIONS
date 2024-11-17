@@ -178,3 +178,11 @@ INSERT INTO Bookings(BookingId, CustomerID, SeatNumber, BookingDate, Status)
 VALUES(50, A5, U2, '2024-10-21', 'Booked');
 
 --BUS PAYMENTS
+
+INSERT INTO Payments (PaymentID, BookingID, Amount, PaymentMethod, PaymentDate)
+VALUES 
+(1, 10, 150.00, 'Credit Card', '2024-11-16'),
+(2, 20, 0.00, 'N/A', '2024-11-10'), 
+(3, 30, 300.00, 'Cash', '2024-11-05'),
+(4, 40, 0.00, 'N/A', '2024-11-03'), 
+(5, 50, 200.00, 'Online', '2024-10-21');
