@@ -298,7 +298,7 @@ WHERE Type = 'Sleeper';
 | 1     | Green Travels| Sleeper 
 | 3     | Red Express  | Sleeper 
 
-[2] Using Having Clause
+[2] Using Having, aggregate, group by Clause
 
 SELECT RouteID, SUM(DISTANCE) AS TotalDistance
 FROM BUS_ROUTES
