@@ -1,8 +1,9 @@
 Given UNF  : 
 
     booking_id ,booking_number ,bus_id,bus_number,bus_type,
-    route_start_location,route_end_location, departure_time ,arrival_time ,departure_location, arrival_location
-    customer_id ,customer_name ,customer_gender ,customer_city ,ticket_amount ,payment_mode.
+    route_start_location,route_end_location, departure1_time ,arrival1_time ,departure2_time ,
+    arrival2_time, departure3_time ,arrival3_time, departure_location, arrival_location,
+    customer_id ,customer_name ,contact_number,customer_city ,ticket_amount ,payment_mode.
 
     ticket1_seat_number ,ticket1_seat_price,
     ticket2_seat_number,ticket2_seat_price,
