@@ -68,6 +68,7 @@ void printMenu()
     cout << "4. Delete Booking\n";
     cout << "5. Exit\n";
 }
+--------------------------VINAYAK-----------------------------
 
 void createBooking(int booking_ids[], int ticket_amounts[], int food_amounts[], int &total_Bookings) 
 {
@@ -102,6 +103,8 @@ void createBooking(int booking_ids[], int ticket_amounts[], int food_amounts[], 
     cout << "Booking created successfully.\n";
 }
 
+------------------------------VISHAK----------------------------
+
 void displayBookings(const int booking_ids[], const int ticket_amounts[], const int food_amounts[], int total_Bookings) 
 {
     if (total_Bookings == 0) 
@@ -121,6 +124,8 @@ void displayBookings(const int booking_ids[], const int ticket_amounts[], const 
     cout << "------------------------------------------------\n";
 }
 
+------------------------------SANA-----------------------
+
 int findBookingIndexById(const int booking_ids[], int total_Bookings, int id) 
 {
     for (int i = 0; i < total_Bookings; i++) 
@@ -131,6 +136,8 @@ int findBookingIndexById(const int booking_ids[], int total_Bookings, int id)
     }
     return -1;
 }
+
+-------------------------------AYISHA--------------------------------
 
 void updateBooking(int booking_ids[], int ticket_amounts[], int food_amounts[], int total_Bookings) 
 {
@@ -154,6 +161,8 @@ void updateBooking(int booking_ids[], int ticket_amounts[], int food_amounts[], 
 
     cout << "Booking updated successfully.\n";
 }
+
+----------------------NIMISHA--------------------------
 
 void deleteBooking(int booking_ids[], int ticket_amounts[], int food_amounts[], int &total_Bookings) 
 {
