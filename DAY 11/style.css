@@ -1,0 +1,7 @@
+body { font-family: Verdana; background-color: rgb(128, 236, 244); }
+table thead tr th { background-color: rgb(243, 243, 143); }
+label { display: inline-block; width: 100px;}
+form div{margin-top: 10px;}
+button {margin-top: 10px;}
+input{padding: 4px;}
+p {font-style: italic;}
