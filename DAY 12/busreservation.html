@@ -5,82 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Ticket Reservation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 </head>
 <body class="bg-secondary-emphasis">
 
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">Bus Booking System</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="create.html">Create</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="edit.html">Edit</a>
-              </li>
-            </ul>
-            <div class="d-flex">
-              <button class="btn btn-outline-danger" type="submit">Logout</button>
+            <a class="navbar-brand fw-bold" href="BusBooking.html">Bus Booking System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="Bus-add.html">Create</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Busedit.html">Edit</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-danger" type="submit">Logout</button>
+                </div>
             </div>
-          </div>
         </div>
-      </nav>
-    
-    <div class="container m-5">
-        <h1 class="m-3" >Bus Ticket Reservation</h1>
-        <table class=" table border border-3" >
-        <thead class="table-secondary ">
-            <tr>
-                <th>Booking ID</th>
-                <th>Customer</th>
-                <th class="p-6">Schedule</th>
-                <th>Seat Number</th>
-                <th>Booking Date</th>
-                <th>Status</th>
-                <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>101</td>
-                <td>vishak</td>
-                <td>22513-EKM-TVM</td>
-                <td>1</td>
-                <td>13-02-24</td>
-                <td>Booked</td>
-                <td><a href="edit.html" class="btn btn-warning">edit</a>&nbsp;<button class="btn btn-danger">delete</button></td>
+    </nav>
 
-            </tr>
-            <tr>
-                <td>102</td>
-                <td>Sana</td>
-                <td>25673-CLT-EKM</td>
-                <td>2</td>
-                <td>30-03-24</td>
-                <td>Booked</td>
-                <td><a href="edit.html" class="btn btn-warning">edit</a>&nbsp;<button class="btn btn-danger">delete</button></td>
-
-            </tr>
-            <tr>
-                <td>103</td>
-                <td>nimisha</td>
-                <td>22453-KZK-TVM</td>
-                <td>3</td>
-                <td>15-02-24</td>
-                <td>Not Booked</td>
-                <td><a href="edit.html" class="btn btn-warning">edit</a>&nbsp;<button class="btn btn-danger">delete</button></td>
-
-            </tr>
-            
+    <!-- Table Container -->
+    <div class="container mt-5">
+        <h1 class="m-3 text-center">Bus Ticket Reservation</h1>
+        <table class="table table-bordered table-striped table-hover text-center align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Customer</th>
+                    <th>Schedule</th>
+                    <th>Seat Number</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>101</td>
+                    <td>Ayisha</td>
+                    <td>22513-EKM-KSD</td>
+                    <td>1</td>
+                    <td>13-02-24</td>
+                    <td><span class="badge bg-success">Booked</span></td>
+                    <td>
+                        <a href="Busedit.html" class="btn btn-warning btn-sm fw-bold">Edit</a>
+                        <button class="btn btn-danger btn-sm fw-bold">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>Sana</td>
+                    <td>25673-CLT-EKM</td>
+                    <td>2</td>
+                    <td>30-03-24</td>
+                    <td><span class="badge bg-success">Booked</span></td>
+                    <td>
+                        <a href="Busedit.html" class="btn btn-warning btn-sm fw-bold">Edit</a>
+                        <button class="btn btn-danger btn-sm fw-bold">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>103</td>
+                    <td>Nimisha</td>
+                    <td>22453-KZK-TVM</td>
+                    <td>3</td>
+                    <td>15-02-24</td>
+                    <td><span class="badge bg-danger">Not Booked</span></td>
+                    <td>
+                        <a href="Busedit.html" class="btn btn-warning btn-sm fw-bold">Edit</a>
+                        <button class="btn btn-danger btn-sm fw-bold">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    </tbody>
-</table>
 
+    <!-- Bootstrap Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+Yvi/+6RO05sI7tU9d1po7Kz0bbTB" crossorigin="anonymous"></script>
 </body>
 </html>
-
