@@ -159,3 +159,69 @@ Enter id: 201
 Enter name: Dhiyana
 Hello Ayisha of id 101
 Hello Dhiyana of id 201
+
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ vim Hello_2students_oops.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ cat Hello_2students_oops.cpp
+#include<iostream>
+#include<cstdlib>
+using std::cout;
+using std::cin;
+using std::endl;
+
+struct student 
+{
+	int id;
+	char name[255];
+};
+
+int main()
+{
+	student student1;
+	student student2;
+
+	cout << "Enter first student details:" << endl;
+	cout << "Enter id: " << endl;
+	cin >> student1.id;
+	cout << "Enter name: " << endl;
+	cin >> student1.name;
+	
+	cout << "Enter second student details: " << endl;
+	cout << "Enter id: " << endl;
+	cin >> student2.id;
+	cout << "Enter name: " << endl;
+	cin >> student2.name;
+
+	cout << "Hello" << student1.name << " of id " << student1.id << endl;
+        cout << "Hello" << student2.name << " of id " << student2.id << endl;
+
+	return EXIT_SUCCESS;
+}
+      
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ g++ Hello_2students_oops.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ ./a.out
+Enter first student details:
+Enter id: 
+101
+Enter name: 
+Ayisha
+Enter second student details: 
+Enter id: 
+102
+Enter name: 
+Dhiyana 
+HelloAyisha of id 101
+HelloDhiyana of id 102
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ vim Hello_2students_oops.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ g++ Hello_2students_oops.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ ./a.out
+Enter first student details:
+Enter id: 1001
+Enter name: Ayisha
+Enter second student details: 
+Enter id: 1002
+Enter name: Dhiyana PS
+Hello Ayisha of id 1001
+Hello Dhiyana of id 1002
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp/Hello_World.cpp$ 
+
+
