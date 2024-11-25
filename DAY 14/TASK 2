@@ -30,105 +30,101 @@ ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_syst
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ ls
 emp_salary.cpp
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ vi emp_salary.cpp
-ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ vi emp_salary.cpp
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ cat emp_salary.cpp
 #include<iostream>
 #include<cstdlib>
+
+#include <iostream>
+#include <cstdlib>
+#include <climits> 
 
 using std::cin;
 using std::cout;
 using std::endl;
 
-int INT_MIN;
 const int MAX_SALARY = 10;
 
-void readSalaries (int salary[], int& size)
-{
-	int salaries;
-	size = 0;
-	
-	cout << "Enter salaries: " << endl;
-	while (size < MAX_SALARY)
-	{
-		cout << "Enter salary: " << size+1 << endl;
-	        cin >> salaries;
-		if (salaries < 0)
-		{
-			cout << "Enter valid salary" << endl;
-		break;
-		}
-		salary[size] = salaries;
-		size++;
-	}	
-	cout << "Max salary reached" << endl;
+void readSalaries(int salary[], int& size) {
+    int salaries;
+    size = 0;
+
+    cout << "Enter salaries: " << endl;
+    while (size < MAX_SALARY) {
+        cout << "Enter salary " << size + 1 << ": ";
+        cin >> salaries;
+        if (salaries < 0) {
+            cout << "Enter valid salary" << endl;
+            break;
+        }
+        salary[size] = salaries;
+        size++;
+    }
+    cout << "Max salary reached" << endl;
 }
 
-int secondMaxSalary (int salary[], int size)
-{
-	int maxsalary = INT_MIN;
-	int secondMaxSalary = INT_MIN;
+int secondMaxSalary(int salary[], int size) {
+    int maxsalary = INT_MIN;
+    int secondMaxSalary = INT_MIN;
 
-	for (int i = 0; i < size; i++)
-	{
-		if (salary[i] == maxsalary)
-		{
-			secondMaxSalary = maxsalary;
-			maxsalary = salary[i];
-		}
-		else if ((salary[i] > secondMaxSalary) && (salary[i] < maxSalary))
-		{
-			salary[i] = secondMaxSalary;
-		}	
-	}
-
-bool is5digits(int number)
-{
-	return ((number >=10000) && (number <= 99999)
+    for (int i = 0; i < size; i++) {
+        if (salary[i] > maxsalary) {
+            secondMaxSalary = maxsalary;
+            maxsalary = salary[i];
+        } else if (salary[i] > secondMaxSalary && salary[i] < maxsalary) {
+            secondMaxSalary = salary[i];
+        }
+    }
+    return secondMaxSalary;
 }
 
-void PrintSalaries(int salary[], int size)
-{
-	cout << " Salaries are: ";
-	for(int i = 0; i < size; i++)
-	{	
-		cout << salary[i] << endl;
-	}
+bool is5digits(int number) {
+    return (number >= 10000 && number <= 99999);
 }
 
-void test()
-{
-	int salary[MAX_SALARY];
-	int size;
-
-	readSalaries(salary, size);
-	printSalaries(salary, size);
-
-	int second_max_salary = secondMaxSalary(salary, size);
-	cout << " Second max salary is " << secondMaxSalary << endl;
+void PrintAllSalaries(int salary[], int size) {
+    cout << "Salaries are: ";
+    for (int i = 0; i < size; i++) {
+        cout << salary[i] << " ";
+    }
+    cout << endl;
 }
 
-int main()
-{
-	test();
-	
-	return EXIT_SUCCESS;
+void test() {
+    int salary[MAX_SALARY];
+    int size;
+
+    readSalaries(salary, size);
+    PrintAllSalaries(salary, size);
+
+    int second_max_salary = secondMaxSalary(salary, size);
+    cout << "Second max salary is " << second_max_salary << endl;
+
+    if (is5digits(second_max_salary)) {
+        cout << "Second max salary is a 5-digit number: " << second_max_salary << endl;
+    }
 }
 
-
-ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ g++ emp_salary.cpp
+int main() {
+    test();
+    return EXIT_SUCCESS;
+}
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ vi emp_salary.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_systayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ g++ emp_salary.cpp
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ ./a.out
 Enter salaries: 
-Enter salary 1: 10000 
+Enter salary 1: 10000
 Enter salary 2: 20000
 Enter salary 3: 30000
 Enter salary 4: 40000
-Enter salary 5: 50000
-Enter salary 6: 60000
-Enter salary 7: 70000
-Enter salary 8: 80000
-Enter salary 9: 90000
-Enter salary 10: 99000
-Max salary reached or input ended.
-Salaries are: 10000 20000 30000 40000 50000 60000 70000 80000 90000 99000 
-Second max salary is 90000
+Enter salary 5: 55000
+Enter salary 6: 80000
+Enter salary 7: 56000
+Enter salary 8: 67777
+Enter salary 9: 80990
+Enter salary 10: 50000
+Max salary reached
+Salaries are: 10000 20000 30000 40000 55000 80000 56000 67777 80990 50000 
+Second max salary is 80000
+Second max salary is a 5-digit number: 80000
+
 
