@@ -24,3 +24,8 @@ ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp_project$ cd ..
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ ls
 a.out    cpp          Desktop    Downloads   hello_world.cpp  Pictures  snap       Videos
 cmd.txt  cpp_project  Documents  helloworld  Music            Public    Templates
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ rmdir cpp_project
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ ls
+a.out    cpp      Documents  helloworld       Music     project  snap       Videos
+cmd.txt  Desktop  Downloads  hello_world.cpp  Pictures  Public   Templates
+
