@@ -1,1 +1,22 @@
+Problem Statement: `Employee Salary Management System`
 
+`Objective`:  
+You need to develop a C++ program that performs the following tasks:
+
+1. `Input an Array of Salaries`:
+   - The program should take input for the salaries of `10 employees` 
+   (you can modify the number as required).
+   - The program should store these salaries in an array.
+
+2. `Find the Second Highest Salary`:
+   - Implement a function to find the second highest salary in the array.
+
+3. `Check if the Second Highest Salary is Exactly 5 Digits`:
+   - After identifying the second highest salary, 
+   check whether the salary is a 5-digit number (between 10000 and 99999).
+   - Print a message indicating 
+   whether the second highest salary is 5 digits or not.
+
+4. `Print All Salaries`:
+   - Implement a function 
+   to print all employee salaries stored in the array.
