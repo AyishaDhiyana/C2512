@@ -24,4 +24,111 @@ You need to develop a C++ program that performs the following tasks:
 ---------------------------------------------------
 SOLUTION
 ---------------------------------------------------
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ mkdir Employee_salary_management_system
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ cd Employee_salary_management_system
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ touch emp_salary.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ ls
+emp_salary.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ vi emp_salary.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ vi emp_salary.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ cat emp_salary.cpp
+#include<iostream>
+#include<cstdlib>
+
+using std::cin;
+using std::cout;
+using std::endl;
+
+int INT_MIN;
+const int MAX_SALARY = 10;
+
+void readSalaries (int salary[], int& size)
+{
+	int salaries;
+	size = 0;
+	
+	cout << "Enter salaries: " << endl;
+	while (size < MAX_SALARY)
+	{
+		cout << "Enter salary: " << size+1 << endl;
+	        cin >> salaries;
+		if (salaries < 0)
+		{
+			cout << "Enter valid salary" << endl;
+		break;
+		}
+		salary[size] = salaries;
+		size++;
+	}	
+	cout << "Max salary reached" << endl;
+}
+
+int secondMaxSalary (int salary[], int size)
+{
+	int maxsalary = INT_MIN;
+	int secondMaxSalary = INT_MIN;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (salary[i] == maxsalary)
+		{
+			secondMaxSalary = maxsalary;
+			maxsalary = salary[i];
+		}
+		else if ((salary[i] > secondMaxSalary) && (salary[i] < maxSalary))
+		{
+			salary[i] = secondMaxSalary;
+		}	
+	}
+
+bool is5digits(int number)
+{
+	return ((number >=10000) && (number <= 99999)
+}
+
+void PrintSalaries(int salary[], int size)
+{
+	cout << " Salaries are: ";
+	for(int i = 0; i < size; i++)
+	{	
+		cout << salary[i] << endl;
+	}
+}
+
+void test()
+{
+	int salary[MAX_SALARY];
+	int size;
+
+	readSalaries(salary, size);
+	printSalaries(salary, size);
+
+	int second_max_salary = secondMaxSalary(salary, size);
+	cout << " Second max salary is " << secondMaxSalary << endl;
+}
+
+int main()
+{
+	test();
+	
+	return EXIT_SUCCESS;
+}
+
+
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ g++ emp_salary.cpp
+ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ ./a.out
+Enter salaries: 
+Enter salary 1: 10000 
+Enter salary 2: 20000
+Enter salary 3: 30000
+Enter salary 4: 40000
+Enter salary 5: 50000
+Enter salary 6: 60000
+Enter salary 7: 70000
+Enter salary 8: 80000
+Enter salary 9: 90000
+Enter salary 10: 99000
+Max salary reached or input ended.
+Salaries are: 10000 20000 30000 40000 50000 60000 70000 80000 90000 99000 
+Second max salary is 90000
 
