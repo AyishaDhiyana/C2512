@@ -135,7 +135,7 @@ void PrintAllSalaries(int salary[], int size) {
     cout << endl;
 }
 
-void test() {
+void test(void) {
     int salary[MAX_SALARY];
     int size;
 
@@ -150,7 +150,7 @@ void test() {
     }
 }
 
-int main() {
+int main(void) {
     test();
     return EXIT_SUCCESS;
 }
