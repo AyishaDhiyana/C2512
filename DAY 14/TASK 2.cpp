@@ -19,7 +19,7 @@ void readSalaries(int salary[], int& size) {
         cin >> salaries;
         if (salaries < 0) {
             cout << "Enter valid salary" << endl;
-            break;
+            continue;
         }
         salary[size] = salaries;
         size++;
