@@ -107,7 +107,7 @@ class Vaccination
         int DosesAdministered;
     public:
         bool Equals(const Vaccination& other);
-        bool NotEquals(const HospitalStay& other);
+        bool NotEquals(const Vaccination& other);
         bool GreaterThan(const Vaccination& other);
         bool GreaterThanEquals(const Vaccination& other);
         bool LessThan(const Vaccination& other);
