@@ -80,9 +80,6 @@ ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_syst
 emp_salary.cpp
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ vi emp_salary.cpp
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/Employee_salary_management_system$ cat emp_salary.cpp
-#include<iostream>
-#include<cstdlib>
-
 #include <iostream>
 #include <cstdlib>
 #include <climits> 
