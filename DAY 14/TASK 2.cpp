@@ -148,6 +148,10 @@ void test(void) {
     if (is5digits(second_max_salary)) {
         cout << "Second max salary is a 5-digit number: " << second_max_salary << endl;
     }
+   else
+    {
+        cout << "Second Max salary is not 5 digits " << endl;
+    }
 }
 
 int main(void) {
