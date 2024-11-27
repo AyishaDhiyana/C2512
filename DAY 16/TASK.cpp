@@ -13,14 +13,13 @@ class Vaccination
         string VaccinationID;
         int DosesAdministered;
     public:
-        //behaviours
         bool Equals(const Vaccination& other);
         bool NotEquals(const Vaccination& other);
         bool GreaterThan(const Vaccination& other);
         bool GreaterThanEquals(const Vaccination& other);
         bool LessThan(const Vaccination& other);
         bool LessThanEquals(const Vaccination& other);
-        //constructor
+
         Vaccination(string p_VaccinationID, int p_DosesAdministered);
 };
 ---------------------------------------------------------------------------------------------------------
@@ -78,8 +77,7 @@ bool Vaccination::LessThanEquals(const Vaccination& other)
 {
         return (DosesAdministered <= other.DosesAdministered);
 }
--------------------------------------------------------------------------------------------------------
-//constructor
+------------------------------------------------------------------------------------------------------
 
 Vaccination::Vaccination(string p_VaccinationID, int p_DosesAdministered)
 {
@@ -108,14 +106,13 @@ class Vaccination
         string VaccinationID;
         int DosesAdministered;
     public:
-        //behaviours
         bool Equals(const Vaccination& other);
         bool NotEquals(const HospitalStay& other);
         bool GreaterThan(const Vaccination& other);
         bool GreaterThanEquals(const Vaccination& other);
         bool LessThan(const Vaccination& other);
         bool LessThanEquals(const Vaccination& other);
-        //constructor
+       
         Vaccination(string p_VaccinationID, int p_DosesAdministered);
 };
 ayisha@DESKTOP-0EIRMV5:/mnt/c/Users/DELL/Cpp$ cat DosesAdministered.cpp
@@ -125,7 +122,6 @@ ayisha@DESKTOP-0EIRMV5:/mnt/c/Users/DELL/Cpp$ cat DosesAdministered.cpp
 
 using std::string;
 
-//behaviours
 bool Vaccination::Equals(const Vaccination& other)
 {
         return (DosesAdministered == other.DosesAdministered);
@@ -156,8 +152,6 @@ bool Vaccination::LessThanEquals(const Vaccination& other)
         return (DosesAdministered <= other.DosesAdministered);
 }
 
-//constructor
-
 Vaccination::Vaccination(string p_VaccinationID, int p_DosesAdministered)
 {
         VaccinationID = p_DosesAdministered;
@@ -173,12 +167,12 @@ int main() {
     Vaccination da2("DA02", 12);
 
     std::cout << std::boolalpha;
-    std::cout << "Equals: " << da1.Equals(da2) << std::endl; // Output: false
-    std::cout << "Not Equals: " << da1.NotEquals(da2) << std::endl;//Output true
-    std::cout << "GreaterThan: " << da1.GreaterThan(da2) << std::endl; // Output: false
-    std::cout << "GreaterThanEquals: " << da1.GreaterThanEquals(da2) << std::endl; //output: false
-    std::cout << "LessThan: " << da1.LessThan(da2) << std::endl;//output true
-    std::cout << "LessThanEquals: " << da1.LessThanEquals(da2) << std::endl; // Output: true
+    std::cout << "Equals: " << da1.Equals(da2) << std::endl; 
+    std::cout << "Not Equals: " << da1.NotEquals(da2) << std::endl;
+    std::cout << "GreaterThan: " << da1.GreaterThan(da2) << std::endl; 
+    std::cout << "GreaterThanEquals: " << da1.GreaterThanEquals(da2) << std::endl; 
+    std::cout << "LessThan: " << da1.LessThan(da2) << std::endl;
+    std::cout << "LessThanEquals: " << da1.LessThanEquals(da2) << std::endl; 
 
     return 0;
 }
