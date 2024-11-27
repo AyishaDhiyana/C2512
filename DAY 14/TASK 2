@@ -65,7 +65,7 @@ bool is5digits(int number) {
 void PrintAllSalaries(int salary[], int size) {
     cout << "Salaries are: ";
     for (int i = 0; i < size; i++) {
-        cout << salary[i] << " ";
+        cout << salary[i] << endl;
     }
     cout << endl;
 }
@@ -130,7 +130,7 @@ bool is5digits(int number) {
 void PrintAllSalaries(int salary[], int size) {
     cout << "Salaries are: ";
     for (int i = 0; i < size; i++) {
-        cout << salary[i] << " ";
+        cout << salary[i] << endl;
     }
     cout << endl;
 }
