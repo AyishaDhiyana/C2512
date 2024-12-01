@@ -163,7 +163,7 @@ void VaccinationManager::create()
     vaccination[numDoses].DosesAdministered = DosesAdministered;
     numDoses++;
 
-    cout << "Total bookings till date: " << numDoses << endl;
+    cout << "Total doses till date: " << numDoses << endl;
     cout << "Vaccination created successfully.\n";
 }
 
