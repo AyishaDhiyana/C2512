@@ -163,16 +163,16 @@ ayisha@DESKTOP-0EIRMV5:/mnt/c/Users/DELL/Cpp$ cat main.cpp
 
 #include "DosesAdministered.h"
 int main() {
-    Vaccination da1("DA01", 10);
-    Vaccination da2("DA02", 12);
+    Vaccination v1("V001", 10);
+    Vaccination v2("V002", 12);
 
     std::cout << std::boolalpha;
-    std::cout << "Equals: " << da1.Equals(da2) << std::endl; 
-    std::cout << "Not Equals: " << da1.NotEquals(da2) << std::endl;
-    std::cout << "GreaterThan: " << da1.GreaterThan(da2) << std::endl; 
-    std::cout << "GreaterThanEquals: " << da1.GreaterThanEquals(da2) << std::endl; 
-    std::cout << "LessThan: " << da1.LessThan(da2) << std::endl;
-    std::cout << "LessThanEquals: " << da1.LessThanEquals(da2) << std::endl; 
+    std::cout << "Equals: " << v1.Equals(v2) << std::endl; 
+    std::cout << "Not Equals: " << v1.NotEquals(v2) << std::endl;
+    std::cout << "GreaterThan: " << v1.GreaterThan(v2) << std::endl; 
+    std::cout << "GreaterThanEquals: " << v1.GreaterThanEquals(v2) << std::endl; 
+    std::cout << "LessThan: " << v1.LessThan(v2) << std::endl;
+    std::cout << "LessThanEquals: " << v1.LessThanEquals(v2) << std::endl; 
 
     return 0;
 }
