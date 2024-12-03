@@ -40,7 +40,7 @@ that prints "Hello, World!" to the console.
 6. Run the compiled executable to check the output.
 
  ./a.out
-Hello World
+ Hello World
 ---------------------------------------------------------------------------	
 7. View the contents of `first_program.cpp` 
 using a Linux command.
