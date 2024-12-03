@@ -5,8 +5,12 @@
 
 using namespace std;
 
+// *****Const.h*****
+
+//constant
 const int MAX_DOSES = 100;
 
+// *****Vaccination.h*****
 class Vaccination
 {
     friend class VaccinationManager;
@@ -23,6 +27,7 @@ class Vaccination
         int GetDosesAdministered(); 
 };
 
+// *****VaccinationManager.h*****
 class VaccinationManager
 {
     friend class VaccinationAggregator;
@@ -32,6 +37,7 @@ class VaccinationManager
         Vaccination vaccination[MAX_DOSES];
         int numDoses;
     public:
+         // support
         int findIndexById(string VaccinationID);
         //behaviours
         void create();
@@ -42,6 +48,7 @@ class VaccinationManager
         VaccinationManager();
 };
 
+//*****VaccinationAggregator.h*****
 class VaccinationAggregator
 {
     public:
@@ -52,8 +59,9 @@ class VaccinationAggregator
         int findSecondMax(VaccinationManager& manager);
 };
 
+// *****Menu.h*****
 void printMenu();
-
+// *****test.cpp*****
 void VaccinationTest(void) 
 {
     VaccinationManager manager;
@@ -117,12 +125,15 @@ void VaccinationTest(void)
     } while (choice != 9);
 }
 
+//***main.cpp***
 int main(void)
 {
     VaccinationTest();
     
     return EXIT_SUCCESS;
 }
+
+// *****Menu.cpp*****
 void printMenu()
 {
     cout << "\n=== Doses Administered Vaccination Management System ===\n";
@@ -137,6 +148,7 @@ void printMenu()
     cout << "9. Exit\n";
 }
 
+// *****VaccinationManager.cpp*****
 void VaccinationManager::create()
 {
     if (numDoses >= MAX_DOSES)
@@ -218,7 +230,7 @@ void VaccinationManager::deleteByID()
     string VaccinationID;
     cout << "Enter Booking ID to delete: ";
     cin >> VaccinationID;
-
+    // Shift data to fill the gap
     int index = findIndexById(VaccinationID);
     if (index == -1)
     {
@@ -235,6 +247,8 @@ void VaccinationManager::deleteByID()
     cout << "Vaccination deleted successfully.\n";
 }
 
+//*****Vaccination.cpp*****
+
 bool Vaccination::GreaterThan(const Vaccination& other)
 {
     return (DosesAdministered > other.DosesAdministered);
@@ -244,6 +258,7 @@ bool Vaccination::LessThan(const Vaccination& other)
     return (DosesAdministered < other.DosesAdministered);
 }
 
+//getter-setters
 string Vaccination::GetVaccinationID()
 {
     return VaccinationID;
@@ -254,6 +269,7 @@ int Vaccination::GetDosesAdministered()
     return DosesAdministered;
 }
 
+//*****VaccinationAggregator.cpp*****
 int VaccinationAggregator::findMin(VaccinationManager& manager)
 {
     Vaccination* arr = manager.vaccination;
