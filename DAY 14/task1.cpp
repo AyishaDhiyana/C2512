@@ -73,7 +73,6 @@ a.out    cpp      Documents  helloworld       Music     project  snap       Vide
 cmd.txt  Desktop  Downloads  hello_world.cpp  Pictures  Public   Templates
 	
 ---------------------------------------------------------------------------
-SOLUTION 
 ---------------------------------------------------------------------------
 	
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ mkdir cpp_project
