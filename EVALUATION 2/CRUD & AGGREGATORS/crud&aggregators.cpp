@@ -61,8 +61,8 @@ class VaccinationAggregator
 
 // *****Menu.h*****
 void printMenu();
-// *****test.cpp*****
-void VaccinationTest(void) 
+// *****main.cpp*****
+int main()
 {
     VaccinationManager manager;
     VaccinationAggregator aggregator;
@@ -123,14 +123,8 @@ void VaccinationTest(void)
                 cout << "Invalid choice. Please enter a number between 1 and 5.\n";
         }
     } while (choice != 9);
-}
-
-//***main.cpp***
-int main(void)
-{
-    VaccinationTest();
     
-    return EXIT_SUCCESS;
+ return EXIT_SUCCESS;
 }
 
 // *****Menu.cpp*****
