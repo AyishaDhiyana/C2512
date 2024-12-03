@@ -14,7 +14,6 @@ const int MAX_DOSES = 100;
 class Vaccination
 {
     friend class VaccinationManager;
-
     private:
     string VaccinationID;
     int DosesAdministered;
@@ -61,6 +60,7 @@ class VaccinationAggregator
 
 // *****Menu.h*****
 void printMenu();
+
 // *****main.cpp*****
 int main()
 {
