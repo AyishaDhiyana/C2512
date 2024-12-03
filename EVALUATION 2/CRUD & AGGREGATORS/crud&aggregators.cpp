@@ -31,7 +31,7 @@ class Vaccination
 class VaccinationManager
 {
     friend class VaccinationAggregator;
-    friend void VaccinationTest() ;
+    friend int main();
     private:
     //attributes
         Vaccination vaccination[MAX_DOSES];
