@@ -28,7 +28,20 @@ in the directory.
 4. Write a simple C++ program inside `first_program.cpp` 
 that prints "Hello, World!" to the console.
 
- nano first_program.cpp
+nano first_program.cpp
+
+#include<iostream>
+#include<cstdlib>
+using std::cout;
+using std::endl;
+
+int main()
+{
+	cout << "Hello World" << endl;
+
+	return EXIT_SUCCESS;
+}
+
  - Ctrl + X 
  - Y
  - Enter
