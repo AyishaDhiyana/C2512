@@ -116,7 +116,6 @@ int main()
 }
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp_project$ rm first_program.cpp
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp_project$ ls
-a.out
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~/cpp_project$ cd ..
 ayisha-dhiyana-ps@ayisha-dhiyana-ps-VirtualBox:~$ ls
 a.out    cpp          Desktop    Downloads   hello_world.cpp  Pictures  snap       Videos
