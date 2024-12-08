@@ -288,30 +288,24 @@ UPDATE customers SET aadhaar_id = '5553 8420' WHERE CustomerID = 5;
 
 // queries
 
-[1] List all customers who have booked a ticket.
+[1] Find all buses that are of type "Sleeper"
 
 SELECT BusID, BusNumber, Type
 FROM Bus_Details
 WHERE Type = 'Sleeper';
 
-[2] Find all buses that are of type "Sleeper"
-
-SELECT BusID, BusNumber, Type
-FROM Bus_Details
-WHERE Type = 'Sleeper';
-
-[3] Find the route with the maximum distance.
+[2] Find the route with the maximum distance.
 
 SELECT RouteID, StartLocation, EndLocation, Distance
 FROM Bus_Routes
 WHERE Distance = (SELECT MAX(Distance) FROM Bus_Routes);
 
-[4]  Get the average payment amount for all bookings.
+[3]  Get the average payment amount for all bookings.
 
 SELECT AVG(Amount) AS AveragePayment
 FROM Payments;
 
-[5] Get the list of buses that are of type "Sleeper" or "Semi-Sleeper"
+[4] Get the list of buses that are of type "Sleeper" or "Semi-Sleeper"
 
 SELECT BusID, BusNumber, Type
 FROM Bus_Details
