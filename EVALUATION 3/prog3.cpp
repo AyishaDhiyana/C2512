@@ -10,9 +10,12 @@ Define all the fields as dynamic fields in each class
 
 If you use string, use c-string (don't use string class)
         ie. dynamic c-string [dynamic char array]
-==========================================================
 
-C++ code :
+============================================================= 
+                          SOLUTION
+=============================================================
+
+C++ CODE:
 
 #include <iostream>
 #include <cstdlib>
@@ -22,19 +25,19 @@ using namespace std;
 class Shape
 {
 public:
-    // Constructor
+    //constructor
     Shape()
     {
         cout << "Shape constructor is called" << endl;
     }
 
-    // Destructor
+    //destructor
     virtual ~Shape()
     {
         cout << "Shape destructor is called" << endl;
     }
 
-    // Pure virtual behaviors
+    //pure virtual behaviors
     virtual void calculateArea() = 0;
     virtual void calculatePerimeter() = 0;
 };
@@ -42,32 +45,34 @@ public:
 class Rectangle : public Shape
 {
 public:
-    // Attributes
-    int length;
-    int breadth;
-
-    // Constructor
-    Rectangle(const int length, const int breadth) : length(length), breadth(breadth)
+    int* length;
+    int* breadth;
+    //constructor
+    Rectangle(const int lengthValue, const int breadthValue)
     {
+        length = new int(lengthValue);
+        breadth = new int(breadthValue);
         cout << "Rectangle constructor is called" << endl;
     }
 
-    // Destructor
+    //destructor
     ~Rectangle()
     {
+        delete length;
+        delete breadth;
         cout << "Rectangle destructor is called" << endl;
     }
 
-    // Behaviors
+    //behaviors
     void calculateArea() override
     {
-        float area = length * breadth;
+        float area = ((*length) * (*breadth));
         cout << "Area is " << area << endl;
     }
 
     void calculatePerimeter() override
     {
-        float perimeter = 2 * (length + breadth);
+        float perimeter = 2 * (*length + *breadth);
         cout << "Perimeter is " << perimeter << endl;
     }
 };
@@ -75,6 +80,7 @@ public:
 int main()
 {
     Shape* rectangle = new Rectangle(3, 5);
+
     rectangle->calculateArea();
     rectangle->calculatePerimeter();
 
@@ -83,7 +89,7 @@ int main()
     return EXIT_SUCCESS;
 }
 
-=============OUTPUT=====================
+--------------------------------OUTPUT---------------------------------
 
 Shape constructor is called
 Rectangle constructor is called
