@@ -9,7 +9,7 @@ Define constructors and destructors for all the classes
 Define all the fields as dynamic fields in each class 
 
 If you use string, use c-string (don't use string class)
-        ie. dynamic c-string [dynamic char array]
+ie. dynamic c-string [dynamic char array]
 
 ============================================================= 
                           SOLUTION
