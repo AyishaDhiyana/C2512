@@ -24,24 +24,25 @@ public:
 
     // Move Constructor
     Employee(Employee&& other) noexcept
-        : id(other.id), age(other.age), name(std::move(*other.name)) {
+        : id(other.id), age(other.age), name(other.name) {
         other.id = nullptr;
         other.age = nullptr;
+        other.name = nullptr;
     }
 
     Employee& operator=(Employee&& other) noexcept {
         if (this != &other) {
-           
             delete id;     
             delete age;    
             delete name;   
 
             id = other.id;
             age = other.age;
-            name = std::move(*other.name);
+            name = other.name;
 
             other.id = nullptr;
             other.age = nullptr;
+            other.name = nullptr;
         }
         return *this;
     }
@@ -52,11 +53,8 @@ public:
     }
 
     void swap(Employee& other) {
-       
         Employee temp = std::move(*this);  
-        
         *this = std::move(other);         
-        
         other = std::move(temp);          
     }
 };
