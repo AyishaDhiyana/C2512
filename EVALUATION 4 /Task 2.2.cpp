@@ -23,18 +23,16 @@ public:
 class VaccinationManager 
 {
 private:
-    deque<Vaccination> vaccinations; // Using vector instead of array.
+    deque<Vaccination> vaccinations; 
 
 public:
     int findIndexById(const string& VaccinationID);
 
-    // CRUD operations
     void create();
     void display();
     void updateByID();
     void deleteByID();
 
-    // Constructor
     VaccinationManager();
 };
 
