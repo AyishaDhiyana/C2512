@@ -1,114 +1,92 @@
 #include <iostream>
+#include <algorithm>
 #include <string>
-#include <memory> 
-#include <utility> 
+#include <memory>  
 using namespace std;
 
 class Employee {
-protected:
-    int id;
-    int age;
-    string name;
+public:
+    
+    unique_ptr<int> id;         
+    unique_ptr<int> age;         
+    unique_ptr<string> name; 
 
 public:
-    Employee(int id, int age, const string &name) : id(id), age(age), name(name) {}
+    Employee(int v_id, int v_age, string v_name)
+        : id(make_unique<int>(v_id)), age(make_unique<int>(v_age)), name(make_unique<string>(v_name)) {}
 
-    virtual ~Employee() {} 
-
-    friend ostream &operator<<(ostream &os, const Employee &e) {
-        os << e.id << " " << e.age << " " << e.name;
-        return os;
+    virtual void printDetails() const {
+        cout << *id << " " << *age << " " << *name; 
     }
 
-    friend istream &operator>>(istream &is, Employee &e) {
-        is >> e.id >> e.age >> e.name;
-        return is;
-    }
-
-    void swap(Employee &other) {
-        std::swap(id, other.id);
+    virtual void swap(Employee& other) {
+        std::swap(id, other.id);  
         std::swap(age, other.age);
         std::swap(name, other.name);
     }
+
+    friend ostream& operator<<(ostream& os, const Employee& e);
 };
 
 class Programmer : public Employee {
-private:
-    unique_ptr<string[]> tasks; 
-    int taskCount;
+public:
+    unique_ptr<string[]> tasks;  
+    int taskCount;  
 
 public:
-    Programmer(int id, int age, const string &name, int taskCount, const string *taskList)
-        : Employee(id, age, name), taskCount(taskCount) {
-        tasks = make_unique<string[]>(taskCount);
-        for (int i = 0; i < taskCount; ++i) {
-            tasks[i] = taskList[i];
+    Programmer(int v_id, int v_age, string v_name, string* v_tasks, int v_taskCount)
+        : Employee(v_id, v_age, v_name), taskCount(v_taskCount) {
+        tasks = make_unique<string[]>(taskCount);   
+        for (int i = 0; i < taskCount; i++) {
+            tasks[i] = v_tasks[i];  
         }
     }
 
-    Programmer(const Programmer &other) : Employee(other.id, other.age, other.name), taskCount(other.taskCount) {
-        tasks = make_unique<string[]>(taskCount);
-        for (int i = 0; i < taskCount; ++i) {
-            tasks[i] = other.tasks[i];
-        }
-    }
-
-    Programmer &operator=(const Programmer &other) {
-        if (this != &other) {
-            Employee::operator=(other); 
-            taskCount = other.taskCount;
-            tasks = make_unique<string[]>(taskCount);
-            for (int i = 0; i < taskCount; ++i) {
-                tasks[i] = other.tasks[i];
-            }
-        }
-        return *this;
-    }
-
-    friend ostream &operator<<(ostream &os, const Programmer &p) {
-        os << static_cast<const Employee &>(p) << " [Tasks: ";
-        for (int i = 0; i < p.taskCount; ++i) {
-            os << p.tasks[i];
-            if (i < p.taskCount - 1) os << ", ";
-        }
-        os << "]";
-        return os;
-    }
-
-    friend istream &operator>>(istream &is, Programmer &p) {
-        is >> static_cast<Employee &>(p);
-        is >> p.taskCount;
-        p.tasks = make_unique<string[]>(p.taskCount);
-        for (int i = 0; i < p.taskCount; ++i) {
-            is >> p.tasks[i];
-        }
-        return is;
-    }
-
-    void swap(Programmer &other) {
-        Employee::swap(other);
-        std::swap(tasks, other.tasks);
+    void swap(Programmer& other) {
         std::swap(taskCount, other.taskCount);
+        std::swap(tasks, other.tasks);
+
+        Employee::swap(other);
     }
+
+    void printDetails() const override {
+        Employee::printDetails(); 
+        cout << " Tasks: ";
+        for (int i = 0; i < taskCount; i++) {
+            cout << tasks[i] << " ";  
+        }
+    }
+
+    friend ostream& operator<<(ostream& os, const Programmer& p);
 };
 
+ostream& operator<<(ostream& os, const Employee& e) {
+    e.printDetails();
+    return os; 
+}
+
+ostream& operator<<(ostream& os, const Programmer& p) {
+    p.printDetails();
+    return os;  
+}
+
 int main() {
-   
-    string taskList1[] = {"Debugging", "Testing"};
-    string taskList2[] = {"Development", "Code Review", "Documentation"};
+    // array for Programmer 1
+    string tasks1[] = {"Task10", "Task11", "Task12"};
+    unique_ptr<Employee> p1 = make_unique<Programmer>(101, 22, "Athira", tasks1, 3);
 
-    Programmer p1(301, 28, "Dev1", 2, taskList1);
-    Programmer p2(302, 29, "Dev2", 3, taskList2);
+    // array for Programmer 2
+    string tasks2[] = {"Task20", "Task21", "Task22"};
+    unique_ptr<Employee> p2 = make_unique<Programmer>(102, 23, "Bhagya", tasks2, 3);
 
-    cout << "Before Swap:" << endl;
-    cout << p1 << endl;
-    cout << p2 << endl;
+    cout << "p1: " << *p1 << endl;  
+    cout << "p2: " << *p2 << endl; 
 
-    p1.swap(p2);
+    p1->swap(*p2);
 
-    cout << "\nAfter Swap:" << endl;
-    cout << p1 << endl;
-    cout << p2 << endl;
+    cout << "after swap" << endl;
+    cout << "p1: " << *p1 << endl;  
+    cout << "p2: " << *p2 << endl;  
 
     return 0;
 }
