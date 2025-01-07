@@ -1,0 +1,52 @@
+Yes, you can use the C++ Standard Library's ``std::mutex`` 
+for synchronization in a multithreaded application. 
+However, when it comes to `Inter-Process Communication (IPC)`, 
+the C++ Standard Library's `std::mutex` 
+is not directly suitable 
+because it works only within a single process.
+
+For IPC, 
+you need a mutex 
+that can be shared across processes. 
+
+This typically requires operating system support, 
+such as `POSIX mutexes` or 
+platform-specific APIs.
+
+---
+
+`Why Can't `std::mutex` Be Used Directly in IPC?`
+1. `std::mutex` instances are designed 
+for thread synchronization within a single process.
+2. They don't provide mechanisms 
+for sharing across process boundaries 
+(e.g., in shared memory).
+
+---
+
+`Alternative: POSIX Mutex with Shared Memory`
+To achieve mutex-based synchronization across processes, 
+you can use `POSIX mutexes` 
+combined with shared memory, 
+as shown in the previous example.
+
+---
+
+`When to Use `std::mutex``
+- If your goal is `multithreading` within the same process, `std::mutex` (or its variants like `std::recursive_mutex` or `std::timed_mutex`) is a good choice.
+- If you need `process-based communication (IPC)`, use POSIX mutexes with shared memory.
+
+---
+
+`Can I Use `std::mutex` with Shared Memory for IPC?`
+In theory, you could map an `std::mutex` into shared memory, 
+but this is not a supported or portable approach. 
+The standard library does not guarantee compatibility 
+for `std::mutex` instances across processes. 
+Instead, it’s better to use POSIX primitives 
+designed explicitly for this purpose.
+
+---
+
+With `single process with threads`, we may an example using `std::mutex`. 
+For `IPC`, stick with `POSIX shared mutexes`.

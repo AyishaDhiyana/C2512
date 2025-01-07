@@ -1,0 +1,108 @@
+`Advanced Debugging with GDB: Table of Contents`
+
+`1. Advanced Breakpoints and Tracepoints`  
+1.1 Breakpoints with Complex Conditions  
+1.2 Watchpoints for Memory Access Monitoring  
+1.3 Data Breakpoints on Multi-Threaded Applications  
+1.4 Advanced Tracepoint Actions (Collecting and Logging Data)  
+1.5 Dynamic Tracepoint Management  
+
+`2. Checkpoints and Program State Management`  
+2.1 Saving Program States (Checkpoints)  
+2.2 Reverting and Switching Checkpoints  
+2.3 Managing Checkpoints Across Sessions  
+
+`3. Reverse Debugging`  
+3.1 Enabling Reverse Debugging  
+3.2 Stepping Backwards (`reverse-step`, `reverse-next`)  
+3.3 Analyzing Past States  
+3.4 Reverse Debugging for Multi-Threaded Programs  
+
+`4. Advanced Multi-Thread Debugging`  
+4.1 Inspecting and Managing Threads (`thread apply all`)  
+4.2 Thread-Specific Breakpoints  
+4.3 Deadlock Analysis in Multi-Threaded Programs  
+4.4 Debugging Thread Creation and Exit Events  
+
+`5. Python Scripting in GDB`  
+5.1 Writing Python Commands for Automation  
+5.2 Extending GDB Functionality with Python APIs  
+5.3 Custom Debugging Tools with Python Scripts  
+5.4 Debugging Python Applications  
+
+`6. Debugging Complex Data Structures`  
+6.1 Visualizing Linked Lists, Trees, and Graphs  
+6.2 Using Pretty Printers for STL Containers  
+6.3 Customizing Pretty Printers for User-Defined Classes  
+
+`7. Debugging Memory Issues`  
+7.1 Memory Region Inspection (`info proc mappings`, `x`)  
+7.2 Debugging Segmentation Faults and Invalid Access  
+7.3 Monitoring Memory Usage Dynamically  
+7.4 Integration with Valgrind or Address Sanitizer  
+
+`8. Dynamic Libraries and Shared Objects`  
+8.1 Debugging Dynamically Linked Libraries  
+8.2 Resolving Symbols in Shared Objects (`info shared`)  
+8.3 Attaching GDB to Dynamically Loaded Libraries  
+
+`9. GDB Non-Stop Mode`  
+9.1 Introduction to Non-Stop Mode  
+9.2 Managing Non-Stop Debugging Sessions  
+9.3 Debugging Multiple Threads in Non-Stop Mode  
+
+`10. Debugging Optimized Code`  
+10.1 Challenges with Debugging Optimized Binaries  
+10.2 Understanding Compiler Optimizations in Debugging  
+10.3 Retrieving Variable Values in Optimized Code  
+
+`11. Custom Debugging Workflows`  
+11.1 Automating Common Tasks with Scripts  
+11.2 Integrating GDB with Build Systems (e.g., Makefile, CMake)  
+11.3 Using GDB with Remote Debugging Tools  
+
+`12. Debugging Distributed Systems`  
+12.1 Remote Debugging with GDB Server  
+12.2 Debugging Client-Server Architectures  
+12.3 Synchronizing Multi-Process Debugging  
+
+`13. Performance and Profiling with GDB`  
+13.1 Profiling Code Execution with GDB  
+13.2 Using GDB to Pinpoint Performance Bottlenecks  
+13.3 Integration with `perf` and Other Profiling Tools  
+
+`14. Specialized Debugging Techniques`  
+14.1 Debugging Embedded Systems  
+14.2 Analyzing Core Dumps in Depth  
+14.3 Symbolic Debugging in Assembly Code  
+
+`15. Advanced Logging and Session Management`  
+15.1 Configuring Detailed GDB Logs (`set logging`)  
+15.2 Saving and Restoring Debugging Sessions  
+15.3 Session Automation with `.gdbinit`  
+
+`16. Visualization and Graphical Debugging Tools`  
+16.1 Integrating with TUI Mode  
+16.2 Using GUI Frontends for GDB (e.g., DDD, Nemiver)  
+16.3 Graphical Representation of Program Flow  
+
+`17. Collaborative Debugging`  
+17.1 Sharing GDB Sessions  
+17.2 Remote Pair Debugging with GDB  
+17.3 Debugging in CI/CD Pipelines  
+
+`18. Debugging Kernel and Low-Level Code`  
+18.1 Using GDB for Kernel Debugging  
+18.2 Debugging Bootloaders and Firmware  
+18.3 Debugging with QEMU or Other Emulators  
+
+`19. Debugging with Third-Party Extensions`  
+19.1 Integrating GDB Plugins  
+19.2 Using Tools like PEDA for Exploit Analysis  
+19.3 Advanced Plugins for Data Visualization  
+
+`20. Troubleshooting and Best Practices`  
+20.1 Diagnosing Debugger Failures  
+20.2 Best Practices for Effective Debugging  
+20.3 Advanced Techniques for Root Cause Analysis  
+

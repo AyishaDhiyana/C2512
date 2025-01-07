@@ -1,0 +1,23 @@
+                    fork
+                    fork
+                    fork
+                    cout
+            fork                fork
+            fork               fork
+            out                cout
+        fork    fork        fork        fork
+        out     out          out        out
+    out  out   out   out   out   out   out   out
+
+
+
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    {fork cout}
+                    cout

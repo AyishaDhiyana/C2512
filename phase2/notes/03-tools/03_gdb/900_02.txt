@@ -1,0 +1,223 @@
+ `GDB Notes for Debugging C++ Programs`
+
+---
+
+ `Introduction to GDB`
+The `GNU Debugger (GDB)` is a powerful tool 
+to debug C++ programs, allowing you to:
+- Step through your program line by line.
+- Examine variable values and memory.
+- Analyze the call stack and execution flow.
+- Set breakpoints to pause execution at specific points.
+
+---
+
+ `Compiling for Debugging`
+1. Use the `-g` flag while compiling to include debugging information:
+   ```bash
+   g++ -std=c++17 -Wall -g -o program main.cpp
+   ```
+   - `-g`: Generates debug symbols.
+
+---
+
+ `Starting GDB`
+2. Run the compiled program in GDB:
+   ```bash
+   gdb program
+   ```
+
+3. Inside GDB, start the program:
+   ```bash
+   run [args]
+   ```
+   - Replace `[args]` with any command-line arguments your program needs.
+
+---
+
+ `Basic Commands`
+
+`Program Execution`
+- `run` or `r`: Start the program.
+- `continue` or `c`: Resume execution after a breakpoint or pause.
+- `quit` or `q`: Exit GDB.
+
+`Breakpoints`
+- `break [filename]:[line_number]`: Set a breakpoint at a specific line.
+  Example:
+  ```bash
+  break main.cpp:25
+  ```
+- `break [function_name]`: Set a breakpoint at a function.
+  Example:
+  ```bash
+  break findGCD
+  ```
+- `info breakpoints`: View all breakpoints.
+- `delete [breakpoint_number]`: Remove a breakpoint.
+
+`Stepping Through Code`
+- `next` or `n`: Execute the next line of code, 
+stepping over function calls.
+- `step` or `s`: Step into a function.
+- `finish`: Execute until the current function returns.
+
+---
+
+ `Inspecting Variables`
+- `print [variable_name]`: Display the value of a variable.
+  Example:
+  ```bash
+  print x
+  ```
+- `info locals`: Show all local variables in the current scope.
+- `set variable [variable_name] = [new_value]`: Change the value of a variable.
+  Example:
+  ```bash
+  set variable x = 10
+  ```
+
+---
+
+ `Analyzing the Call Stack`
+- `backtrace` or `bt`: Show the function call stack.
+- `frame [frame_number]`: Switch to a specific frame in the stack.
+  Example:
+  ```bash
+  frame 2
+  ```
+
+---
+
+ `Examining Memory`
+- `x/nfu [address]`: Examine memory at a specific address.
+  - `n`: Number of units to display.
+  - `f`: Format (`x` for hex, `d` for decimal, `c` for char, `s` for string).
+  - `u`: Unit size (`b` for byte, `h` for half-word, `w` for word).
+  Example:
+  ```bash
+  x/4xw 0x7fff5fbff
+  ```
+
+---
+
+ `Monitoring Variables`
+- `watch [variable_name]`: Watch a variable for changes.
+- `info watchpoints`: List all watchpoints.
+- `delete [watchpoint_number]`: Remove a watchpoint.
+
+---
+
+ `Debugging Techniques`
+
+`1. Setting Breakpoints`
+- Use breakpoints to pause execution where you suspect bugs:
+  ```bash
+  break findGCD
+  ```
+
+`2. Inspecting Variables`
+- Check the state of variables at each breakpoint:
+  ```bash
+  print x
+  ```
+
+`3. Stepping Through Code`
+- Use `next` to execute code line by line:
+  ```bash
+  next
+  ```
+
+`4. Analyzing Crashes`
+- Use `backtrace` to find where the program crashed:
+  ```bash
+  backtrace
+  ```
+
+---
+
+ `Practical Example`
+`Debugging `findGCD` in `Gcd.cpp`:`
+
+1. Compile the program:
+   ```bash
+   g++ -std=c++17 -g -o program main.cpp Gcd.cpp
+   ```
+
+2. Start GDB:
+   ```bash
+   gdb program
+   ```
+
+3. Set a breakpoint in the `findGCD` function:
+   ```bash
+   break findGCD
+   ```
+
+4. Run the program:
+   ```bash
+   run
+   ```
+
+5. Step through the code:
+   ```bash
+   step
+   ```
+
+6. Check variable values:
+   ```bash
+   print x
+   print y
+   ```
+
+7. Analyze the stack if a crash occurs:
+   ```bash
+   backtrace
+   ```
+
+8. Exit GDB:
+   ```bash
+   quit
+   ```
+
+---
+
+ `Advanced GDB Features`
+- `TUI Mode:`
+  View the source code alongside debugging information:
+  ```bash
+  gdb -tui program
+  ```
+
+- `Logging:`
+  Record a debugging session:
+  ```bash
+  set logging on
+  ```
+
+- `Debugging Core Dumps:`
+  Analyze a core dump file:
+  ```bash
+  gdb program core
+  ```
+
+---
+
+ `Common Issues`
+1. `No Debugging Symbols:`
+   Ensure the program is compiled with `-g`.
+
+2. `Library Debugging:`
+   If debugging a library like `libsun.a`, 
+   ensure all library files are compiled with `-g`.
+
+3. `GTest Debugging:`
+   Compile tests with `-g` and 
+   follow the same workflow as a regular program.
+
+---
+
+ `References`
+- GDB Manual: Run `info gdb` or visit 
+[GNU GDB Documentation]
+(https://www.gnu.org/software/gdb/documentation/).

@@ -1,0 +1,79 @@
+When you run a program in `gdb` and see the prompt:
+
+```plaintext
+Enable debuginfod for this session? (y or [n])
+```
+
+This refers to `debuginfod`, 
+a service that helps you retrieve 
+    debug information files, 
+    source code, and 
+    binary files 
+from a remote server.
+
+`What is debuginfod?`
+- `Debuginfod` is a part of the `elfutils` project.
+- It allows `gdb` and other debugging tools to automatically fetch 
+    debug symbols, 
+    source code, and 
+    binaries 
+from a remote or 
+local server 
+    when they are missing on your system.
+
+- This is particularly useful if:
+  - You're debugging prebuilt binaries 
+  (e.g., from a Linux distribution's package manager).
+  - You don’t have the debug symbols installed locally.
+
+---
+
+`How does it work?`
+- If enabled, `gdb` will query a `debuginfod server` 
+to find the necessary debug symbols or source files.
+- The server returns the required files, and 
+gdb uses them for debugging.
+
+---
+
+`Benefits of debuginfod`
+- Saves time: You don’t need to manually install debug symbol packages.
+- Convenient: Useful for systems with shared binaries, such as containers or virtual machines.
+- Transparent: Works in the background without needing additional user input.
+
+---
+
+`Why is it asking for your input?`
+- By default, `debuginfod` is disabled to respect privacy and system settings.
+- If enabled, `gdb` will send information about binaries you're debugging (like build IDs) to a debuginfod server.
+
+---
+
+`Options when prompted`
+1. `Enable it (y)`: 
+   - gdb will connect to a debuginfod server if needed.
+   - May require an internet connection, depending on the server.
+
+2. `Disable it ([n]):`
+   - gdb will only use locally installed debug symbols.
+
+3. `Configure globally:`
+   - To avoid being prompted in the future:
+     - Enable: 
+       ```bash
+       export DEBUGINFOD_URLS="https://debuginfod.server.url"
+       ```
+     - Disable:
+       ```bash
+       unset DEBUGINFOD_URLS
+       ```
+
+---
+
+`When should you enable it?`
+- `Enable it` if:
+  - You're debugging system-installed binaries.
+  - You don’t have debug symbol packages installed locally.
+- `Disable it` if:
+  - You're debugging your own programs with debug symbols already available.
+  - You have privacy concerns or are working offline.

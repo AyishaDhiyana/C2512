@@ -1,0 +1,178 @@
+`C++ Build Systems`:
+
+---
+
+`Introduction to Build Systems`
+    `Importance of Build Systems`
+        - Automates the process of compiling, linking, and 
+          managing project dependencies.
+        - Ensures consistency and reproducibility in building projects.
+        - Scales with project size, reducing manual errors.
+        - Provides support for cross-platform development.
+
+`Overview of Make and CMake`
+    - `Make`: 
+        - A traditional, simple, and powerful build automation tool.
+        - Relies on `Makefiles` to define build rules and dependencies.
+    - `CMake`: 
+        - A more modern and versatile cross-platform build system generator.
+        - Outputs build files for tools like `Make`, `Ninja`, or 
+          IDE-specific build configurations.
+        - Provides better support for complex and multi-platform projects.
+
+---
+
+`Writing Makefiles`
+    `Basic Syntax and Structure of Makefiles`
+        - Structure:
+            ```
+            target: prerequisites
+                commands
+            ```
+        - Example:
+            ```make
+            hello: hello.cpp
+                g++ -o hello hello.cpp
+            ```
+
+`Variables, Rules, and Targets`
+    - Variables:
+        - Example: `CC = g++` (defines the compiler to use).
+        - Use with `$(CC)`.
+    - Rules:
+        - Define how to build targets.
+        - Example: `.cpp.o: $(CC) -c $<`.
+    - Targets:
+        - Names of files or symbolic actions like `clean`.
+
+`Pattern Rules and Automatic Variables`
+    - Pattern Rules:
+        - Define reusable build patterns.
+        - Example: `%.o: %.cpp`.
+    - Automatic Variables:
+        - `$@` = target name, `$<` = first prerequisite, `$^` = all prerequisites.
+        - Example:
+            ```make
+            %.o: %.cpp
+                $(CC) -c $< -o $@
+            ```
+
+---
+
+`Introduction to CMake`
+    `CMakeLists.txt Structure`
+        - Basic structure:
+            ```cmake
+            cmake_minimum_required(VERSION 3.10)
+            project(ProjectName)
+            add_executable(TargetName main.cpp)
+            ```
+
+`Basic Commands and Syntax`
+    - `cmake_minimum_required`: Specifies the minimum version of CMake.
+    - `project`: Names the project and sets metadata.
+    - `add_executable`: Defines executable targets.
+    - Example:
+        ```cmake
+        cmake_minimum_required(VERSION 3.10)
+        project(HelloWorld)
+        add_executable(hello main.cpp)
+        ```
+
+`Configuring and Generating Build Files`
+    - Steps:
+        1. Navigate to the build directory.
+        2. Run `cmake ..` to configure.
+        3. Use `make` to build the project.
+    - Command example:
+        ```bash
+        mkdir build
+        cd build
+        cmake ..
+        make
+        ```
+
+---
+
+`Advanced CMake`
+    `Handling Dependencies`
+        - Use `find_package` to locate libraries.
+        - Example:
+            ```cmake
+            find_package(OpenGL REQUIRED)
+            target_link_libraries(TargetName OpenGL::GL)
+            ```
+
+`Creating and Using CMake Modules`
+    - Custom modules can extend functionality.
+    - Place custom `Find*.cmake` files in a directory and use:
+        ```cmake
+        list(APPEND CMAKE_MODULE_PATH "/path/to/modules")
+        find_package(MyLibrary REQUIRED)
+        ```
+
+`Cross-Platform Builds`
+    - Utilize platform checks:
+        ```cmake
+        if(WIN32)
+            # Windows-specific commands
+        elseif(UNIX)
+            # Unix-specific commands
+        endif()
+  ```
+
+---
+
+`Practical Examples`
+`Writing Makefiles for Sample Projects`
+    - Simple `Makefile` for a single file:
+        ```make
+        CC = g++
+        TARGET = app
+        SRCS = main.cpp
+        OBJS = $(SRCS:.cpp=.o)
+
+        $(TARGET): $(OBJS)
+            $(CC) -o $@ $^
+
+        clean:
+            rm -f $(OBJS) $(TARGET)
+        ```
+
+    - For multiple source files:
+        ```make
+        CC = g++
+        TARGET = my_program
+        SRCS = main.cpp utils.cpp
+        OBJS = $(SRCS:.cpp=.o)
+
+        $(TARGET): $(OBJS)
+            $(CC) -o $@ $^
+
+        %.o: %.cpp
+            $(CC) -c $< -o $@
+
+        clean:
+            rm -f $(OBJS) $(TARGET)
+        ```
+
+`Using CMake for Complex Project Structures`
+    - Example directory structure:
+        ```
+        Project/
+        ├── src/
+        │   ├── main.cpp
+        │   ├── utils.cpp
+        └── CMakeLists.txt
+        ```
+
+    - `CMakeLists.txt`:
+        ```cmake
+        cmake_minimum_required(VERSION 3.10)
+        project(MyProject)
+
+        set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
+        file(GLOB SOURCES "${SRC_DIR}/*.cpp")
+
+        add_executable(MyProgram ${SOURCES})
+        ```

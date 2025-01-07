@@ -1,0 +1,28 @@
+# Makefile for Main.cpp to use libgcd.a
+
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -IHeaders -I../LibGcd/Headers
+LDFLAGS = -L../LibGcd -lgcd
+
+# Target executable
+TARGET = mainApp
+
+# Source files
+SRCS = Main.cpp Sources/Fraction.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# Default target
+all: $(TARGET)
+
+# Build the executable
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+# Build object files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	@rm -f $(OBJS) $(TARGET)

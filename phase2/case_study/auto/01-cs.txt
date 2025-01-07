@@ -1,0 +1,123 @@
+`Mini Hackathon Theme: "Smart Parking System for Connected Vehicles in C++"`
+
+`Overview:`
+Participants will develop a `Smart Parking System` using C++. The system will simulate parking space management, allowing users to check parking availability, reserve spots, and calculate charges. This project focuses on object-oriented programming (OOP), file handling, and algorithmic problem-solving.
+
+---
+
+`Hackathon Structure:`
+
+`1. Problem Statement:`
+Build a C++ application that simulates a smart parking system with the following functionalities:
+- Manage a parking lot with multiple spaces.
+- Allow users to check availability and reserve a parking spot.
+- Calculate parking charges based on the duration of the stay.
+- Store and retrieve parking lot data from a file for persistence.
+
+---
+
+`2. Requirements:`
+
+1. `Core Features`:
+   - `Parking Lot Management`:
+     - Represent parking spaces with unique IDs.
+     - Track occupied and available spots.
+   - `Reservation System`:
+     - Allow users to reserve a spot by entering their vehicle number.
+     - Update availability in real-time.
+   - `Billing`:
+     - Calculate charges based on parking duration (e.g., $5/hour).
+   - `File Persistence`:
+     - Save parking lot data (availability, reservations, etc.) to a file.
+     - Load data when the application starts.
+
+2. `Advanced Features (Bonus)`:
+   - Predict parking availability using a simple algorithm.
+   - Add a command-line menu interface for better user interaction.
+
+---
+
+`3. Tools and Technologies:`
+- Language: `C++`
+- Compiler: GCC, Clang, or MSVC.
+- Libraries: STL (Standard Template Library) for data handling.
+- File Handling: Use standard file I/O for saving and loading data.
+
+---
+
+`4. Expected Deliverables:`
+1. A functional C++ program with a menu-driven interface.
+2. A file (`parking_lot_data.txt`) storing parking lot details.
+3. Documentation explaining the code structure, classes, and usage instructions.
+4. (Optional) A demo presentation or code walkthrough.
+
+---
+
+`5. Evaluation Criteria:`
+1. `Functionality`:
+   - Does the system meet the core requirements (availability, reservation, billing, file handling)?
+2. `Code Quality`:
+   - Is the code well-structured, readable, and efficient?
+3. `OOP Concepts`:
+   - Effective use of classes, inheritance, and encapsulation.
+4. `Innovation`:
+   - Additional features like predictive availability or advanced interfaces.
+5. `Presentation`:
+   - How well the solution is documented and explained.
+
+---
+
+`6. Duration:`
+- `6–8 Hours` (ideal for a one-day hackathon).
+
+---
+
+`Sample Workflow`:
+1. `Menu Options`:
+   - View available parking spots.
+   - Reserve a parking spot (enter vehicle details).
+   - Calculate parking charges.
+   - Exit and save data.
+
+2. `Example Output`:
+   ```
+   Welcome to Smart Parking System
+   1. View Available Parking Spots
+   2. Reserve a Spot
+   3. Calculate Parking Charges
+   4. Exit
+   Enter your choice: 1
+
+   Available Spots:
+   Spot ID: 101
+   Spot ID: 102
+   ...
+   ```
+
+---
+
+`Suggested Implementation Steps:`
+
+1. `Define Classes`:
+   - `ParkingSpot`:
+     - Attributes: `spotID`, `isOccupied`, `vehicleNumber`.
+     - Methods: `reserveSpot()`, `releaseSpot()`.
+   - `ParkingLot`:
+     - Attributes: List of `ParkingSpot` objects.
+     - Methods: `displayAvailableSpots()`, `calculateCharges()`.
+
+2. `File Handling`:
+   - Save `ParkingSpot` details to a file on exit.
+   - Load details into memory when the application starts.
+
+3. `Algorithms`:
+   - Use a basic search to find the first available spot.
+   - Calculate charges based on entry and exit times.
+
+4. `Enhancements`:
+   - Add error handling (e.g., invalid inputs).
+   - Use `std::vector` or `std::map` for managing parking spots.
+
+---
+
+This hackathon will provide trainee programmers with hands-on experience in C++ programming, focusing on OOP, file handling, and practical problem-solving in the automotive domain.

@@ -1,0 +1,233 @@
+IPC Mechanisms - Sockets
+====================================================
+IPC Mechanism - Sockets
+
+`Sockets` are a versatile and widely used IPC mechanism 
+that enables communication between processes, 
+either on the same machine or across a network. 
+
+They provide a low-level communication interface and 
+are particularly useful for client-server architectures.
+
+---
+
+Types of Sockets:
+1. `Stream Sockets (TCP)`:
+   - Provide reliable, connection-oriented communication.
+   - Ensure data arrives in order and without duplication.
+
+2. `Datagram Sockets (UDP)`:
+   - Provide connectionless communication.
+   - No guarantee of message order or delivery, 
+   but they are faster and lightweight.
+
+3. `UNIX Domain Sockets`:
+   - Used for communication between processes on the same machine.
+   - Similar to stream or datagram sockets 
+   but with lower overhead.
+
+---
+
+System Calls for Sockets:
+1. `socket()`:
+   - Creates a socket descriptor.
+   - Example: `int socket(int domain, int type, int protocol);`
+
+2. `bind()`:
+   - Binds a socket to an address and port.
+   - Example: `int bind(int sockfd, 
+   const struct sockaddr *addr, socklen_t addrlen);`
+
+3. `listen()`:
+   - Marks a socket as passive, waiting for incoming connections (TCP only).
+   - Example: `int listen(int sockfd, int backlog);`
+
+4. `accept()`:
+   - Accepts an incoming connection on a listening socket.
+   - Example: `int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);`
+
+5. `connect()`:
+   - Establishes a connection to a remote socket.
+   - Example: `int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);`
+
+6. `send() / recv()`:
+   - Used for data transfer over connected sockets.
+   - Example: `ssize_t send(int sockfd, const void *buf, size_t len, int flags);`
+
+7. `close()`:
+   - Closes the socket and releases resources.
+
+---
+
+Example: Simple Client-Server Communication Using TCP
+
+#Server Code:
+```cpp
+#include <iostream>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <cstring>
+
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+void run_server() {
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    char buffer[BUFFER_SIZE] = {0};
+    const char* response = "Hello from server";
+
+    // Create socket
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("Socket failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Bind socket to port
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+    if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
+        perror("Bind failed");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    // Listen for connections
+    if (listen(server_fd, 3) < 0) {
+        perror("Listen failed");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    std::cout << "Server is listening on port " << PORT << std::endl;
+
+    // Accept a connection
+    if ((new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen)) < 0) {
+        perror("Accept failed");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    // Read data from client
+    read(new_socket, buffer, BUFFER_SIZE);
+    std::cout << "Received from client: " << buffer << std::endl;
+
+    // Send response to client
+    send(new_socket, response, strlen(response), 0);
+    std::cout << "Response sent to client" << std::endl;
+
+    // Close sockets
+    close(new_socket);
+    close(server_fd);
+}
+```
+
+---
+
+#Client Code:
+```cpp
+#include <iostream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <cstring>
+
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+void run_client() {
+    int sock = 0;
+    struct sockaddr_in serv_addr;
+    const char* message = "Hello from client";
+    char buffer[BUFFER_SIZE] = {0};
+
+    // Create socket
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        perror("Socket creation error");
+        exit(EXIT_FAILURE);
+    }
+
+    // Specify server address
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(PORT);
+    if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
+        perror("Invalid address or address not supported");
+        exit(EXIT_FAILURE);
+    }
+
+    // Connect to server
+    if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+        perror("Connection failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Send message to server
+    send(sock, message, strlen(message), 0);
+    std::cout << "Message sent to server" << std::endl;
+
+    // Read response from server
+    read(sock, buffer, BUFFER_SIZE);
+    std::cout << "Received from server: " << buffer << std::endl;
+
+    // Close socket
+    close(sock);
+}
+```
+
+---
+
+Explanation:
+
+1. `Server`:
+   - Creates a socket and binds it to a specific port (`8080`).
+   - Listens for incoming connections.
+   - Accepts a connection, receives a message, and responds.
+
+2. `Client`:
+   - Creates a socket and connects to the server's IP and port.
+   - Sends a message to the server and waits for a response.
+
+---
+
+Example Output:
+
+`Server`:
+```
+Server is listening on port 8080
+Received from client: Hello from client
+Response sent to client
+```
+
+`Client`:
+```
+Message sent to server
+Received from server: Hello from server
+```
+
+---
+
+Advantages of Sockets:
+1. `Flexibility`: Can be used for local or network communication.
+2. `Scalability`: Easily supports multiple clients.
+3. `Portability`: Works across different platforms.
+
+---
+
+Challenges:
+1. `Complexity`: Requires careful handling of connection setup and teardown.
+2. `Synchronization`: May need additional mechanisms for managing concurrency.
+3. `Error Handling`: Network-related issues can lead to various errors.
+
+---
+
+Use Cases:
+- `Web Servers`: Communication between web servers and clients.
+- `Distributed Systems`: Facilitates communication between nodes.
+- `Real-Time Applications`: Used in chat applications, games, etc.
+
+Sockets are a robust and powerful tool for IPC, 
+especially when processes need to communicate 
+across machines or over a network.

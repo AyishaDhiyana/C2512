@@ -1,0 +1,27 @@
+# Makefile for LibGcd to build libgcd.a
+
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -IHeaders
+
+# Target library
+TARGET = libgcd.a
+
+# Source and object files
+SRCS = Sources/Gcd.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# Default target
+all: $(TARGET)
+
+# Build the static library
+$(TARGET): $(OBJS)
+	@ar rcs $@ $^
+
+# Build object files
+%.o: %.cpp Headers/Gcd.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	@rm -f $(OBJS) $(TARGET)

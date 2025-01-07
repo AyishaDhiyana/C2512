@@ -1,0 +1,248 @@
+`Mini Hackathon Theme: "Medical Inventory Management System in C++"`
+
+`Overview:`
+In this hackathon, trainees will develop a `Medical Inventory Management System` in C++ to manage the stock of medical supplies, medicines, and other healthcare items. The system will allow users to add, view, update, and delete medical items, and track their quantities. The system will also support generating reports for low stock items and expired products.
+
+---
+
+`Hackathon Structure:`
+
+`1. Problem Statement:`
+Create a `Medical Inventory Management System` in C++ with the following features:
+- `Item Management`: Allows the addition, removal, and update of medical inventory items (e.g., medicines, bandages, surgical tools).
+- `Stock Tracking`: Tracks the stock of each item and alerts when stock is low.
+- `Expiry Management`: Tracks expiry dates of medicines and alerts when an item is expired.
+- `Report Generation`: Generates a report of items with low stock or expired items.
+- `File Persistence`: All data should be saved and loaded from a file, ensuring that data persists between sessions.
+
+---
+
+`2. Requirements:`
+
+1. `Core Features`:
+   - `Item Management`:
+     - Add, update, and delete medical inventory items (e.g., `medicineName`, `medicineID`, `quantity`, `expiryDate`).
+   - `Stock Management`:
+     - Track and update stock quantities for each item.
+     - Alert when stock is low (threshold defined by the system).
+   - `Expiry Management`:
+     - Store the expiry dates for medicines and alert when any items are expired.
+   - `Report Generation`:
+     - Generate and view a list of items with `low stock` or `expired`.
+   - `File Persistence`:
+     - Store all items and stock data in text files for data persistence:
+       - `inventory.txt` (stores item details and stock quantity).
+       - `expiry.txt` (stores expiry dates for each item).
+
+2. `Advanced Features (Bonus)`:
+   - `Search Functionality`: Allow searching for items by name, ID, or expiry date.
+   - `Bulk Update`: Support bulk updating of stock quantities (e.g., after a delivery).
+   - `Sorting`: Allow sorting items based on expiry date, quantity, or name.
+
+---
+
+`3. Tools and Technologies:`
+- `Language`: `C++`
+- `Libraries`: Use the `Standard Template Library (STL)` for handling vectors, strings, and file I/O operations.
+- `File Handling`: Use file I/O to persist data (text files).
+
+---
+
+`4. Expected Deliverables:`
+1. `Working Application`:
+   - A fully functional C++ application with a menu-driven interface for managing medical inventory items, stock, and expiry dates.
+2. `Data Files`:
+   - `inventory.txt`: Stores item details such as name, ID, quantity, and expiry date.
+   - `expiry.txt`: Stores expiry dates for each item.
+3. `Documentation`:
+   - A brief documentation explaining how the system works and instructions for running the program.
+
+---
+
+`5. Evaluation Criteria:`
+1. `Functionality`:
+   - Does the system allow the user to manage inventory effectively?
+   - Does it alert users about low stock and expired items?
+2. `Code Quality`:
+   - Is the code well-structured, modular, and properly documented?
+   - Is it easy to extend or modify?
+3. `User Interface`:
+   - How user-friendly is the command-line interface?
+   - Can users easily navigate through the system to perform actions?
+4. `OOP Principles`:
+   - Does the program make use of object-oriented programming principles (e.g., classes, inheritance, encapsulation)?
+5. `Additional Features`:
+   - Are there any additional features like search, sorting, or bulk updates?
+
+---
+
+`6. Duration:`
+- `6–8 Hours` (ideal for a one-day hackathon).
+
+---
+
+`Sample Workflow:`
+
+1. `Main Menu`:
+   ```
+   Welcome to the Medical Inventory Management System
+   1. Add Item
+   2. View Items
+   3. Update Stock
+   4. Delete Item
+   5. Generate Low Stock Report
+   6. Generate Expired Items Report
+   7. Exit
+   Enter your choice: 1
+   ```
+
+2. `Adding an Item`:
+   ```
+   Enter Item Name: Paracetamol
+   Enter Item ID: 101
+   Enter Quantity: 50
+   Enter Expiry Date (YYYY-MM-DD): 2025-06-15
+   ```
+
+3. `Updating Stock`:
+   ```
+   Enter Item ID: 101
+   Enter new Quantity: 100
+   ```
+
+4. `Generating Reports`:
+   - Low Stock Report: Displays items with stock less than a predefined threshold.
+   - Expired Items Report: Displays items that have passed their expiry date.
+
+---
+
+`Suggested Implementation Steps`:
+
+1. `Define Classes`:
+   - `InventoryItem`:
+     - Attributes: `itemID`, `name`, `quantity`, `expiryDate`.
+     - Methods: `addItem()`, `updateItem()`, `deleteItem()`, `viewItem()`.
+   - `InventoryManager`:
+     - Attributes: List of `InventoryItem` objects.
+     - Methods: `addItem()`, `updateStock()`, `deleteItem()`, `generateLowStockReport()`, `generateExpiredItemsReport()`, `saveData()`, `loadData()`.
+   - `Report`:
+     - Attributes: `itemID`, `name`, `quantity`, `expiryDate`.
+     - Methods: `generateLowStockReport()`, `generateExpiredItemsReport()`.
+
+2. `File Handling`:
+   - Use `text files` for storing the inventory data:
+     - `inventory.txt`: Stores the details of all items in the inventory (name, ID, quantity, expiry date).
+     - `expiry.txt`: Stores expiry dates to check when items are expired.
+
+3. `Data Structures`:
+   - Use `vectors` to store items in memory.
+   - Use `file I/O operations` to read and write inventory data to the text files.
+
+4. `Error Handling`:
+   - Handle invalid inputs, such as invalid item IDs or incorrect expiry dates.
+   - Prevent adding items with duplicate IDs.
+
+5. `Additional Features`:
+   - `Search Functionality`: Implement search functionality by item name, ID, or expiry date.
+   - `Sorting`: Sort items by expiry date, name, or stock quantity to make reports more useful.
+   - `Bulk Update`: Implement a function to update stock quantities in bulk (e.g., after receiving a new shipment).
+
+---
+
+`Example Code Structure`:
+
+```cpp
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class InventoryItem {
+public:
+    int itemID;
+    string name;
+    int quantity;
+    string expiryDate;
+    
+    void addItem();
+    void updateItem();
+    void viewItem();
+};
+
+class InventoryManager {
+private:
+    vector<InventoryItem> inventory;
+    
+public:
+    void addItem();
+    void updateStock();
+    void deleteItem();
+    void generateLowStockReport();
+    void generateExpiredItemsReport();
+    void saveData();
+    void loadData();
+};
+
+int main() {
+    // Implement the menu-driven interface and operations for managing medical inventory
+    InventoryManager manager;
+    manager.loadData();  // Load data at the start
+    
+    int choice;
+    do {
+        cout << "1. Add Item\n";
+        cout << "2. Update Stock\n";
+        cout << "3. Generate Low Stock Report\n";
+        cout << "4. Generate Expired Items Report\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                manager.addItem();
+                break;
+            case 2:
+                manager.updateStock();
+                break;
+            case 3:
+                manager.generateLowStockReport();
+                break;
+            case 4:
+                manager.generateExpiredItemsReport();
+                break;
+            case 5:
+                manager.saveData();  // Save data before exiting
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while(choice != 5);
+
+    return 0;
+}
+```
+
+---
+
+`Sample Data Format in Files`:
+
+`inventory.txt`:
+```
+101, Paracetamol, 50, 2025-06-15
+102, Bandage, 100, 2025-12-01
+103, Surgical Gloves, 200, 2024-05-20
+```
+
+`expiry.txt`:
+```
+101, 2025-06-15
+102, 2025-12-01
+103, 2024-05-20
+```
+
+---
+
+This `Mini Hackathon` will give `trainee programmers` hands-on experience in working with `file handling`, `inventory management`, and `report generation` while reinforcing `C++ concepts` such as `classes`, `vectors`, and `object-oriented design`. It will also improve their skills in managing `real-world applications` in the `healthcare domain`.

@@ -1,0 +1,167 @@
+Here's a fixed implementation of 
+the `Producer-Consumer problem 
+using Inter-Process Communication (IPC) 
+with shared memory and mutex synchronization`. 
+
+`Fixed Code Using Mutex`
+
+```cpp
+#include <iostream>
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <pthread.h>
+
+// Shared data structure
+struct SharedData {
+    int value;
+    bool end_signal;       // Indicates end of data
+    pthread_mutex_t mutex; // Mutex for synchronization
+    pthread_cond_t cond;   // Condition variable
+    bool data_available;   // Signal for data availability
+};
+
+void producer(SharedData* shared_data) {
+    // Producer generates data
+    for (int i = 1; i <= 5; ++i) {
+        pthread_mutex_lock(&shared_data->mutex);
+
+        // Produce data
+        shared_data->value = i;
+        shared_data->data_available = true;
+        std::cout << "Producer produced: " << i << std::endl;
+
+        // Notify consumer
+        pthread_cond_signal(&shared_data->cond);
+        pthread_mutex_unlock(&shared_data->mutex);
+
+        usleep(100000); // Simulate some delay
+    }
+
+    // Signal end of data
+    pthread_mutex_lock(&shared_data->mutex);
+    shared_data->end_signal = true;
+    pthread_cond_signal(&shared_data->cond);
+    pthread_mutex_unlock(&shared_data->mutex);
+}
+
+void consumer(SharedData* shared_data) {
+    while (true) {
+        pthread_mutex_lock(&shared_data->mutex);
+
+        // Wait for data to be available
+        while (!shared_data->data_available && !shared_data->end_signal) {
+            pthread_cond_wait(&shared_data->cond, &shared_data->mutex);
+        }
+
+        if (shared_data->end_signal) {
+            pthread_mutex_unlock(&shared_data->mutex);
+            break;
+        }
+
+        // Consume data
+        int value = shared_data->value;
+        shared_data->data_available = false;
+        std::cout << "Consumer consumed: " << value << std::endl;
+
+        pthread_mutex_unlock(&shared_data->mutex);
+    }
+}
+
+int main() {
+    // Create shared memory
+    int shm_fd = shm_open("/shared_memory", O_CREAT | O_RDWR, 0666);
+    ftruncate(shm_fd, sizeof(SharedData));
+    SharedData* shared_data = static_cast<SharedData*>(
+        mmap(nullptr, sizeof(SharedData), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0));
+
+    // Initialize shared data
+    shared_data->end_signal = false;
+    shared_data->data_available = false;
+    pthread_mutexattr_t mutex_attr;
+    pthread_condattr_t cond_attr;
+
+    // Initialize mutex for shared memory
+    pthread_mutexattr_init(&mutex_attr);
+    pthread_mutexattr_setpshared(&mutex_attr, PTHREAD_PROCESS_SHARED);
+    pthread_mutex_init(&shared_data->mutex, &mutex_attr);
+
+    // Initialize condition variable for shared memory
+    pthread_condattr_init(&cond_attr);
+    pthread_condattr_setpshared(&cond_attr, PTHREAD_PROCESS_SHARED);
+    pthread_cond_init(&shared_data->cond, &cond_attr);
+
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    } else if (pid == 0) {
+        // Child process: Consumer
+        consumer(shared_data);
+    } else {
+        // Parent process: Producer
+        producer(shared_data);
+
+        // Wait for child process to finish
+        wait(nullptr);
+
+        // Cleanup
+        pthread_mutex_destroy(&shared_data->mutex);
+        pthread_cond_destroy(&shared_data->cond);
+        munmap(shared_data, sizeof(SharedData));
+        shm_unlink("/shared_memory");
+    }
+
+    return 0;
+}
+```
+
+---
+
+`Explanation`
+
+1. `Shared Memory`:
+   - The shared memory segment is created using `shm_open` and `mmap`.
+   - The `SharedData` structure contains:
+     - `value`: Stores the produced value.
+     - `end_signal`: Signals the end of data.
+     - `mutex`: Ensures synchronized access.
+     - `cond`: Used for signaling between producer and consumer.
+     - `data_available`: Tracks whether data is ready to be consumed.
+
+2. `Synchronization Using Mutex`:
+   - A `mutex` is used to synchronize access to the shared data.
+   - A `condition variable` is used to signal between producer and consumer.
+
+3. `Producer`:
+   - Writes data into shared memory.
+   - Signals the consumer using `pthread_cond_signal`.
+
+4. `Consumer`:
+   - Waits for data to become available using `pthread_cond_wait`.
+   - Consumes the data and resets the `data_available` flag.
+
+5. `End Signal`:
+   - The producer sets `end_signal` to `true` when all data has been produced.
+   - The consumer checks this signal to exit the loop.
+
+---
+
+`Output`
+```
+Producer produced: 1
+Consumer consumed: 1
+Producer produced: 2
+Consumer consumed: 2
+Producer produced: 3
+Consumer consumed: 3
+Producer produced: 4
+Consumer consumed: 4
+Producer produced: 5
+Consumer consumed: 5
+```
+
+This implementation ensures proper synchronization and avoids race conditions.

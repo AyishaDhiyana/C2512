@@ -1,0 +1,231 @@
+The `GNU Debugger (GDB)` is a powerful tool 
+for debugging C++ programs. 
+
+Below is a step-by-step guide to 
+using GDB 
+to debug a C++ program:
+
+---
+
+`1. Compile Your Program with Debug Symbols`
+To enable debugging with GDB, you need 
+to compile your program with the `-g` flag:
+```bash
+g++ -std=c++17 -Wall -g -o program main.cpp
+```
+- `-g`: Includes debugging symbols in the executable.
+
+---
+
+`2. Start GDB`
+Run GDB on the compiled program:
+```bash
+gdb program
+```
+
+---
+
+`3. Common GDB Commands`
+
+`Run and Control Execution`
+- `Run the Program:`
+  ```bash
+  run [args]
+  ```
+  Example:
+  ```bash
+  run input.txt
+  ```
+  This starts the program with `input.txt` as the argument.
+
+- `Pause Execution:`
+  Press `Ctrl + C` during execution to pause the program.
+
+- `Step Through Code:`
+  - `next` or `n`: Execute the next line of code (step over functions).
+  - `step` or `s`: Step into a function.
+
+- `Continue Execution:`
+  ```bash
+  continue
+  ```
+
+- `Quit GDB:`
+  ```bash
+  quit
+  ```
+
+---
+
+`Breakpoints`
+- `Set a Breakpoint:`
+  ```bash
+  break filename:line_number
+  ```
+  Example:
+  ```bash
+  break main.cpp:25
+  ```
+
+- `Set a Breakpoint at a Function:`
+  ```bash
+  break function_name
+  ```
+  Example:
+  ```bash
+  break findGCD
+  ```
+
+- `List All Breakpoints:`
+  ```bash
+  info breakpoints
+  ```
+
+- `Delete a Breakpoint:`
+  ```bash
+  delete breakpoint_number
+  ```
+  Example:
+  ```bash
+  delete 1
+  ```
+
+---
+
+`Inspect Variables`
+- `Print the Value of a Variable:`
+  ```bash
+  print variable_name
+  ```
+  Example:
+  ```bash
+  print x
+  ```
+
+- `Examine All Local Variables:`
+  ```bash
+  info locals
+  ```
+
+- `Change a Variable’s Value:`
+  ```bash
+  set variable variable_name = new_value
+  ```
+  Example:
+  ```bash
+  set variable x = 42
+  ```
+
+---
+
+`View the Call Stack`
+- `Backtrace the Stack:`
+  ```bash
+  backtrace
+  ```
+  Shows the sequence of function calls that led to the current point.
+
+- `Move to a Specific Frame in the Stack:`
+  ```bash
+  frame frame_number
+  ```
+
+---
+
+`Examine Memory`
+- `Examine Memory at a Specific Address:`
+  ```bash
+  x/nfu address
+  ```
+  - `n`: Number of units to display.
+  - `f`: Format (`x` for hexadecimal, `d` for decimal, `c` for character, `s` for string).
+  - `u`: Unit size (`b` for byte, `h` for half-word, `w` for word).
+
+  Example:
+  ```bash
+  x/4xb 0x7ffc5a5d
+  ```
+
+---
+
+`Debugging an Issue`
+1. Start GDB with your program:
+   ```bash
+   gdb program
+   ```
+
+2. Set a breakpoint at a suspicious line or function:
+   ```bash
+   break findGCD
+   ```
+
+3. Run the program:
+   ```bash
+   run
+   ```
+
+4. Step through the code:
+   ```bash
+   step
+   ```
+
+5. Print variable values to find incorrect behavior:
+   ```bash
+   print variable_name
+   ```
+
+---
+
+`4. Example Debugging Workflow`
+Suppose you are debugging a function `findGCD`:
+1. Compile the program:
+   ```bash
+   g++ -std=c++17 -g -o program main.cpp Gcd.cpp
+   ```
+
+2. Launch GDB:
+   ```bash
+   gdb program
+   ```
+
+3. Set a breakpoint in `findGCD`:
+   ```bash
+   break findGCD
+   ```
+
+4. Run the program:
+   ```bash
+   run
+   ```
+
+5. When execution stops, inspect the variables:
+   ```bash
+   print x
+   print y
+   ```
+
+6. Step through the function:
+   ```bash
+   step
+   ```
+
+7. Continue or exit:
+   ```bash
+   continue
+   quit
+   ```
+
+---
+
+`5. Debugging Tips`
+- Always compile with `-g` for debugging symbols.
+- Use `info locals` to view all variables in the current scope.
+- Use `backtrace` to trace the flow of function calls leading to an error.
+- Use `watch` to monitor changes to a specific variable during execution:
+  ```bash
+  watch variable_name
+  ```
+
+With these GDB basics, 
+you can efficiently debug C++ programs and 
+pinpoint issues in your code.

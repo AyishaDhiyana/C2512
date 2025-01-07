@@ -1,0 +1,211 @@
+Here are `detailed notes` 
+on using GDB (GNU Debugger) 
+to debug C++ programs effectively:
+
+---
+
+`1. Setting Up GDB`
+- `Compile your program with debug symbols`:  
+  Use the `-g` flag during compilation. For example:  
+  ```bash
+  g++ -g -o my_program my_program.cpp
+  ```
+
+- `Start GDB`:  
+  Run GDB on the compiled program:  
+  ```bash
+  gdb ./my_program
+  ```
+
+---
+
+`2. Basic Commands`
+|--------------------------------------|----------------------------------------------------------------------------|
+| Command                              | Description                                                                |
+|--------------------------------------|----------------------------------------------------------------------------|
+| `run` (or `r`)                       | Start executing the program.                                               |
+| `break` (or `b`) `<location>`        | Set a breakpoint at a function, line number, or memory address.            |
+| `info breakpoints`                   | List all breakpoints and their statuses.                                   |
+| `delete <num>`                       | Remove a breakpoint (use `info breakpoints` to get the number).            |
+| `continue` (or `c`)                  | Continue execution until the next breakpoint or program termination.       |
+| `next` (or `n`)                      | Execute the next line; steps over function calls.                          |
+| `step` (or `s`)                      | Execute the next line; steps into function calls.                          |
+| `finish`                             | Continue execution until the current function finishes.                    |
+| `quit` (or `q`)                      | Exit GDB.                                                                  |
+|--------------------------------------|----------------------------------------------------------------------------|
+---
+
+`3. Setting Breakpoints`
+- `By Function Name`:  
+  ```bash
+  (gdb) break my_function
+  ```
+- `By Line Number`:  
+  ```bash
+  (gdb) break 42
+  ```
+- `By File and Line Number`:  
+  ```bash
+  (gdb) break my_file.cpp:42
+  ```
+- `Conditional Breakpoint`:  
+  ```bash
+  (gdb) break my_function if x == 10
+  ```
+
+---
+
+`4. Inspecting Variables`
+|--------------------------------------|----------------------------------------------------------------------------|
+| Command                              | Description                                                                |
+|--------------------------------------|----------------------------------------------------------------------------|
+| `print` (or `p`) `<variable>`        | Print the value of a variable.                                             |
+| `set <variable> = <value>`           | Change the value of a variable.                                            |
+| `info locals`                        | List all local variables in the current scope.                             |
+| `info args`                          | List all function arguments.                                               |
+| `display <variable>`                 | Automatically print the value of a variable after each step.               |
+| `undisplay <num>`                    | Stop displaying a variable (get the number from the `display` command).    |
+|--------------------------------------|----------------------------------------------------------------------------|
+---
+
+`5. Navigating the Call Stack`
+|--------------------------------------|----------------------------------------------------------------------------|
+| Command                              | Description                                                                |
+|--------------------------------------|----------------------------------------------------------------------------|
+| `backtrace` (or `bt`)                | Display the call stack (function calls leading to the current line).       |
+| `frame <num>`                        | Switch to a specific stack frame (use `bt` to get frame numbers).          |
+| `up`                                 | Move up one frame in the stack.                                            |
+| `down`                               | Move down one frame in the stack.                                          |
+|--------------------------------------|----------------------------------------------------------------------------|
+---
+
+`6. Memory Inspection`
+|--------------------------------------|----------------------------------------------------------------------------|
+| Command                              | Description                                                                |
+|--------------------------------------|----------------------------------------------------------------------------|
+| `x/<fmt> <address>`                  | Examine memory at a specific address.                                      |
+| `x/s <address>`                      | Display a string at the given memory address.                              |
+| `x/d <address>`                      | Display a decimal integer at the given memory address.                     |
+| `x/x <address>`                      | Display a hexadecimal value at the given memory address.                   |
+| `p &<variable>`                      | Print the memory address of a variable.                                    |
+|--------------------------------------|----------------------------------------------------------------------------|
+---
+
+`7. Debugging Tips`
+1. `Check Source Code Context`:  
+   ```bash
+   (gdb) list
+   ```
+   Displays the current and surrounding lines of code.
+
+2. `Debug Core Dumps`:
+   - Enable core dumps:
+     ```bash
+     ulimit -c unlimited
+     ```
+   - Run the program to generate a core file.
+   - Open GDB with the core dump:
+     ```bash
+     gdb ./my_program core
+     ```
+
+3. `Set Watchpoints`:  
+   Monitor when a variable's value changes:
+   ```bash
+   (gdb) watch <variable>
+   ```
+
+4. `Logging Commands`:  
+   Save commands in a file for reuse:
+   ```bash
+   gdb -x commands.txt ./my_program
+   ```
+
+5. `Use TUI Mode`:  
+   Enable a graphical source window:
+   ```bash
+   (gdb) layout src
+   ```
+
+---
+
+`8. Advanced Features`
+- `Attach to a Running Process`:  
+  Find the process ID (PID) and attach:
+  ```bash
+  gdb ./my_program <PID>
+  ```
+
+- `Run with Arguments`:  
+  Provide arguments to the program:
+  ```bash
+  (gdb) run arg1 arg2
+  ```
+
+- `Debug Shared Libraries`:  
+  Set a breakpoint in a shared library function:
+  ```bash
+  (gdb) break library_function
+  ```
+
+- `Debug Threads`:  
+  List all threads:
+  ```bash
+  (gdb) info threads
+  ```
+  Switch to a specific thread:
+  ```bash
+  (gdb) thread <num>
+  ```
+
+---
+
+`9. Example Debugging Session`
+Debugging a Segmentation Fault
+1. `Compile with Debug Symbols`:
+   ```bash
+   g++ -g -o segfault_example segfault_example.cpp
+   ```
+
+2. `Run the Program in GDB`:
+   ```bash
+   gdb ./segfault_example
+   ```
+
+3. `Start the Program`:
+   ```bash
+   (gdb) run
+   ```
+
+4. `Check the Stack Trace`:
+   ```bash
+   (gdb) backtrace
+   ```
+
+5. `Inspect Variables`:
+   ```bash
+   (gdb) print <variable>
+   ```
+
+6. `Fix and Test Again`:
+   Adjust the code, recompile, and rerun.
+
+---
+
+`10. Resources for Learning`
+- `GDB Official Documentation`:  
+  [https://www.gnu.org/software/gdb/documentation/]
+  (https://www.gnu.org/software/gdb/documentation/)
+
+- `GDB Cheat Sheet`:  
+  Quick reference for commands and usage.
+
+- `GDB Tutorials`:  
+  Practice debugging sample programs to build confidence.
+
+---
+
+By mastering GDB, you can efficiently 
+    debug and troubleshoot C++ programs, 
+    uncover subtle bugs, and 
+    understand your program's behavior.

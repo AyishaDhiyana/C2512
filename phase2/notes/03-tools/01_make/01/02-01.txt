@@ -1,0 +1,32 @@
+# Makefile for testing libgcd.a using GTest
+
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -I../LibGcd/Headers -I/usr/local/include
+LDFLAGS = -L../LibGcd -lgcd -L/usr/local/lib -lgtest -lgtest_main -pthread
+
+# Source files
+SRCS = GcdTest.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# Target executable
+TARGET = testLibGcd
+
+# Default target
+all: $(TARGET)
+
+# Build the test executable
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+# Build object files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Run tests
+test: all
+	./$(TARGET)
+
+# Clean up
+clean:
+	@rm -f $(OBJS) $(TARGET)

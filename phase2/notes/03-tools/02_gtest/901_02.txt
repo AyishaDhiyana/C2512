@@ -1,0 +1,155 @@
+Here’s a focused guide to 
+`writing basic tests using Google Test (GTest)` 
+for C++:
+
+---
+
+`Step-by-Step Guide`
+`1. Setting Up Google Test`
+Before you can write tests, make sure 
+Google Test is properly installed and 
+set up in your environment. 
+
+Refer to the installation and setup steps if needed.
+
+`2. Writing a Simple Function to Test`
+Create a simple C++ function in a file named, 
+for example, `main.cpp`, which you want to test:
+```cpp
+// main.cpp
+int Add(int a, int b) {
+    return a + b;
+}
+
+int Multiply(int a, int b) {
+    return a * b;
+}
+```
+
+`3. Creating a Test File`
+Create a separate file for your tests, 
+such as `test.cpp`, and 
+include Google Test's header file:
+```cpp
+// test.cpp
+#include <gtest/gtest.h>
+#include "main.cpp"  // Include the file with the function(s) to test
+
+// Test cases for the Add function
+TEST(AdditionTest, PositiveNumbers) {
+    EXPECT_EQ(Add(2, 3), 5);  // Check if Add(2, 3) equals 5
+}
+
+TEST(AdditionTest, NegativeNumbers) {
+    EXPECT_EQ(Add(-2, -3), -5);  // Check if Add(-2, -3) equals -5
+}
+
+TEST(AdditionTest, MixedNumbers) {
+    EXPECT_EQ(Add(-2, 3), 1);  // Check if Add(-2, 3) equals 1
+}
+
+// Test cases for the Multiply function
+TEST(MultiplicationTest, PositiveNumbers) {
+    EXPECT_EQ(Multiply(2, 3), 6);  // Check if Multiply(2, 3) equals 6
+}
+
+TEST(MultiplicationTest, NegativeNumbers) {
+    EXPECT_EQ(Multiply(-2, -3), 6);  // Check if Multiply(-2, -3) equals 6
+}
+
+TEST(MultiplicationTest, MixedNumbers) {
+    EXPECT_EQ(Multiply(-2, 3), -6);  // Check if Multiply(-2, 3) equals -6
+}
+
+// Main function to run tests
+int main(int argc, char `argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+```
+
+---
+
+`4. Running the Tests`
+`Using CMake for Build`
+1. `Create a `CMakeLists.txt` file`:
+    ```cmake
+    cmake_minimum_required(VERSION 3.10)
+    project(GTestExample)
+
+    # Add Google Test
+    add_subdirectory(googletest)  # Assuming googletest is downloaded locally
+
+    # Include directories
+    include_directories(${gtest_SOURCE_DIR}/include)
+
+    # Add the test executable
+    add_executable(runTests main.cpp test.cpp)
+    target_link_libraries(runTests gtest gtest_main)
+    ```
+
+2. `Build and Run`:
+   ```bash
+   mkdir build && cd build
+   cmake ..
+   make
+   ./runTests
+   ```
+
+`Manual Compilation`
+If you don’t use CMake, compile manually by linking with GTest:
+```bash
+g++ -std=c++17 -isystem /path/to/gtest/include -pthread test.cpp main.cpp /path/to/gtest/libgtest.a -o runTests
+./runTests
+```
+
+---
+
+`5. Output Example`
+When you run the test executable, you should see output like this:
+```
+[==========] Running 6 tests from 2 test cases.
+[----------] Global test environment set-up.
+[----------] 3 tests from AdditionTest
+[ RUN      ] AdditionTest.PositiveNumbers
+[       OK ] AdditionTest.PositiveNumbers (0 ms)
+[ RUN      ] AdditionTest.NegativeNumbers
+[       OK ] AdditionTest.NegativeNumbers (0 ms)
+[ RUN      ] AdditionTest.MixedNumbers
+[       OK ] AdditionTest.MixedNumbers (0 ms)
+[----------] 3 tests from AdditionTest (0 ms total)
+
+[----------] 3 tests from MultiplicationTest
+[ RUN      ] MultiplicationTest.PositiveNumbers
+[       OK ] MultiplicationTest.PositiveNumbers (0 ms)
+[ RUN      ] MultiplicationTest.NegativeNumbers
+[       OK ] MultiplicationTest.NegativeNumbers (0 ms)
+[ RUN      ] MultiplicationTest.MixedNumbers
+[       OK ] MultiplicationTest.MixedNumbers (0 ms)
+[----------] 3 tests from MultiplicationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 2 test cases ran. (0 ms total)
+[  PASSED  ] 6 tests.
+```
+
+---
+
+`Key Assertions in GTest`
+Here are some commonly used GTest assertions:
+- `Equality`:
+  - `EXPECT_EQ(val1, val2);` or `ASSERT_EQ(val1, val2);`
+  - `EXPECT_NE(val1, val2);` or `ASSERT_NE(val1, val2);`
+- `Relational`:
+  - `EXPECT_LT(val1, val2);`, `EXPECT_LE(val1, val2);`
+  - `EXPECT_GT(val1, val2);`, `EXPECT_GE(val1, val2);`
+- `Boolean`:
+  - `EXPECT_TRUE(condition);` or `ASSERT_TRUE(condition);`
+  - `EXPECT_FALSE(condition);` or `ASSERT_FALSE(condition);`
+- `String`:
+  - `EXPECT_STREQ(str1, str2);` (case-sensitive equality)
+  - `EXPECT_STRNE(str1, str2);` (case-sensitive inequality)
+
+---
+
+This structure allows you to easily write and organize basic tests with GTest! 

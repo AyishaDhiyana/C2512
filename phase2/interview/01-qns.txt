@@ -1,0 +1,109 @@
+1. What all topics did we study in each phase. 
+2. Write a C++ program to store employee details. And 3 functions, Add, Display, Remove. Using structure array as data member. 
+3. Asked about all the files in MFC, what is the use of every file. Flow of MFC execution. What is OnPaint(), InitDialog(), CAboutDlg, etc. 
+4. We have a Base class with a member function display() which will print "A" when called. And a Derived class ( from Base ) which has another display() function which will print "B". (There is no virtual class used in code). We made an object of Derived, using the object of Derived class we need to print both "A" of base class and "B" of Derived class. We can update the class part and cannot update the int main(). How to display both. 
+5. Write a program to replace all spaces in a given string with underscores using a loop.
+6. Design a base class Vehicle and derived classes Car and Bike. Override a function to show specific vehicle details using runtime polymorphism.
+7. Explain static functions in C++ with examples.
+8. Provide an example of operator overloading in C++.
+9. Explain oops concepts.
+10. What is abstraction and implement it in  the code.
+11. Explain about virtual function,run time polymorphism.
+12. Usage of public,private,protected in the code.
+13. Explain about STL.
+14. Explain Friend function and how it is implemented in the code.
+15. What is typedef and write syntax.
+16. Explain Data structure.
+17. Stack and queue
+18. What is the difference between Structure and class in cpp.
+19. Use of abstraction. How to make a class abstract and what is its use.
+20. Real time example for oops concepts.
+21. Gave the example of atm machine.
+        Then they asked which are the public data members of atm machine.
+22. Why are access specifiers used.
+23. There are 3 classes. A is the base class.B is derived from A . C is derived from B. There is a pure virtual function in class A. He wants to override this function in B but not in C.How to achieve this.
+24. Static functions 
+25. Const keyword
+26. Oops concept with code
+27. Operator overloading code example
+28. Set minimum balance in code for bank.
+29. Replace the space in a string with an underscore.
+30. What is message mapping.
+31. Create a class named student and print using array of objects.
+32. Explain different oops concept.
+33. Explain operator overloading and do an example using equal to operator.
+34. Add any sorting to the class 
+35.Coding
+a. Run time polymorphism. 
+b. Program to return the sum and avg of a set of numbers from a dynamically allocated array( use call by reference).
+36. Theory 
+a. Threads and Synchronisation 
+b. Constructor and destructor 
+c. Types of constructors 
+d. OOPs concepts
+e. What is dialogue based., it's use.
+f. Difference between Structure and class.
+g. Access specifiers explanation with code
+37. What are smart pointers 
+38. Explain oops concepts like inheritance, polymorphism, encapsulation, abstraction in detail with example 
+39. There is a base class Shape and derived classes Rectangle, triangle, square using inheritance and pure virtual function.How to draw the shapes in MFC using this code 
+40. What are the access specifiers and explain with the help of a code 
+41. Asked about 1&2nd phase training
+42. What all topics covered on 1st phase
+43. To write a program on inheritance 
+44. Write default and parameterised constructors
+45. Give an integer variable in parent and pass it to child using constructor
+46. Oops concept 
+47. Write a program on polymorphism using pointer
+48. Debugging and asked to show how to do debugging 
+49. Pointers: character pointer, integer pointer, adding characters into an array without using for loop
+50. Use strcpy 
+51. Oops explain each concept using sample code 
+52. Access specifiers explanation with code 
+53. Run time polymorphism sample example 
+54. How to get the value of a private data member in the inherited subclass.
+55. Oops - polymorphism- write a code to show polymorphism using base class pointer?
+56. Consider a scenario where you are asked to convert image format of different pictures [eg. jpg to png]. How you can design that using oops concept?
+57. Asked to open a recent project and do debugging?
+58. User defined string copy function.
+59. Oops- brief idea about all the subtopics.
+60. Virtual Function Coding
+61 .Make a dynamic array and add elements using pointer to array.
+62. Pointer- Explanation
+63. Access Specifiers 
+64. Run time polymorphism coding
+65. Did u study threading, sockets? 
+66. How was the training in both Phase 1 and Phase 2?
+67. Which phase did you like most? Why?
+68. What topics did you learn during these two phases?
+69. What is OOPs, and why is it needed?
+70. What is the difference between stack and heap?
+71. What is the difference between structure and class?
+72. Write the syntax of the new operator.
+73. Array sorting
+74. Adding an element in the middle of the array
+75. Operator overloading
+76. Create a class Student and an array of objects
+77. Operator overloading (write program using + operator to add two objects) ?
+78. Difference between static and const ?
+79. What is template what is the difference between the exe file generated with template and normal function ?
+80. What is function pointer ?
+81. Create a default constructor
+82. Parameterized constructor
+83. Copy constructor for the same
+84. Operator overloading (- and +)
+85. Call by value and Call by reference
+86. Find the output qns of Pointers.
+87. Inheritance Questions
+88. Function override code
+89. Virtual functions
+90. What is virtual function and add virtual function to above example , declare object using new 
+91. what is copy constructor and show an  example  
+92. what is STL,write syntax for vector with some functions
+93. What is stack and queue 
+94. Oops concepts with real world example.
+95. Implement all types of constructors.
+96. Demonstrate  polymorphism and inheritance for a given scenario.
+97. Types of inheritance.
+98. Pointer with example, dynamic memory allocation and object creation.
+99. MFC- simple registration form.

@@ -1,0 +1,56 @@
+95. Implement all types of constructors.
+------------------------------------------------------
+class Rectangle {
+    private: 
+        int length;
+        int breadth;
+    public: 
+        Rectangle();
+        Rectangle(int p_length, int p_breath);
+        Rectangle(Rectangle& other);
+        Rectangle& operator=(Rectangle& other);
+        Rectangle(Rectangle&& other);
+        Rectangle& operator=(Rectangle&& other);
+};
+
+-----------------------------------------------------
+class Rectangle {
+    private: 
+        int length;
+        int breadth;
+    public: 
+        Rectangle() : Rectangle(0,0){};
+        Rectangle(int p_length, int p_breath):length(p_length), breadth(p_breath) {}
+        Rectangle(const Rectangle& other):Rectangle(other.length, other.breadth){}
+        Rectangle& operator=(const Rectangle& other){ this->length = other.length; this->breadth = other.breath; return *this; }
+        Rectangle(Rectangle&& other) : Rectangle(other.length, other.breadth){other.length=0; other.breadth=0;}
+        Rectangle& operator=(Rectangle&& other){ 
+            this->length = other.length; 
+            this->breadth = other.breath; 
+            other.length=0; other.breadth=0;
+            return *this; }
+        ~Rectangle() {}
+};
+
+
+//if((r2 = move(r1)).getLength() != 0)
+
+
+-----------------------------------------------------
+usages: 
+    Rectangle r1; //0,0                     no-arg 
+    
+    Rectangle r2(2,3); //2,3                arg 
+    Rectangle r3(r2); //r3=2,3 | r2=2,3     copy consr
+    Rectangle r6;     //r6=0,0                      no-arg 
+    r6 = r2;                                copy =      :: r6=2,3 | r2 = 2,3 
+
+    Rectangle r4(1,4); //r4=2,4             arg 
+    Rectangle r5(move(r4)); //r5=1,4|r4=0,0 move consr 
+
+    Rectangle r7(4,7); //r7=4,7             arg 
+    Rectange r8;       //r8 = 0,0           no-arg 
+    r8 = move(r7);     //r8=4,7|r7=0,0      move =
+
+-----------------------------------------------------
+

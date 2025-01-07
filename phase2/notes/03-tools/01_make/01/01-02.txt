@@ -1,0 +1,27 @@
+# Makefile for LibSun to build libsun.a
+
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -IHeaders
+
+# Target library
+TARGET = libsun.a
+
+# Source and object files
+SRCS = Sources/Gcd.cpp Sources/Arithmetic.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# Default target
+all: $(TARGET)
+
+# Build the static library
+$(TARGET): $(OBJS)
+	@ar rcs $@ $^
+
+# Build object files
+%.o: %.cpp Headers/%.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	@rm -f $(OBJS) $(TARGET)

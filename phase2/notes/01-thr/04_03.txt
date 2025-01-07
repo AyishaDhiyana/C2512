@@ -1,0 +1,201 @@
+Task-based parallelism using `std::async` 
+in C++ is a high-level abstraction 
+for concurrent programming. 
+
+It allows you to run tasks asynchronously, 
+handle their results, and 
+avoid manually managing threads and synchronization mechanisms.
+
+Key Features of `std::async`
+1. `Automatic Thread Management`: 
+The runtime decides 
+whether to run the task on a new thread or 
+reuse an existing thread.
+2. `Future Result Handling`: 
+Returns a `std::future` 
+to retrieve the result of the asynchronous task.
+3. `Simplicity`: 
+No need to create and manage explicit threads or 
+synchronization primitives.
+
+---
+
+Syntax
+```cpp
+#include <future>
+
+std::future<ReturnType> std::async(std::launch policy, Callable&& f, Args&&... args);
+```
+
+- ``policy``: Specifies how the task should be executed. Options:
+  - `std::launch::async`: Forces asynchronous execution (on a separate thread).
+  - `std::launch::deferred`: Executes lazily when `future.get()` or `future.wait()` is called.
+  - Default (no policy): Combines `std::launch::async | std::launch::deferred`.
+- ``Callable``: A callable object (function, lambda, or functor).
+- ``Args``: Arguments passed to the callable.
+
+---
+
+Example 1: Simple Asynchronous Task
+```cpp
+#include <iostream>
+#include <future>
+#include <thread>
+#include <chrono>
+
+int task(int x, int y) {
+    std::this_thread::sleep_for(std::chrono::seconds(2)); // Simulate work
+    return x + y;
+}
+
+int main() {
+    std::cout << "Starting async task..." << std::endl;
+
+    std::future<int> result = std::async(std::launch::async, task, 5, 10);
+
+    std::cout << "Doing other work in main thread..." << std::endl;
+
+    // Wait for the result
+    std::cout << "Result: " << result.get() << std::endl;
+
+    return 0;
+}
+```
+
+#Output
+```
+Starting async task...
+Doing other work in main thread...
+Result: 15
+```
+
+---
+
+Example 2: Deferred Execution
+```cpp
+#include <iostream>
+#include <future>
+
+int task(int x, int y) {
+    return x * y;
+}
+
+int main() {
+    std::future<int> result = std::async(std::launch::deferred, task, 7, 3);
+
+    std::cout << "Deferred task is not running yet..." << std::endl;
+
+    // Execution starts here
+    std::cout << "Result: " << result.get() << std::endl;
+
+    return 0;
+}
+```
+
+#Output
+```
+Deferred task is not running yet...
+Result: 21
+```
+
+---
+
+Example 3: Exception Handling in Asynchronous Tasks
+```cpp
+#include <iostream>
+#include <future>
+#include <stdexcept>
+
+int task(int x, int y) {
+    if (y == 0) throw std::runtime_error("Division by zero!");
+    return x / y;
+}
+
+int main() {
+    try {
+        std::future<int> result = std::async(std::launch::async, task, 10, 0);
+        std::cout << "Result: " << result.get() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Caught exception: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
+```
+
+#Output
+```
+Caught exception: Division by zero!
+```
+
+---
+
+Example 4: Parallelizing Multiple Tasks
+```cpp
+#include <iostream>
+#include <future>
+#include <vector>
+
+int compute(int x) {
+    return x * x;
+}
+
+int main() {
+    std::vector<std::future<int>> futures;
+
+    // Launch multiple asynchronous tasks
+    for (int i = 1; i <= 5; ++i) {
+        futures.push_back(std::async(std::launch::async, compute, i));
+    }
+
+    // Collect results
+    for (auto& fut : futures) {
+        std::cout << "Result: " << fut.get() << std::endl;
+    }
+
+    return 0;
+}
+```
+
+#Output
+```
+Result: 1
+Result: 4
+Result: 9
+Result: 16
+Result: 25
+```
+
+---
+
+`std::future` Methods
+1. ``get()``: Blocks the current thread 
+until the result is ready and retrieves it.
+2. ``wait()``: Blocks until the task is complete 
+but doesn't retrieve the result.
+3. ``valid()``: Checks if the `future` holds a valid result.
+
+---
+
+Best Practices
+1. `Specify Launch Policy`: 
+    Use `std::launch::async` or 
+        `std::launch::deferred` explicitly 
+    for predictable behavior.
+2. `Avoid Overuse`: Task-based parallelism simplifies concurrency 
+    but can lead to overhead 
+    if used excessively for trivial tasks.
+3. `Handle Exceptions`: Always wrap `get()` 
+    in a try-catch block 
+    to handle potential exceptions.
+
+---
+
+Advantages of `std::async`
+- Simplifies task-based concurrency.
+- Automatically manages threads and resources.
+- Integrates seamlessly with `std::future` for result handling.
+
+Use `std::async` for scenarios 
+where tasks are independent and can run concurrently, 
+allowing you to leverage multicore processors effectively.

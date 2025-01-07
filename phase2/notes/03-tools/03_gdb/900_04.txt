@@ -1,0 +1,203 @@
+The notes provided are quite comprehensive, 
+covering everything 
+from basic commands to advanced debugging techniques. 
+
+However, there are a few additional `concepts and features of GDB` 
+that could be helpful to include for a more thorough understanding:
+
+---
+
+`11. Conditional Execution`
+1. `Run Program with Conditions`:  
+   To run the program with a specific condition:
+   ```bash
+   (gdb) condition <breakpoint_number> <condition>
+   ```
+   Example:
+   ```bash
+   (gdb) condition 1 x > 10
+   ```
+
+2. `Ignore Breakpoints Temporarily`:  
+   Skip a breakpoint a certain number of times before stopping:
+   ```bash
+   (gdb) ignore <breakpoint_number> <count>
+   ```
+
+---
+
+`12. Debugging C++ Specific Features`
+1. `Handle Namespaces`:  
+   Specify fully qualified names for functions or variables if you use namespaces:
+   ```bash
+   (gdb) break NamespaceName::FunctionName
+   ```
+
+2. `Inspect Classes and Objects`:  
+   - Print a class or object's fields:
+     ```bash
+     (gdb) print object
+     ```
+   - Access specific fields in an object:
+     ```bash
+     (gdb) print object.field
+     ```
+
+3. `Virtual Functions`:  
+   GDB can show which virtual function is being called:
+   ```bash
+   (gdb) set print vtbl on
+   ```
+
+---
+
+`13. Automating with GDB`
+1. `Command Files`:  
+   Automate commands by placing them in a file and loading them:
+   ```bash
+   gdb -x commands.gdb ./my_program
+   ```
+   Example `commands.gdb`:
+   ```gdb
+   break main
+   run
+   backtrace
+   ```
+
+2. `Startup Script`:  
+   Add custom GDB settings to `.gdbinit` in your home directory or project root:
+   ```bash
+   set pagination off
+   set logging on
+   ```
+
+---
+
+`14. Debugging Multithreaded Programs`
+1. `Switch Threads`:  
+   ```bash
+   (gdb) thread <thread_number>
+   ```
+
+2. `Thread-specific Breakpoints`:  
+   Set a breakpoint for a specific thread:
+   ```bash
+   (gdb) break <location> thread <thread_id>
+   ```
+
+3. `Check Mutex Locks`:  
+   Use `info threads` to see the thread states and check for deadlocks.
+
+---
+
+`15. Debugging Signals`
+1. `List All Signals`:  
+   ```bash
+   (gdb) info signals
+   ```
+
+2. `Handle a Specific Signal`:  
+   Example for ignoring `SIGINT`:
+   ```bash
+   (gdb) handle SIGINT nostop noprint
+   ```
+
+---
+
+`16. Debugging Forked Processes`
+1. `Follow Child Process`:  
+   By default, GDB debugs only the parent process. 
+   To follow the child process:
+   ```bash
+   (gdb) set follow-fork-mode child
+   ```
+
+2. `Switch Between Parent and Child`:  
+   If debugging both:
+   ```bash
+   (gdb) info inferiors
+   (gdb) inferior <id>
+   ```
+
+---
+
+`17. Reverse Debugging`
+Some modern versions of GDB support reverse debugging, 
+allowing you to step `backwards` through your program.  
+1. `Enable Record Mode`:
+   ```bash
+   (gdb) target record
+   ```
+2. `Step Backwards`:
+   ```bash
+   (gdb) reverse-step
+   (gdb) reverse-next
+   ```
+
+---
+
+`18. Debugging Shared Libraries`
+1. `Set Breakpoints in a Shared Library`:
+   Load symbols for a shared library and set breakpoints:
+   ```bash
+   (gdb) sharedlibrary <library_name>
+   ```
+2. `Debug Loading of Libraries`:
+   ```bash
+   (gdb) set stop-on-solib-events 1
+   ```
+
+---
+
+`19. Advanced Memory Debugging`
+1. `Watch for Memory Access`:
+   ```bash
+   (gdb) watch *(int *)0xaddress
+   ```
+2. `Check for Memory Leaks`:  
+   Use `valgrind` alongside GDB for in-depth analysis:
+   ```bash
+   valgrind --vgdb=yes --vgdb-error=0 ./my_program
+   ```
+
+---
+
+`20. Python Scripting in GDB`
+1. `Write Python Scripts for GDB`:
+   Use Python to automate tasks:
+   ```python
+   class HelloWorldCommand(gdb.Command):
+       def __init__(self):
+           super(HelloWorldCommand, self).__init__("hello", gdb.COMMAND_USER)
+
+       def invoke(self, args, from_tty):
+           print("Hello, world!")
+
+   HelloWorldCommand()
+   ```
+   Save the script as `hello.py` and load it:
+   ```bash
+   (gdb) source hello.py
+   (gdb) hello
+   ```
+
+---
+
+`21. Debugging Tips`
+1. `Debugging Large Projects`:
+   - Load only the required files using `set substitute-path`.
+   - Use `break` or `step` to narrow down the issue.
+
+2. `Analyze Core Dumps`:
+   Ensure core dumps are enabled (`ulimit -c unlimited`) and 
+   open them in GDB:
+   ```bash
+   gdb ./my_program core
+   ```
+
+---
+
+Final Notes
+These additions cover more niche but powerful features of GDB, 
+like multithreading, reverse debugging, and automation, 
+which are especially useful for complex C++ projects. 

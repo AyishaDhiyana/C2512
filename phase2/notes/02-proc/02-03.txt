@@ -1,0 +1,229 @@
+IPC Mechanism - Shared Memory
+
+`Shared Memory` is one of the fastest and 
+most efficient interprocess communication (IPC) mechanisms. 
+
+It allows multiple processes 
+to access the same memory segment for communication. 
+
+Instead of copying data between processes, 
+shared memory enables direct memory access, 
+making it ideal for high-performance scenarios.
+
+---
+
+Features of Shared Memory:
+1. `Speed`: 
+    Shared memory is faster than other IPC mechanisms 
+    (e.g., pipes or message queues) 
+    because no data copying occurs between processes.
+2. `Shared State`: 
+    Processes can maintain shared states or large datasets in memory.
+3. `Explicit Synchronization`: 
+    Shared memory does not provide synchronization mechanisms, 
+    so processes must handle synchronization 
+    (e.g., using semaphores or mutexes).
+
+---
+
+System Calls for Shared Memory in Linux:
+
+1. `shmget()`:
+   - Creates or accesses a shared memory segment.
+   - Example: `int shmget(key_t key, size_t size, int shmflg);`
+
+2. `shmat()`:
+   - Attaches a shared memory segment to a process's address space.
+   - Example: `void* shmat(int shmid, const void* shmaddr, int shmflg);`
+
+3. `shmdt()`:
+   - Detaches a shared memory segment from a process's address space.
+   - Example: `int shmdt(const void* shmaddr);`
+
+4. `shmctl()`:
+   - Performs control operations on the shared memory segment.
+   - Example: `int shmctl(int shmid, int cmd, struct shmid_ds* buf);`
+
+---
+
+Example: Shared Memory Communication Between a Producer and Consumer
+
+Here’s an example where a producer process writes data to a shared memory segment, and a consumer process reads it.
+
+#Code Implementation:
+```cpp
+#include <iostream>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <unistd.h>
+#include <cstring>
+#include <wait.h>
+
+#define SHM_KEY 12345
+#define SHM_SIZE 1024  // Size of the shared memory segment
+
+struct SharedData {
+    int flag;         // 0: Empty, 1: Data written
+    char message[100]; // Shared message
+};
+
+void producer() {
+    // Create shared memory
+    int shmid = shmget(SHM_KEY, sizeof(SharedData), 0666 | IPC_CREAT);
+    if (shmid == -1) {
+        perror("shmget failed");
+        exit(1);
+    }
+
+    // Attach shared memory
+    SharedData* shared_data = static_cast<SharedData*>(shmat(shmid, nullptr, 0));
+    if (shared_data == reinterpret_cast<SharedData*>(-1)) {
+        perror("shmat failed");
+        exit(1);
+    }
+
+    // Write data to shared memory
+    for (int i = 0; i < 5; ++i) {
+        while (shared_data->flag == 1) {
+            // Wait for consumer to read
+        }
+        snprintf(shared_data->message, sizeof(shared_data->message), "Message %d", i + 1);
+        std::cout << "Producer wrote: " << shared_data->message << std::endl;
+        shared_data->flag = 1;  // Indicate data is ready
+        sleep(1);               // Simulate work
+    }
+
+    // Signal end of communication
+    while (shared_data->flag == 1) {
+        // Wait for consumer to read
+    }
+    strcpy(shared_data->message, "END");
+    shared_data->flag = 1;
+
+    // Detach and destroy shared memory
+    shmdt(shared_data);
+}
+
+void consumer() {
+    // Access shared memory
+    int shmid = shmget(SHM_KEY, sizeof(SharedData), 0666);
+    if (shmid == -1) {
+        perror("shmget failed");
+        exit(1);
+    }
+
+    // Attach shared memory
+    SharedData* shared_data = static_cast<SharedData*>(shmat(shmid, nullptr, 0));
+    if (shared_data == reinterpret_cast<SharedData*>(-1)) {
+        perror("shmat failed");
+        exit(1);
+    }
+
+    // Read data from shared memory
+    while (true) {
+        while (shared_data->flag == 0) {
+            // Wait for producer to write
+        }
+
+        if (strcmp(shared_data->message, "END") == 0) {
+            std::cout << "Consumer received END signal. Exiting..." << std::endl;
+            break;
+        }
+
+        std::cout << "Consumer read: " << shared_data->message << std::endl;
+        shared_data->flag = 0;  // Indicate data is read
+    }
+
+    // Detach and destroy shared memory
+    shmdt(shared_data);
+    shmctl(shmid, IPC_RMID, nullptr);
+}
+
+int main() {
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork failed");
+        return 1;
+    }
+
+    if (pid == 0) {
+        // Child process: Consumer
+        consumer();
+    } else {
+        // Parent process: Producer
+        producer();
+        wait(nullptr);  // Wait for child process to complete
+    }
+
+    return 0;
+}
+```
+
+---
+
+Explanation:
+
+1. `Shared Memory Initialization`:
+   - The producer creates the shared memory using `shmget()` with `IPC_CREAT`.
+   - Both processes attach to the shared memory using `shmat()`.
+
+2. `Shared Data Structure`:
+   - `flag`: Used for synchronization (0 means empty, 1 means data written).
+   - `message`: Contains the actual data shared between the processes.
+
+3. `Producer Logic`:
+   - Writes messages into shared memory and sets the `flag` to 1 to indicate data availability.
+   - Waits for the consumer to read the data (`flag == 0`).
+
+4. `Consumer Logic`:
+   - Waits for the producer to write data (`flag == 1`).
+   - Reads the data and sets the `flag` back to 0.
+
+5. `End Signal`:
+   - The producer writes a special "END" message to signal the consumer to terminate.
+
+6. `Memory Cleanup`:
+   - `shmdt()` detaches the shared memory from a process.
+   - `shmctl()` with `IPC_RMID` removes the shared memory segment.
+
+---
+
+Example Output:
+```
+Producer wrote: Message 1
+Consumer read: Message 1
+Producer wrote: Message 2
+Consumer read: Message 2
+Producer wrote: Message 3
+Consumer read: Message 3
+Producer wrote: Message 4
+Consumer read: Message 4
+Producer wrote: Message 5
+Consumer read: Message 5
+Consumer received END signal. Exiting...
+```
+
+---
+
+Key Considerations:
+
+1. `Synchronization`:
+   - Shared memory requires explicit synchronization, as demonstrated with the `flag` variable in this example.
+   - In real-world scenarios, semaphores or mutexes are commonly used for synchronization.
+
+2. `Security`:
+   - Proper permissions (`0666` in this example) should be set to prevent unauthorized access.
+
+3. `Resource Cleanup`:
+   - Shared memory must be detached (`shmdt`) and removed (`shmctl` with `IPC_RMID`) after use to avoid resource leaks.
+
+4. `Performance`:
+   - Shared memory is faster than most other IPC mechanisms but requires careful synchronization to avoid race conditions.
+
+---
+
+Use Cases:
+- High-performance applications requiring frequent data exchange (e.g., video streaming, gaming engines).
+- Shared caches or lookup tables.
+- Communication between tightly coupled processes.

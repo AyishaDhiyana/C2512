@@ -1,0 +1,34 @@
+# Makefile for LibSun with dynamic source detection
+
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -IHeaders
+
+# Target library
+TARGET = libsun.a
+
+# Detect all source and object files
+SRCS = $(wildcard Sources/*.cpp)
+OBJS = $(SRCS:.cpp=.o)
+
+# Default target
+all: $(TARGET)
+
+# Build the static library
+$(TARGET): $(OBJS)
+	@echo "Building static library $(TARGET)..."
+	@ar rcs $@ $^
+
+# Build object files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	@echo "Cleaning up..."
+	@rm -f $(OBJS) $(TARGET)
+
+# Print source and object files (optional debugging targets)
+print:
+	@echo "Source files: $(SRCS)"
+	@echo "Object files: $(OBJS)"

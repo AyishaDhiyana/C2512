@@ -1,0 +1,166 @@
+`IPC Mechanisms: Pipes`
+
+---
+
+`Overview`
+Pipes are one of the simplest and most widely used 
+`Inter-Process Communication (IPC)` mechanisms. 
+
+They enable processes to communicate 
+by reading and writing data in a unidirectional or 
+bidirectional stream. 
+
+Pipes are commonly used in operating systems and 
+programming environments to pass information between processes.
+
+---
+
+`Types of Pipes`
+1. `Anonymous Pipes`  
+   - `Definition`: Temporary, unidirectional pipes with no name, 
+   typically used for communication 
+   between a parent process and its child process.
+   - `Characteristics`:
+     - Only works between related processes (e.g., parent and child).
+     - Data flows in one direction.
+     - Automatically destroyed when the processes terminate.
+   - `Example Use Case`: 
+   A parent process spawns a child process and 
+   communicates results (e.g., shell pipelines).
+
+2. `Named Pipes (FIFO - First In, First Out)`  
+   - `Definition`: Permanent pipes that have a name in the file system, 
+   allowing unrelated processes to communicate.
+   - `Characteristics`:
+     - Can be bidirectional.
+     - Can be used by unrelated processes.
+     - Persistent until explicitly removed.
+   - `Example Use Case`: Two independent applications exchanging data via a shared communication point.
+
+---
+
+`How Pipes Work`
+1. A `pipe` is created as a data buffer in memory.
+2. One process writes data to the pipe, while another reads the data.
+3. Pipes act as a `byte stream`, ensuring that data is read in the same order it was written.
+4. If the pipe's buffer is full, the writing process blocks until space becomes available.
+5. If the pipe is empty, the reading process blocks until data is written.
+
+---
+
+`Advantages of Pipes`
+- `Simplicity`: Easy to implement and use for basic communication needs.
+- `Efficiency`: Suitable for lightweight data transfer between processes.
+- `Standardized`: Supported on most operating systems and programming languages.
+
+---
+
+`Limitations of Pipes`
+1. `Anonymous Pipes`:
+   - Unidirectional (data flows in only one direction).
+   - Can only be used between related processes (parent-child).
+2. `Named Pipes`:
+   - More complex to implement and manage than anonymous pipes.
+3. `No Data Persistence`:
+   - Pipes do not store data persistently; they only exist while the processes are running.
+4. `Limited Buffer Size`:
+   - Pipes have a fixed buffer size, which can lead to blocking if the buffer is full or empty.
+
+---
+
+`Programming Examples`
+
+`1. Anonymous Pipes in C++`
+```cpp
+#include <unistd.h>
+#include <iostream>
+
+int main() {
+    int pipe_fd[2];
+    char buffer[128];
+
+    if (pipe(pipe_fd) == -1) {
+        perror("pipe");
+        return 1;
+    }
+
+    pid_t pid = fork();
+
+    if (pid == 0) { // Child process
+        close(pipe_fd[1]); // Close write end
+        read(pipe_fd[0], buffer, sizeof(buffer));
+        std::cout << "Child received: " << buffer << std::endl;
+        close(pipe_fd[0]);
+    } else { // Parent process
+        close(pipe_fd[0]); // Close read end
+        const char* message = "Hello from parent!";
+        write(pipe_fd[1], message, strlen(message) + 1);
+        close(pipe_fd[1]);
+    }
+
+    return 0;
+}
+```
+
+---
+
+`2. Named Pipes in Linux`
+`Creating a Named Pipe:`
+```bash
+mkfifo my_pipe
+```
+
+`Writing to the Pipe (Writer Process):`
+```bash
+echo "Hello from Writer" > my_pipe
+```
+
+`Reading from the Pipe (Reader Process):`
+```bash
+cat < my_pipe
+```
+
+---
+
+`Applications of Pipes`
+1. `Shell Commands`:
+   - Example: `ls | grep ".cpp"`  
+     Here, the `ls` command writes its output to a pipe, and 
+     the `grep` command reads from the pipe 
+     to filter the results.
+
+2. `Parent-Child Communication`:
+   - A parent process passes instructions or 
+   data to its child process, 
+   such as managing subprocesses 
+   in a job scheduler.
+
+3. `Producer-Consumer Model`:
+   - Pipes facilitate communication 
+   where one process produces data, and 
+   another consumes it (e.g., data pipelines in ETL processes).
+
+4. `Application Communication`:
+   - Named pipes enable inter-application communication 
+   without requiring shared memory.
+
+---
+
+`Best Practices`
+- Use `anonymous pipes` for simple, 
+lightweight parent-child process communication.
+- Use `named pipes` when unrelated processes need to communicate.
+- Ensure proper `synchronization` to prevent deadlocks.
+- Handle `errors` such as reading from a closed pipe or 
+writing to a full pipe.
+- Use `buffering` wisely to optimize performance.
+
+---
+
+Pipes are foundational IPC mechanisms, 
+providing a simple yet powerful way 
+to facilitate communication between processes. 
+
+Their versatility and integration 
+with system-level programming 
+make them invaluable for many software applications.

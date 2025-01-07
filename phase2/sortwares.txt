@@ -1,0 +1,9 @@
+1. WSL (Windows Subsystem for Linux)
+2. Ubuntu 22.04 LTS 
+3. gcc 13.x/ g++ 13.x / gdb 
+4. gtest (linux)
+5. java 11 on windows 
+6. git 
+7. permission to 
+   i. github 
+   ii. sonarcube official page   

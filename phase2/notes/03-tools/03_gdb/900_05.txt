@@ -1,0 +1,155 @@
+Here is a detailed explanation of `tracepoints` and `checkpoints` in `gdb`:
+
+---
+
+`Tracepoints`
+Tracepoints are used to collect data 
+without stopping the program's execution. 
+
+Unlike breakpoints, which halt execution, 
+tracepoints allow you to "trace" the program 
+by capturing information at specific points. 
+
+This is particularly useful in real-time systems or 
+when you want to monitor execution 
+without disrupting the program.
+
+Key Features of Tracepoints:
+1. `Non-intrusive Monitoring:` Execution continues while data is collected.
+2. `Data Collection:` You can specify what data to collect at a tracepoint.
+3. `Efficient Debugging:` Suitable for large systems 
+where halting the program is impractical.
+
+Commands:
+- `Setting a Tracepoint:`  
+  ```bash
+  trace <location>
+  ```
+  Example:  
+  ```bash
+  trace myFunction
+  ```
+
+- `Listing Tracepoints:`  
+  ```bash
+  info tracepoints
+  ```
+
+- `Deleting Tracepoints:`  
+  ```bash
+  delete tracepoint <number>
+  ```
+
+- `Specifying Actions for Tracepoints:`  
+  ```bash
+  actions <tracepoint-number>
+  > collect <variable>
+  > end
+  ```
+  Example:  
+  ```bash
+  actions 1
+  > collect x, y
+  > end
+  ```
+
+- `Start/Stop Tracing:`  
+  ```bash
+  tstart
+  tstop
+  ```
+
+---
+
+`Checkpoints`
+Checkpoints allow you to save the state of a program 
+during debugging so you can revert to a previous state later. 
+This is useful for exploring different execution paths or 
+debugging complex issues.
+
+Key Features of Checkpoints:
+1. `Snapshot of Execution State:` Captures program state at a particular moment.
+2. `Revertibility:` You can return to a saved checkpoint at any time.
+3. `Parallel Exploration:` Allows examining multiple execution paths 
+without restarting.
+
+Commands:
+- `Creating a Checkpoint:`  
+  ```bash
+  checkpoint
+  ```
+  Example:  
+  ```bash
+  checkpoint
+  ```
+
+- `Listing Checkpoints:`  
+  ```bash
+  info checkpoints
+  ```
+
+- `Reverting to a Checkpoint:`  
+  ```bash
+  restart <checkpoint-number>
+  ```
+  Example:  
+  ```bash
+  restart 1
+  ```
+
+- `Deleting a Checkpoint:`  
+  ```bash
+  delete checkpoint <checkpoint-number>
+  ```
+
+---
+
+`Practical Use Cases`
+Tracepoints:
+1. Monitoring the value of a variable in a loop without stopping execution.
+2. Collecting function arguments when a specific function is called.
+3. Debugging performance-critical code in real-time systems.
+
+Checkpoints:
+1. Testing multiple conditional branches in a function.
+2. Debugging segmentation faults by reverting to a point before the crash.
+3. Comparing program behavior across different checkpoints.
+
+---
+
+`Example Workflow`
+1. `Set a Tracepoint:`
+   ```bash
+   trace myFunction
+   actions 1
+   > collect x, y
+   > end
+   tstart
+   ```
+
+2. `Set a Checkpoint:`
+   ```bash
+   checkpoint
+   ```
+
+3. `Run Program:`
+   ```bash
+   run
+   ```
+
+4. `Restart from Checkpoint if Needed:`
+   ```bash
+   restart 1
+   ```
+
+5. `List Collected Data:`
+   ```bash
+   tstop
+   ```
+
+---
+
+`Tips:`
+- Use tracepoints when debugging performance-sensitive applications.
+- Combine tracepoints with `tstart` and `tstop` for efficient data collection.
+- Use checkpoints to save time when exploring program states and paths.

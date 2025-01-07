@@ -1,0 +1,239 @@
+Below is the implementation of 
+the `Producer-Consumer Model` using `fork()` 
+for `inter-process communication (IPC)` 
+with anonymous pipes in C++:
+
+Updated Implementation
+```cpp
+#include <iostream>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <vector>
+
+void producer(int write_fd) {
+    // Producer generates data
+    std::vector<int> data = {1, 2, 3, 4, 5};
+    for (int value : data) {
+        write(write_fd, &value, sizeof(value));
+        std::cout << "Producer sent: " << value << std::endl;
+    }
+    // Signal end of data with a special value (-1)
+    int end_signal = -1;
+    write(write_fd, &end_signal, sizeof(end_signal));
+    close(write_fd);
+}
+
+void consumer(int read_fd) {
+    int value;
+    while (read(read_fd, &value, sizeof(value)) > 0) {
+        if (value == -1) {
+            // End of data signal
+            break;
+        }
+        std::cout << "Consumer received: " << value << std::endl;
+    }
+    close(read_fd);
+}
+
+int main() {
+    int pipe_fds[2];
+    if (pipe(pipe_fds) == -1) {
+        perror("pipe");
+        return 1;
+    }
+
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    } else if (pid == 0) {
+        // Child process: Consumer
+        close(pipe_fds[1]); // Close unused write end
+        consumer(pipe_fds[0]);
+    } else {
+        // Parent process: Producer
+        close(pipe_fds[0]); // Close unused read end
+        producer(pipe_fds[1]);
+
+        // Wait for the child process to complete
+        wait(nullptr);
+    }
+
+    return 0;
+}
+```
+
+---
+
+Explanation
+1. `Anonymous Pipe`:
+   - The `pipe()` system call creates a unidirectional communication channel with two ends:
+     - `pipe_fds[0]`: Read end.
+     - `pipe_fds[1]`: Write end.
+
+2. `Fork`:
+   - `fork()` creates a new child process.
+   - The child process runs the `consumer()` function.
+   - The parent process runs the `producer()` function.
+
+3. `Producer`:
+   - Writes data to the pipe.
+   - Ends with a special value (`-1`) to signal the end of the data stream.
+
+4. `Consumer`:
+   - Reads data from the pipe.
+   - Stops when it encounters the special value (`-1`).
+
+5. `Synchronization`:
+   - The `wait()` system call ensures that the parent process waits for the child process to complete.
+
+---
+
+Sample Output
+```
+Producer sent: 1
+Producer sent: 2
+Producer sent: 3
+Producer sent: 4
+Producer sent: 5
+Consumer received: 1
+Consumer received: 2
+Consumer received: 3
+Consumer received: 4
+Consumer received: 5
+```
+
+---
+
+Key Points
+1. `IPC with Pipes`:
+   - Anonymous pipes are suitable for parent-child communication.
+   - Pipes are unidirectional; for bidirectional communication, you would need two pipes.
+
+2. `Process Isolation`:
+   - The producer and consumer run in separate memory spaces.
+
+3. `Error Handling`:
+   - The implementation includes basic error checking for `pipe()` and `fork()`.
+
+=================================================================================
+
+The provided code demonstrates a simple implementation of the `Producer-Consumer Model` using `anonymous pipes` and `fork()` for interprocess communication in C++. Below is a detailed walkthrough:
+
+---
+
+Key Components of the Code:
+
+1. `Pipe Creation`:
+   ```cpp
+   int pipe_fds[2];
+   if (pipe(pipe_fds) == -1) {
+       perror("pipe");
+       return 1;
+   }
+   ```
+   - The `pipe()` system call creates a unidirectional communication channel. 
+   - `pipe_fds[0]` is the `read end`.
+   - `pipe_fds[1]` is the `write end`.
+
+2. `Forking a Child Process`:
+   ```cpp
+   pid_t pid = fork();
+   ```
+   - The `fork()` system call creates a new child process.
+   - The child process inherits the file descriptors of the parent process.
+
+3. `Producer Function`:
+   ```cpp
+   void producer(int write_fd) {
+       std::vector<int> data = {1, 2, 3, 4, 5};
+       for (int value : data) {
+           write(write_fd, &value, sizeof(value));
+           std::cout << "Producer sent: " << value << std::endl;
+       }
+       int end_signal = -1;
+       write(write_fd, &end_signal, sizeof(end_signal));
+       close(write_fd);
+   }
+   ```
+   - Writes a series of integers to the pipe.
+   - Sends a special value (`-1`) to signal the end of data.
+   - Closes the write end of the pipe after sending the data.
+
+4. `Consumer Function`:
+   ```cpp
+   void consumer(int read_fd) {
+       int value;
+       while (read(read_fd, &value, sizeof(value)) > 0) {
+           if (value == -1) break; // End of data signal
+           std::cout << "Consumer received: " << value << std::endl;
+       }
+       close(read_fd);
+   }
+   ```
+   - Reads integers from the pipe until it encounters the end signal (`-1`).
+   - Closes the read end of the pipe after processing.
+
+5. `Parent and Child Logic`:
+   ```cpp
+   if (pid == 0) {
+       // Child process: Consumer
+       close(pipe_fds[1]);
+       consumer(pipe_fds[0]);
+   } else {
+       // Parent process: Producer
+       close(pipe_fds[0]);
+       producer(pipe_fds[1]);
+       wait(nullptr);
+   }
+   ```
+   - The parent process acts as the producer, writing to the pipe.
+   - The child process acts as the consumer, reading from the pipe.
+   - The parent waits for the child process to complete using `wait()`.
+
+---
+
+Expected Output:
+The output will look like this:
+```
+Producer sent: 1
+Producer sent: 2
+Producer sent: 3
+Producer sent: 4
+Producer sent: 5
+Consumer received: 1
+Consumer received: 2
+Consumer received: 3
+Consumer received: 4
+Consumer received: 5
+```
+
+---
+
+Notes:
+1. `Pipe Behavior`:
+   - Pipes provide unidirectional communication. 
+   - For bidirectional communication, two separate pipes would be needed.
+
+2. `Synchronization`:
+   - The `wait()` ensures that the producer (parent) does not terminate before the consumer (child) finishes.
+
+3. `Error Handling`:
+   - Proper error checking is in place for `pipe()` and `fork()`.
+
+---
+
+Extensions:
+1. `Bidirectional Communication`:
+   Implement another pipe for the child to send data back to the parent.
+
+2. `Named Pipes (FIFOs)`:
+   Use named pipes for communication between unrelated processes.
+
+3. `Real-World Applications`:
+   This code could be adapted for scenarios like:
+   - ETL pipelines.
+   - Data streaming between producer and consumer processes.
+
+Would you like to explore any of these extensions?

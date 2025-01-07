@@ -1,0 +1,195 @@
+In multithreaded programming, `message passing` is a common way for threads to communicate without sharing memory directly. Instead of accessing shared variables, threads exchange messages, reducing the risk of race conditions and improving modularity.
+
+In C++, you can use standard constructs like `std::queue`, `std::condition_variable`, and `std::mutex` to implement thread communication. Starting from C++20, `std::atomic` and synchronization features such as `std::latch` and `std::barrier` provide more robust tools for message passing.
+
+---
+
+Example 1: Producer-Consumer with `std::queue`
+
+A producer thread generates messages and adds them to a queue, while a consumer thread processes these messages.
+
+Code Example
+```cpp
+#include <iostream>
+#include <thread>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
+#include <atomic>
+
+std::queue<int> message_queue;     // Shared message queue
+std::mutex queue_mutex;            // Mutex to protect queue
+std::condition_variable cv;        // Condition variable for synchronization
+std::atomic<bool> done(false);     // Flag to indicate when producer is finished
+
+void producer() {
+    for (int i = 1; i <= 10; ++i) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Simulate work
+        {
+            std::lock_guard<std::mutex> lock(queue_mutex);
+            message_queue.push(i);
+            std::cout << "Produced: " << i << std::endl;
+        }
+        cv.notify_one(); // Notify the consumer
+    }
+    done = true;
+    cv.notify_all(); // Notify consumers to check the done flag
+}
+
+void consumer() {
+    while (true) {
+        std::unique_lock<std::mutex> lock(queue_mutex);
+        cv.wait(lock, [] { return !message_queue.empty() || done; });
+
+        while (!message_queue.empty()) {
+            int message = message_queue.front();
+            message_queue.pop();
+            lock.unlock();
+
+            std::cout << "Consumed: " << message << std::endl;
+
+            lock.lock(); // Relock for further queue operations
+        }
+
+        if (done) break; // Exit when done
+    }
+}
+
+int main() {
+    std::thread producer_thread(producer);
+    std::thread consumer_thread(consumer);
+
+    producer_thread.join();
+    consumer_thread.join();
+
+    return 0;
+}
+```
+
+Key Points
+1. `Shared Queue`: The `std::queue` holds messages 
+   to be processed.
+2. `Mutex`: Protects the queue 
+   to prevent race conditions.
+3. `Condition Variable`: Synchronizes producer and consumer threads.
+4. `Atomic Flag`: Signals when the producer is done.
+
+---
+
+Example 2: Message Passing 
+with `std::future` and `std::promise`
+
+C++ `std::promise` and `std::future` can be used 
+for one-time message passing between threads.
+
+Code Example
+```cpp
+#include <iostream>
+#include <thread>
+#include <future>
+
+void producer(std::promise<int> promise) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // Simulate work
+    int result = 42; // The message
+    std::cout << "Produced: " << result << std::endl;
+    promise.set_value(result); // Send message to consumer
+}
+
+void consumer(std::future<int> future) {
+    int message = future.get(); // Wait for the message
+    std::cout << "Consumed: " << message << std::endl;
+}
+
+int main() {
+    std::promise<int> promise;
+    std::future<int> future = promise.get_future();
+
+    std::thread producer_thread(producer, std::move(promise));
+    std::thread consumer_thread(consumer, std::move(future));
+
+    producer_thread.join();
+    consumer_thread.join();
+
+    return 0;
+}
+```
+
+Key Points
+1. ``std::promise``: Allows a producer 
+to send a value or exception 
+to a consumer.
+2. ``std::future``: The consumer waits 
+for the value provided by the promise.
+3. `One-Time Use`: Each `std::promise` 
+can only set a value once.
+
+---
+
+Example 3: Message Passing Using `std::atomic` (Flag-Based)
+
+Using `std::atomic`, 
+a simple flag-based communication system can be implemented.
+
+Code Example
+```cpp
+#include <iostream>
+#include <thread>
+#include <atomic>
+#include <chrono>
+
+std::atomic<int> message(0); // Shared atomic message
+std::atomic<bool> ready(false); // Flag to indicate the message is ready
+
+void producer() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // Simulate work
+    message = 42;
+    std::cout << "Produced: " << message << std::endl;
+    ready = true; // Notify consumer
+}
+
+void consumer() {
+    while (!ready.load()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Wait for producer
+    }
+    std::cout << "Consumed: " << message.load() << std::endl;
+}
+
+int main() {
+    std::thread producer_thread(producer);
+    std::thread consumer_thread(consumer);
+
+    producer_thread.join();
+    consumer_thread.join();
+
+    return 0;
+}
+```
+
+Key Points
+1. `Atomic Message`: Ensures message consistency without locks.
+2. `Atomic Flag`: Used to notify the consumer.
+
+---
+
+Comparison of Approaches
+
+| `Feature`                | `Queue + Mutex/Condition Variable`  | ``std::promise`/`std::future``   | ``std::atomic``           |
+|--------------------------|-------------------------------------|----------------------------------|---------------------------|
+| Flexibility              | Supports multiple messages          | Single-message                   | Single or simple message  |
+| Complexity               | Moderate                            | Simple                           | Simple                    |
+| Performance              | Moderate                            | High for one-time use            | High                      |
+| Synchronization Overhead | Mutex/Condition variable            | None                             | None                      |
+
+---
+
+Best Practices
+1. Use ``std::queue` with mutex/condition variables` 
+for multiple messages or producer-consumer patterns.
+2. Use ``std::promise` and `std::future`` 
+for one-time message passing.
+3. Use ``std::atomic`` 
+for lightweight, 
+simple message passing.
+
+Each approach has its own advantages, and 
+the choice depends on your specific requirements.

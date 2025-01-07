@@ -1,0 +1,205 @@
+C++ - Synchronization in IPC - Mutexes in IPC
+===========================================================
+Synchronization in IPC: Mutexes in C++
+
+Mutexes (short for `mutual exclusion`) are 
+synchronization primitives 
+used to protect shared resources 
+from concurrent access, 
+ensuring only one process or thread 
+accesses a critical section at a time. 
+
+Mutexes are commonly used in 
+`Inter-Process Communication (IPC)` as well as 
+multithreading.
+
+---
+
+Key Concepts:
+
+1. `What is a Mutex?`
+   - A mutex is a lock that ensures mutual exclusion 
+   by allowing only one process/thread 
+   to acquire the lock at any time.
+
+2. `Operations`:
+   - `Lock`: Acquires the mutex, blocking other processes/threads from accessing the critical section.
+   - `Unlock`: Releases the mutex, allowing others to acquire it.
+   - `Try Lock`: Attempts to acquire the mutex without blocking; returns failure if the mutex is already locked.
+
+3. `System-Level Mutex in IPC`:
+   - Mutexes for IPC are usually implemented using `POSIX shared mutexes` with `pthread` or by mapping mutexes to shared memory.
+
+---
+
+IPC Mutexes Using POSIX `pthread`
+
+Key Functions:
+- `pthread_mutexattr_init()`: Initializes mutex attributes.
+- `pthread_mutexattr_setpshared()`: Sets the mutex to be shared between processes.
+- `pthread_mutex_init()`: Initializes the mutex.
+- `pthread_mutex_lock()`: Locks the mutex.
+- `pthread_mutex_unlock()`: Unlocks the mutex.
+- `pthread_mutex_destroy()`: Destroys the mutex.
+
+---
+
+Example: Producer-Consumer Using Mutexes and Shared Memory
+
+This example demonstrates 
+how mutexes can synchronize access to 
+shared memory between two processes.
+
+Code:
+
+```cpp
+#include <iostream>
+#include <sys/mman.h>
+#include <sys/wait.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <vector>
+
+struct SharedData {
+    pthread_mutex_t mutex;
+    std::vector<int> buffer;
+    bool done;
+};
+
+void producer(SharedData* shared) {
+    for (int i = 1; i <= 5; ++i) {
+        pthread_mutex_lock(&shared->mutex);
+
+        shared->buffer.push_back(i);
+        std::cout << "Producer produced: " << i << std::endl;
+
+        pthread_mutex_unlock(&shared->mutex);
+        sleep(1);
+    }
+
+    // Signal completion
+    pthread_mutex_lock(&shared->mutex);
+    shared->done = true;
+    pthread_mutex_unlock(&shared->mutex);
+}
+
+void consumer(SharedData* shared) {
+    while (true) {
+        pthread_mutex_lock(&shared->mutex);
+
+        if (!shared->buffer.empty()) {
+            int item = shared->buffer.back();
+            shared->buffer.pop_back();
+            std::cout << "Consumer consumed: " << item << std::endl;
+        } else if (shared->done) {
+            pthread_mutex_unlock(&shared->mutex);
+            break;
+        }
+
+        pthread_mutex_unlock(&shared->mutex);
+        sleep(1);
+    }
+}
+
+int main() {
+    // Create shared memory
+    SharedData* shared = static_cast<SharedData*>(mmap(
+        nullptr, sizeof(SharedData),
+        PROT_READ | PROT_WRITE,
+        MAP_SHARED | MAP_ANONYMOUS,
+        -1, 0));
+
+    if (shared == MAP_FAILED) {
+        perror("mmap");
+        return 1;
+    }
+
+    // Initialize mutex attributes
+    pthread_mutexattr_t attr;
+    pthread_mutexattr_init(&attr);
+    pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
+    pthread_mutex_init(&shared->mutex, &attr);
+    pthread_mutexattr_destroy(&attr);
+
+    shared->done = false;
+
+    // Fork processes
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    } else if (pid == 0) {
+        // Child process: Consumer
+        consumer(shared);
+    } else {
+        // Parent process: Producer
+        producer(shared);
+
+        // Wait for the child process to finish
+        wait(nullptr);
+
+        // Clean up
+        pthread_mutex_destroy(&shared->mutex);
+        munmap(shared, sizeof(SharedData));
+    }
+
+    return 0;
+}
+```
+
+---
+
+Explanation:
+
+1. `Shared Memory`:
+   - A `SharedData` struct is created in shared memory using `mmap()`. It contains:
+     - A `pthread_mutex_t` for mutual exclusion.
+     - A shared buffer (`std::vector<int>`).
+     - A `done` flag to signal the end of production.
+
+2. `Mutex Initialization`:
+   - `pthread_mutexattr_setpshared()` sets the mutex to be shared across processes.
+   - The mutex is initialized with these attributes.
+
+3. `Producer`:
+   - Locks the mutex to add items to the shared buffer.
+   - Unlocks the mutex after modifying the buffer.
+
+4. `Consumer`:
+   - Locks the mutex to access and remove items from the buffer.
+   - Checks the `done` flag to determine when production is complete.
+
+5. `Synchronization`:
+   - Mutex ensures that only one process accesses the shared buffer at a time.
+
+---
+
+Sample Output:
+
+```
+Producer produced: 1
+Consumer consumed: 1
+Producer produced: 2
+Producer produced: 3
+Consumer consumed: 2
+Consumer consumed: 3
+Producer produced: 4
+Producer produced: 5
+Consumer consumed: 4
+Consumer consumed: 5
+```
+
+---
+
+Advantages of Mutex in IPC:
+1. Ensures mutual exclusion in accessing shared resources.
+2. Prevents race conditions and data corruption.
+3. Works seamlessly with shared memory for IPC.
+
+Challenges:
+1. Potential for `deadlocks` if mutexes are not released correctly.
+2. Performance overhead due to locking and unlocking.
+3. Complexity increases in large, multi-process applications.
+
+Mutexes are a robust solution for synchronizing processes in IPC, ensuring data integrity while enabling concurrent operations.

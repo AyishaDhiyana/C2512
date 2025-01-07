@@ -1,0 +1,192 @@
+Here’s a detailed breakdown of the `C++ Unit Testing with GTest` content:
+
+---
+
+`Introduction to Unit Testing`
+`Definition and Importance of Unit Testing`
+- `Definition`:
+  - Unit testing is 
+        the process of testing individual 
+            components or 
+            functions 
+        of a software application 
+        to ensure they work as intended.
+- `Importance`:
+  - Detects bugs early in development.
+  - Ensures code reliability and robustness.
+  - Facilitates refactoring and code maintenance.
+  - Encourages modular design and improves developer confidence.
+
+`Overview of Different Unit Testing Frameworks`
+- Popular frameworks for C++:
+  - `Google Test (GTest)`: Comprehensive, widely used, and supports mocking with Google Mock.
+  - `Catch2`: Lightweight and easy to use with a modern C++ syntax.
+  - `Boost.Test`: Part of the Boost library, integrates well with other Boost modules.
+  - `CppUnit`: Inspired by JUnit, suitable for traditional C++ projects.
+
+---
+
+`Getting Started with GTest`
+`Installation and Setup`
+1. `Install Google Test`:
+   - Using package managers:
+     - Ubuntu: `sudo apt-get install libgtest-dev` (build and copy manually).
+     - macOS: `brew install googletest`.
+     - Windows: Download prebuilt binaries or build from source.
+   - Manual build:
+     ```bash
+     git clone https://github.com/google/googletest.git
+     cd googletest
+     cmake .
+     make
+     sudo make install
+     ```
+
+2. `Integrating GTest into a Project`:
+   - Add GTest as a dependency in your `CMakeLists.txt`:
+     ```cmake
+     cmake_minimum_required(VERSION 3.10)
+     project(UnitTestingExample)
+
+     add_subdirectory(googletest)
+     include_directories(${gtest_SOURCE_DIR}/include)
+
+     add_executable(TestExample test.cpp)
+     target_link_libraries(TestExample gtest gtest_main)
+     ```
+
+`Writing Basic Tests`
+- Example test file: `test.cpp`
+  ```cpp
+  #include <gtest/gtest.h>
+
+  // Function to test
+  int Add(int a, int b) {
+      return a + b;
+  }
+
+  // Test case
+  TEST(AdditionTest, PositiveNumbers) {
+      EXPECT_EQ(Add(2, 3), 5);
+  }
+
+  TEST(AdditionTest, NegativeNumbers) {
+      EXPECT_EQ(Add(-2, -3), -5);
+  }
+
+  int main(int argc, char `argv) {
+      ::testing::InitGoogleTest(&argc, argv);
+      return RUN_ALL_TESTS();
+  }
+  ```
+
+`Running Tests and Interpreting Results`
+- Compile and run the test binary:
+  ```bash
+  mkdir build
+  cd build
+  cmake ..
+  make
+  ./TestExample
+  ```
+- Output example:
+  ```
+  [==========] Running 2 tests from 1 test case.
+  [ RUN      ] AdditionTest.PositiveNumbers
+  [       OK ] AdditionTest.PositiveNumbers (0 ms)
+  [ RUN      ] AdditionTest.NegativeNumbers
+  [       OK ] AdditionTest.NegativeNumbers (0 ms)
+  [==========] 2 tests from 1 test case ran.
+  ```
+
+---
+
+`Advanced GTest Features`
+`Test Fixtures`
+- Used to set up shared resources for multiple tests.
+- Example:
+  ```cpp
+  class MathTest : public ::testing::Test {
+  protected:
+      void SetUp() override { num1 = 2; num2 = 3; }
+      int num1, num2;
+  };
+
+  TEST_F(MathTest, Addition) {
+      EXPECT_EQ(num1 + num2, 5);
+  }
+
+  TEST_F(MathTest, Multiplication) {
+      EXPECT_EQ(num1 * num2, 6);
+  }
+  ```
+
+`Parameterized Tests`
+- Run the same test logic with different input values.
+- Example:
+  ```cpp
+  class AdditionTest : public ::testing::TestWithParam<std::pair<int, int>> {};
+
+  TEST_P(AdditionTest, CheckSum) {
+      auto params = GetParam();
+      EXPECT_EQ(params.first + params.second, 5);
+  }
+
+  INSTANTIATE_TEST_SUITE_P(Default, AdditionTest,
+                           ::testing::Values(std::make_pair(2, 3), std::make_pair(4, 1)));
+  ```
+
+`Mocking with Google Mock`
+- Simulate the behavior of complex dependencies.
+- Example:
+  ```cpp
+  #include <gmock/gmock.h>
+
+  class MockDatabase {
+  public:
+      MOCK_METHOD(int, GetValue, (int id), ());
+  };
+
+  TEST(DatabaseTest, MockExample) {
+      MockDatabase db;
+      EXPECT_CALL(db, GetValue(1)).WillOnce(::testing::Return(42));
+      EXPECT_EQ(db.GetValue(1), 42);
+  }
+  ```
+
+---
+
+`Best Practices`
+`Writing Effective Tests`
+- Focus on testing one functionality per test.
+- Use clear and descriptive test names.
+- Cover edge cases and error handling scenarios.
+
+`Test-Driven Development (TDD)`
+- Write tests before implementing the functionality.
+- Benefits:
+  - Forces thinking about requirements and design.
+  - Provides a safety net for refactoring.
+
+`Maintaining and Organizing Test Suites`
+- Organize tests into directories and files based on modules or components.
+- Use consistent naming conventions for test cases.
+- Regularly run tests and ensure all pass after code changes.
+
+---
+
+`Practical Examples`
+`Unit Testing Sample Projects`
+1. `Testing a Calculator`:
+   - Functions: Add, Subtract, Multiply, Divide.
+   - Write test cases for valid inputs and edge cases (e.g., division by zero).
+
+2. `Testing a String Utility Library`:
+   - Functions: Reverse, Palindrome check, String concatenation.
+   - Write tests for corner cases like empty strings or very large inputs.
+
+`Hands-on Exercises`
+- Write tests for:
+  - A sorting algorithm with various input arrays (sorted, unsorted, duplicates, etc.).
+  - A file parser that reads and validates configuration files.
+  - A library management system that manages books and borrowers.

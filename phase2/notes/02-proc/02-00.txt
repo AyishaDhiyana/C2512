@@ -1,0 +1,10 @@
+IPC Mechanisms
+            Pipes
+            Message Queues
+            Shared Memory
+            Sockets
+
+IPC Mechanisms - Pipes
+IPC Mechanisms - Message Queues
+IPC Mechanisms - Shared Memory
+IPC Mechanisms - Sockets

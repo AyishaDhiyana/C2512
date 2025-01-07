@@ -1,0 +1,173 @@
+Parallel algorithms in C++17 and C++20 
+enhance the Standard Template Library (STL) 
+by providing a way to execute algorithms concurrently. 
+
+This enables developers to efficiently use multi-core systems 
+without delving into low-level thread management. 
+
+Here's a comprehensive overview:
+
+---
+
+`Parallel Algorithms in C++17`
+
+C++17 introduced execution policies 
+that define how standard algorithms should execute:
+
+1. `Execution Policies`
+   - `std::execution::seq`: Sequential execution 
+   (default behavior, same as before C++17).
+   - `std::execution::par`: Parallel execution using multiple threads.
+   - `std::execution::par_unseq`: Parallel execution 
+   with SIMD (Single Instruction Multiple Data) vectorization.
+
+2. `Supported Algorithms`
+   Many STL algorithms 
+   (like `std::for_each`, `std::transform`, `std::reduce`, etc.) 
+   now accept an execution policy as the first parameter. 
+
+   ```cpp
+   #include <vector>
+   #include <execution>
+   #include <algorithm>
+   #include <iostream>
+
+   int main() {
+       std::vector<int> data{1, 2, 3, 4, 5};
+
+       // Parallel for_each
+       std::for_each(std::execution::par, data.begin(), data.end(),
+                     [](int& x) { x *= 2; });
+
+       // Output: 2 4 6 8 10
+       for (int x : data)
+           std::cout << x << " ";
+       return 0;
+   }
+   ```
+
+3. `Benefits`
+   - No explicit thread management.
+   - Portable across platforms.
+   - Easier adoption of parallelism.
+
+---
+
+`C++20 Enhancements`
+
+C++20 expanded the concurrency and parallelism landscape with new features:
+
+1. `Coroutines`
+   - Coroutines provide asynchronous behavior with a synchronous coding style.
+   - Example: `co_await` for suspending and resuming execution.
+
+   ```cpp
+   #include <iostream>
+   #include <coroutine>
+
+   struct SimpleCoro {
+       struct promise_type {
+           SimpleCoro get_return_object() { return {}; }
+           std::suspend_never initial_suspend() { return {}; }
+           std::suspend_never final_suspend() noexcept { return {}; }
+           void return_void() {}
+           void unhandled_exception() {}
+       };
+   };
+
+   SimpleCoro myCoro() {
+       std::cout << "Coroutine Start\n";
+       co_await std::suspend_always{};
+       std::cout << "Coroutine Resumed\n";
+   }
+
+   int main() {
+       auto coro = myCoro();
+       std::cout << "Main Function End\n";
+       return 0;
+   }
+   ```
+
+2. `New Synchronization Primitives`
+   - `std::latch`: Wait for a fixed number of threads to complete.
+   - `std::barrier`: Allow threads to synchronize at multiple phases.
+   - `std::semaphore`: General-purpose semaphore for resource management.
+
+   ```cpp
+   #include <latch>
+   #include <iostream>
+   #include <thread>
+
+   int main() {
+       std::latch latch(3);
+
+       auto worker = [&latch]() {
+           std::cout << "Worker finished\n";
+           latch.count_down();
+       };
+
+       std::thread t1(worker), t2(worker), t3(worker);
+
+       latch.wait();
+       std::cout << "All workers done\n";
+
+       t1.join();
+       t2.join();
+       t3.join();
+       return 0;
+   }
+   ```
+
+3. ``std::jthread``
+   - A new thread class that joins automatically when the thread object goes out of scope.
+   - Simplifies thread lifecycle management.
+
+   ```cpp
+   #include <thread>
+   #include <iostream>
+
+   int main() {
+       std::jthread t([] { std::cout << "Hello from thread\n"; });
+       // Automatically joined when `t` goes out of scope.
+       return 0;
+   }
+   ```
+
+---
+
+`Key Algorithms`
+
+- ``std::reduce` (C++17)`:
+  - Reduces a range of elements into a single value.
+  - Example: Parallel summation.
+  - Sequential: `std::reduce(std::execution::seq, ...)`
+  - Parallel: `std::reduce(std::execution::par, ...)`
+
+- ``std::transform_reduce` (C++17)`:
+  - Combines `std::transform` and `std::reduce` for simultaneous transformation and reduction.
+  
+- ``std::for_each_n` (C++20)`:
+  - Processes `n` elements with parallel execution.
+
+---
+
+`Best Practices for Parallel Algorithms`
+
+1. Use `std::execution::par` for CPU-intensive tasks.
+2. Use `std::execution::par_unseq` when SIMD vectorization is beneficial.
+3. Ensure thread-safe operations (e.g., avoid modifying shared data).
+4. Test performance gains; sometimes, 
+   sequential execution is more efficient for small data sets.
+5. Understand hardware limitations (e.g., core count, memory bandwidth).
+
+---
+
+`Conclusion`
+
+Parallel algorithms in C++17 and C++20 provide powerful tools 
+for achieving concurrency 
+while abstracting away much of the complexity. 
+
+These features allow developers 
+to write more expressive, maintainable, and 
+efficient code with minimal overhead.

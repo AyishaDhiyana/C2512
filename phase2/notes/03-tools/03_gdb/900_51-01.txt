@@ -1,0 +1,95 @@
+`Table of Contents: Debugging with GDB`
+1. `Introduction to GDB`  
+   - What is GDB?  
+   - Key Features of GDB  
+
+2. `Setting Up GDB`  
+   - Installing GDB  
+   - Compiling Programs for GDB (`-g` flag)
+
+3. `Starting GDB`  
+   - Running GDB  
+   - Command-Line Options  
+   - Loading Core Dumps  
+
+4. `Navigating a Program`  
+   - Running a Program (`run`)  
+   - Passing Arguments (`run <args>`)  
+   - Continuing Execution (`continue`)  
+
+5. `Breakpoints`  
+   - Setting Breakpoints (`break`)  
+   - Conditional Breakpoints (`break <condition>`)  
+   - Temporary Breakpoints (`tbreak`)  
+   - Listing Breakpoints (`info breakpoints`)  
+   - Deleting Breakpoints (`delete`)  
+
+6. `Tracepoints`  
+   - Overview of Tracepoints  
+   - Setting Tracepoints (`trace`)  
+   - Collecting Data at Tracepoints (`actions`)  
+   - Managing Tracepoints (`info tracepoints`, `delete tracepoint`)  
+
+7. `Checkpoints`  
+   - Overview of Checkpoints  
+   - Creating Checkpoints (`checkpoint`)  
+   - Reverting to Checkpoints (`restart`)  
+   - Managing Checkpoints (`info checkpoints`, `delete checkpoint`)  
+
+8. `Inspecting Program State`  
+   - Printing Variables (`print`)  
+   - Watching Variables (`watch`)  
+   - Local and Global Variables (`info locals`, `info globals`)  
+
+9. `Stack and Function Calls`  
+   - Viewing the Call Stack (`backtrace`)  
+   - Navigating Frames (`frame`, `up`, `down`)  
+   - Inspecting Function Arguments  
+
+10. `Debugging Tools`  
+    - Step Commands (`step`, `next`, `finish`)  
+    - Continuing Until a Condition (`until`)  
+    - Jumping to Specific Lines (`jump`)  
+
+11. `Debugging Memory`  
+    - Viewing Memory (`x`)  
+    - Allocating/Deallocating Memory  
+    - Debugging Memory Leaks  
+
+12. `Debugging Multi-Threaded Programs`  
+    - Listing Threads (`info threads`)  
+    - Switching Threads (`thread`)  
+    - Debugging Specific Threads  
+
+13. `Debugging Signals`  
+    - Handling Signals (`handle`)  
+    - Ignoring Signals  
+
+14. `GDB Scripts and Automation`  
+    - Writing GDB Scripts  
+    - Running Commands from Files (`source`)  
+
+15. `Logging and Output`  
+    - Redirecting Output (`set logging`)  
+    - Saving Command History  
+
+16. `Advanced Debugging`  
+    - Non-Stop Mode Debugging  
+    - Reverse Debugging  
+    - Using Python in GDB  
+
+17. `Debugging Libraries`  
+    - Attaching to Running Processes (`attach`)  
+    - Debugging Shared Libraries (`info shared`)  
+
+18. `Integration with IDEs`  
+    - Using GDB with Visual Studio Code  
+    - GDB GUI Frontends  
+
+19. `Common Errors and Troubleshooting`  
+    - Common GDB Errors  
+    - Debugging Crash Issues  
+
+20. `Frequently Used Commands Reference`  
+    - Quick Reference for Commands  
+

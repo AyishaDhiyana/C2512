@@ -1,0 +1,220 @@
+IPC Mechanism - Message Queues
+
+`Message Queues` are 
+an interprocess communication (IPC) mechanism 
+that allows processes to send and 
+receive messages to each other in a queued format. 
+
+Each message in the queue is identified by a message type, and 
+processes can read or write messages to the queue 
+in a synchronous or asynchronous manner.
+
+Message queues are a powerful IPC mechanism because they provide:
+
+- `Asynchronous Communication`: 
+Processes do not need to wait 
+for a message to be received 
+before continuing execution.
+
+- `Message Prioritization`: 
+Messages can be assigned priority, and 
+high-priority messages can be retrieved first.
+
+- `Decoupled Communication`: 
+Sender and receiver processes do not need 
+to know about each other directly, 
+only about the message queue.
+
+In Unix-like systems, message queues 
+can be managed using the 
+`msgget()`, `msgsnd()`, 
+`msgrcv()`, and `msgctl()` 
+system calls. 
+On Windows, message queues are implemented using 
+`CreateMessageQueue()`, 
+`SendMessage()`, and `ReceiveMessage()`.
+
+---
+
+Message Queue API Overview in Linux:
+
+1. `msgget()`: Creates a new message queue or accesses an existing one.
+2. `msgsnd()`: Sends a message to a message queue.
+3. `msgrcv()`: Receives a message from the message queue.
+4. `msgctl()`: Controls various aspects of a message queue, 
+including removing the queue.
+
+Basic Example of Message Queues in C++ (Linux)
+
+Below is a simple implementation of message queues 
+using `msgget()`, `msgsnd()`, and `msgrcv()` 
+in a C++ program. 
+
+This example demonstrates communication 
+between a `Producer` process and 
+a `Consumer` process.
+
+---
+
+Message Queue Structure:
+```cpp
+#include <iostream>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <unistd.h>
+#include <cstring>
+
+#define MSG_KEY 1234  // Unique key for message queue
+
+// Structure for message content
+struct msgbuf {
+    long mtype;  // Message type
+    char mtext[100];  // Message content
+};
+
+// Producer function: sends messages to the queue
+void producer(int msgid) {
+    struct msgbuf message;
+    for (int i = 0; i < 5; ++i) {
+        message.mtype = 1;  // Message type
+        snprintf(message.mtext, sizeof(message.mtext), "Message %d", i + 1);
+
+        // Send message to queue
+        if (msgsnd(msgid, &message, sizeof(message.mtext), 0) == -1) {
+            perror("msgsnd failed");
+            exit(1);
+        }
+
+        std::cout << "Producer sent: " << message.mtext << std::endl;
+        sleep(1);  // Simulate some work
+    }
+
+    // End of data signal
+    message.mtype = 1;
+    snprintf(message.mtext, sizeof(message.mtext), "END");
+    msgsnd(msgid, &message, sizeof(message.mtext), 0);
+}
+
+// Consumer function: receives messages from the queue
+void consumer(int msgid) {
+    struct msgbuf message;
+    while (true) {
+        // Receive message from the queue
+        if (msgrcv(msgid, &message, sizeof(message.mtext), 0, 0) == -1) {
+            perror("msgrcv failed");
+            exit(1);
+        }
+
+        // If message is "END", break the loop
+        if (strncmp(message.mtext, "END", 3) == 0) {
+            std::cout << "Consumer received END signal. Exiting..." << std::endl;
+            break;
+        }
+
+        std::cout << "Consumer received: " << message.mtext << std::endl;
+    }
+}
+
+int main() {
+    // Create a message queue
+    int msgid = msgget(MSG_KEY, 0666 | IPC_CREAT);
+    if (msgid == -1) {
+        perror("msgget failed");
+        return 1;
+    }
+
+    pid_t pid = fork();
+    if (pid == -1) {
+        perror("fork failed");
+        return 1;
+    }
+
+    if (pid == 0) {
+        // Child process: Consumer
+        consumer(msgid);
+    } else {
+        // Parent process: Producer
+        producer(msgid);
+
+        // Wait for child process to finish
+        wait(nullptr);
+
+        // Remove the message queue
+        msgctl(msgid, IPC_RMID, nullptr);
+        std::cout << "Message queue removed." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+---
+
+Explanation:
+1. `Message Queue Creation`:
+   - `msgget(MSG_KEY, 0666 | IPC_CREAT)` 
+   creates a message queue 
+   with the unique key `MSG_KEY`.
+   - The flag `0666` 
+   provides read and write permissions 
+   for the message queue, and 
+   `IPC_CREAT` ensures the queue is created 
+   if it doesn't already exist.
+
+2. `Producer`:
+   - The producer generates messages and 
+   sends them using `msgsnd()`.
+   - The `mtype` field is used 
+   to specify the type of message, 
+   while `mtext` contains the message content.
+   - The producer sends a series of messages, followed by an "END" signal to inform the consumer that there are no more messages to process.
+
+3. `Consumer`:
+   - The consumer reads messages from the queue using `msgrcv()`.
+   - It keeps receiving messages until it encounters the "END" message, at which point it exits.
+
+4. `Fork`:
+   - A `fork()` creates a child process. The parent process acts as the producer, while the child process acts as the consumer.
+
+5. `Cleaning Up`:
+   - `msgctl(msgid, IPC_RMID, nullptr)` removes the message queue after use to free system resources.
+
+---
+
+Example Output:
+```
+Producer sent: Message 1
+Producer sent: Message 2
+Producer sent: Message 3
+Producer sent: Message 4
+Producer sent: Message 5
+Consumer received: Message 1
+Consumer received: Message 2
+Consumer received: Message 3
+Consumer received: Message 4
+Consumer received: Message 5
+Consumer received END signal. Exiting...
+Message queue removed.
+```
+
+---
+
+Key Concepts and Benefits of Message Queues:
+
+1. `Asynchronous Communication`:
+   - Message queues allow asynchronous communication, meaning the producer can send messages without waiting for the consumer to process them immediately.
+
+2. `Decoupling`:
+   - The producer and consumer processes are decoupled, meaning they do not need to know about each other directly. They only interact via the message queue.
+
+3. `Synchronization`:
+   - Message queues can be used with synchronization, especially if multiple producers or consumers are involved. Queues can be used in a way that ensures data is processed in the correct order or with priority.
+
+4. `Scalability`:
+   - You can scale this architecture by adding more producers and consumers, allowing multiple processes to communicate efficiently.
+
+---
+
+Conclusion:
+
+Message queues provide a robust IPC mechanism for communication between processes. They can be used for a wide range of applications, including logging systems, task scheduling, data pipelines, and more. The Linux implementation using `msgget()`, `msgsnd()`, `msgrcv()`, and `msgctl()` provides a simple yet powerful interface for managing communication between processes.

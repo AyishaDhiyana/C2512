@@ -1,0 +1,16 @@
+Debugger 
+1. compile with -g flag 
+    $ g++ -g prg01.cpp 
+2. run debugger 
+    $ gdb ./a.out 
+3. In gdb, prompt:
+(gdb) tui enable            #switch on the source code 
+
+
+
+run             r           # to run the program 
+continue        c           # to go to next break point 
+next            n           # next (step over)
+step            s           # step into 
+
+--------------------------------------------------------------

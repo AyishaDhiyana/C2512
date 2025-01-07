@@ -1,0 +1,186 @@
+Deadlock is a common issue in multi-threading 
+where two or more threads are waiting 
+for resources held by each other, 
+resulting in an indefinite wait. 
+
+Preventing deadlock involves careful 
+design of resource allocation and thread synchronization. 
+Below are techniques and best practices 
+to prevent deadlocks in C++:
+
+---
+
+`1. Understanding Deadlock`
+Deadlock occurs when:
+1. `Mutual Exclusion:` Resources cannot be shared.
+2. `Hold and Wait:` A thread holding a resource is waiting 
+for additional resources held by other threads.
+3. `No Preemption:` Resources cannot be forcibly taken from threads.
+4. `Circular Wait:` A circular chain of threads exists, 
+where each thread waits for a resource held 
+by the next thread in the chain.
+
+To prevent deadlock, one or more of these conditions must be eliminated.
+
+---
+
+`2. Deadlock Prevention Techniques`
+
+`a. Lock Ordering`
+- Always acquire locks in a consistent global order across all threads.
+- Example:
+  ```cpp
+  std::mutex mutex1, mutex2;
+
+  void thread1() {
+      std::lock_guard<std::mutex> lock1(mutex1);
+      std::lock_guard<std::mutex> lock2(mutex2);
+      // Critical section
+  }
+
+  void thread2() {
+      std::lock_guard<std::mutex> lock1(mutex1);
+      std::lock_guard<std::mutex> lock2(mutex2);
+      // Critical section
+  }
+  ```
+- Both threads acquire `mutex1` first, followed by `mutex2`, avoiding circular waits.
+
+---
+
+`b. Use `std::lock``
+- Use `std::lock` to acquire multiple locks simultaneously. It prevents deadlocks by locking in a safe order.
+- Example:
+  ```cpp
+  std::mutex mutex1, mutex2;
+
+  void threadFunction() {
+      std::lock(mutex1, mutex2); // Locks both without risk of deadlock
+      std::lock_guard<std::mutex> lock1(mutex1, std::adopt_lock);
+      std::lock_guard<std::mutex> lock2(mutex2, std::adopt_lock);
+      // Critical section
+  }
+  ```
+
+---
+
+`c. Avoid Nested Locks`
+- Minimize the use of nested locks. If nesting is unavoidable, ensure consistent locking order.
+- Example:
+  ```cpp
+  // Avoid situations where one thread locks A then B, and another locks B then A
+  ```
+
+---
+
+`d. Use Try-Lock`
+- Use `std::try_lock` to acquire a lock without blocking. If a thread cannot acquire the lock, it can take alternative actions.
+- Example:
+  ```cpp
+  std::mutex mutex1, mutex2;
+
+  void threadFunction() {
+      if (std::try_lock(mutex1, mutex2) == -1) {
+          // Critical section
+          std::lock_guard<std::mutex> lock1(mutex1, std::adopt_lock);
+          std::lock_guard<std::mutex> lock2(mutex2, std::adopt_lock);
+      } else {
+          // Failed to acquire locks, take alternative action
+      }
+  }
+  ```
+
+---
+
+`e. Break Circular Wait`
+- Ensure threads do not wait in a circular chain for resources.
+- Example:
+  - Use a hierarchy or priority to determine the order of resource acquisition.
+
+---
+
+`f. Reduce Lock Granularity`
+- Reduce the number of locks or the duration for which locks are held to minimize contention.
+- Example:
+  ```cpp
+  void criticalFunction(std::mutex& mtx) {
+      std::lock_guard<std::mutex> lock(mtx);
+      // Do minimal work inside the critical section
+  }
+  ```
+
+---
+
+`g. Use Deadlock Detection Tools`
+- Some tools like `ThreadSanitizer`, `Helgrind`, and `Intel Inspector` can detect deadlocks during testing.
+
+---
+
+`3. Practical Example`
+
+`Deadlock Example`
+```cpp
+#include <iostream>
+#include <thread>
+#include <mutex>
+
+std::mutex mutex1, mutex2;
+
+void thread1() {
+    std::lock_guard<std::mutex> lock1(mutex1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::lock_guard<std::mutex> lock2(mutex2);
+    std::cout << "Thread 1 completed\n";
+}
+
+void thread2() {
+    std::lock_guard<std::mutex> lock2(mutex2);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::lock_guard<std::mutex> lock1(mutex1);
+    std::cout << "Thread 2 completed\n";
+}
+
+int main() {
+    std::thread t1(thread1);
+    std::thread t2(thread2);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+```
+- This code will likely result in a deadlock as `thread1` locks `mutex1` and waits for `mutex2`, while `thread2` locks `mutex2` and waits for `mutex1`.
+
+---
+
+`Deadlock-Free Version`
+```cpp
+void thread1() {
+    std::lock(mutex1, mutex2);
+    std::lock_guard<std::mutex> lock1(mutex1, std::adopt_lock);
+    std::lock_guard<std::mutex> lock2(mutex2, std::adopt_lock);
+    std::cout << "Thread 1 completed\n";
+}
+
+void thread2() {
+    std::lock(mutex1, mutex2);
+    std::lock_guard<std::mutex> lock1(mutex1, std::adopt_lock);
+    std::lock_guard<std::mutex> lock2(mutex2, std::adopt_lock);
+    std::cout << "Thread 2 completed\n";
+}
+```
+
+---
+
+`4. Best Practices`
+1. Avoid holding locks longer than necessary.
+2. Minimize the number of locks by carefully designing shared resources.
+3. Test extensively for deadlock scenarios.
+4. Use higher-level abstractions like `std::async`, 
+   thread pools, or 
+   task-based libraries to manage concurrency.
+
+By applying these techniques and best practices, 
+you can significantly reduce the risk of deadlock 
+in your C++ multi-threaded applications.

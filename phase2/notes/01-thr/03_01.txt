@@ -1,0 +1,115 @@
+In C++, `std::shared_mutex` is 
+a synchronization primitive 
+that allows multiple threads 
+to read shared data concurrently, 
+but only one thread 
+to write to the data at a time. 
+
+It allows you to implement the reader-writer lock pattern where:
+
+- Multiple threads can acquire a `shared lock` for reading, 
+as long as no thread holds an exclusive lock (i.e., writing).
+- Only one thread can acquire an `exclusive lock` for writing, and 
+no other threads can read or write when a thread is writing.
+
+Key Methods of `std::shared_mutex`
+
+- `lock()` – Acquires an exclusive lock for writing. 
+Blocks other threads from acquiring either shared or 
+exclusive locks until released.
+- `unlock()` – Releases the lock, 
+allowing other threads to acquire shared or 
+exclusive locks.
+- `try_lock()` – Attempts to acquire the lock. 
+Returns `true` if successful, 
+otherwise returns `false`.
+- `lock_shared()` – Acquires a shared lock for reading. 
+Multiple threads can acquire shared locks simultaneously, 
+but only if no thread holds an exclusive lock.
+- `unlock_shared()` – Releases the shared lock.
+
+Example Usage
+
+Here's an example demonstrating how to use `std::shared_mutex` 
+to manage concurrent read and write access to shared data:
+
+```cpp
+#include <iostream>
+#include <thread>
+#include <shared_mutex>
+#include <vector>
+
+std::shared_mutex mtx;  // Shared mutex
+std::vector<int> data;  // Shared data
+
+// Function to read data
+void reader(int id) {
+    std::shared_lock<std::shared_mutex> lock(mtx);  // Shared lock (read)
+    std::cout << "Reader " << id << " reading data: ";
+    for (const auto& d : data) {
+        std::cout << d << " ";
+    }
+    std::cout << std::endl;
+}
+
+// Function to write data
+void writer(int id, int value) {
+    std::unique_lock<std::shared_mutex> lock(mtx);  // Exclusive lock (write)
+    data.push_back(value);
+    std::cout << "Writer " << id << " wrote: " << value << std::endl;
+}
+
+int main() {
+    std::thread readers[5];
+    std::thread writers[2];
+
+    // Start readers
+    for (int i = 0; i < 5; ++i) {
+        readers[i] = std::thread(reader, i);
+    }
+
+    // Start writers
+    for (int i = 0; i < 2; ++i) {
+        writers[i] = std::thread(writer, i, i + 100);
+    }
+
+    // Join all threads
+    for (int i = 0; i < 5; ++i) {
+        readers[i].join();
+    }
+    for (int i = 0; i < 2; ++i) {
+        writers[i].join();
+    }
+
+    return 0;
+}
+```
+
+Explanation of the Code
+
+- `std::shared_mutex mtx` is the shared mutex 
+that synchronizes access to the `data` vector.
+- `reader()` function reads the data 
+while holding a shared lock 
+(`std::shared_lock<std::shared_mutex>`).
+- `writer()` function writes to the `data` vector 
+while holding an exclusive lock 
+(`std::unique_lock<std::shared_mutex>`).
+- The main function creates multiple reader and writer threads and 
+waits for them to finish.
+
+Key Points:
+- `Shared lock (`std::shared_lock`)`: 
+Allows multiple threads 
+to read simultaneously but blocks writing.
+- `Exclusive lock (`std::unique_lock`)`: 
+Allows a single thread to write, 
+blocking both reading and writing from others 
+during the write.
+  
+When to Use `std::shared_mutex`:
+`std::shared_mutex` is ideal for situations 
+where reads are much more frequent than writes, 
+allowing you to improve performance 
+by enabling multiple readers 
+to access the shared data concurrently.
