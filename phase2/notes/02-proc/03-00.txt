@@ -1,3 +1,0 @@
-Synchronization in IPC
-Synchronization in IPC- Semaphores
-Synchronization in IPC - Mutexes in IPC
