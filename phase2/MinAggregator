@@ -146,3 +146,11 @@ int main() {
     run_server();
     return 0;
 }
+--------------------------OUTPUT-----------------------------
+Server is listening on port 8080
+Received from client: 20, 30, 40
+Minimum value sent to client: 20
+==============================================================
+Enter numbers separated by commas (e.g., 10,20,30): 20, 30, 40
+Numbers sent to server
+Minimum value from server: 20
