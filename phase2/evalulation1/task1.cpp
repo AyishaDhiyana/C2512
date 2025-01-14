@@ -41,7 +41,7 @@ int firstMinInHalf(std::vector<Vaccination>& doses)
 int secondHalfMax(std::vector<Vaccination>& doses)
 {  
 	int max = INT_MIN;
-    for(size_t i = ((doses.size() - 1)/2); i < ((doses.size()/2) - 1); i++)
+    for(size_t i = ((doses.size())/2); i < doses.size(); i++)
     if(doses[i].getDoses() > max)
     {
         max = doses[i].getDoses(); 
