@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <thread>
+#include <climits>
 
 using namespace std;
 class Vaccination
@@ -15,55 +16,56 @@ class Vaccination
     int getVaccinations() 
     { 
         return DosesAdministered;
-    }
-    
+    }   
 };
-int findSum(std::vector<Vaccination>& vaccinations)
+
+void findSum(std::vector<Vaccination>& vaccinations, int& sum)
 {
-    int sum = 0;
+    sum = 0;
 	for(int i = 0; i < vaccinations.size(); i++)
     {
         sum = sum + vaccinations[i].getVaccinations();
     }
-    return sum;
 }
 
-int firstMinInHalf(std::vector<Vaccination>& vaccinations)
+void firstMinInHalf(std::vector<Vaccination>& vaccinations, int& min)
 {
-    int min = INT_MAX;
+    min = INT_MAX;
     for(size_t i = 0; i < vaccinations.size()/2; i++)
     {
-    if(vaccinations[i].getVaccinations() < min)
-    {
-        min = vaccinations[i].getVaccinations();
+        if(vaccinations[i].getVaccinations() < min)
+        {
+            min = vaccinations[i].getVaccinations();
+        }
     }
-    }
-    return min;
 }	
 
-int secondHalfMax(std::vector<Vaccination>& vaccinations)
+void secondHalfMax(std::vector<Vaccination>& vaccinations, int& max)
 {  
-	int max = INT_MIN;
+	max = INT_MIN;
     for(size_t i = ((vaccinations.size())/2); i < vaccinations.size(); i++)
-    if(vaccinations[i].getVaccinations() > max)
     {
-        max = vaccinations[i].getVaccinations(); 
+        if(vaccinations[i].getVaccinations() > max)
+        {
+            max = vaccinations[i].getVaccinations(); 
+        }
     }
-    return max;
 }
 
 int main()
 {
-	std::vector<Vaccination> vaccinations;
+    std::vector<Vaccination> vaccinations;
     vaccinations.emplace_back("V001", 3);
     vaccinations.emplace_back("V002", 4);
     vaccinations.emplace_back("V003", 5);
     vaccinations.emplace_back("V004", 6);
     vaccinations.emplace_back("V005", 10);
 
-    thread thr1(findSum, std::ref(doses), std::ref(sum));
-    thread thr2(firstMinInHalf, std::ref(doses), std::ref(min));
-    thread thr3(secondHalfMax, std::ref(doses), std::ref(max));
+    int sum, min, max;
+
+    thread thr1(findSum, std::ref(vaccinations), std::ref(sum));
+    thread thr2(firstMinInHalf, std::ref(vaccinations), std::ref(min));
+    thread thr3(secondHalfMax, std::ref(vaccinations), std::ref(max));
 
     thr1.join();
     thr2.join();
@@ -72,5 +74,6 @@ int main()
     cout << "sum is " << sum << std::endl;
     cout << "minimum value is " << min << std::endl;
     cout << "maximum value in the second half is " << max << std::endl;
+
 	return 0;
 }
