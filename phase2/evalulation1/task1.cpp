@@ -1,9 +1,7 @@
 #include <iostream>
-#include <numeric>
-#include <algorithm>
 #include <string>
 #include <vector>
-#include <thread>
+#include <climits>
 
 using namespace std;
 class Vaccination
@@ -29,8 +27,8 @@ int findSum(std::vector<Vaccination>& doses)
 
 int firstMinInHalf(std::vector<Vaccination>& doses)
 {
-    int min = -1;
-    for(int i = 0; i < doses.size()/2; i++)
+    int min = INT_MAX;
+    for(size_t i = 0; i < doses.size()/2; i++)
     {
     if(doses[i].getDoses() < min)
     {
@@ -42,11 +40,11 @@ int firstMinInHalf(std::vector<Vaccination>& doses)
 
 int secondHalfMax(std::vector<Vaccination>& doses)
 {  
-	int max = 10000;
-    for(int i = (size(doses)/2); i < ((doses.size()/2) - 1); i++)
+	int max = INT_MIN;
+    for(size_t i = ((doses.size() - 1)/2); i < ((doses.size()/2) - 1); i++)
     if(doses[i].getDoses() > max)
     {
-        max = doses[i].getDoses();
+        max = doses[i].getDoses(); 
     }
     return max;
 }
@@ -59,11 +57,15 @@ int main()
     doses.emplace_back("V003", 5);
     doses.emplace_back("V004", 6);
     doses.emplace_back("V005", 10);
+
     int sum = findSum(doses);
     cout << "sum is " << sum << std::endl;
+
     int min = firstMinInHalf(doses);
     cout << "minimum value is " << min << std::endl;
+
     int max = secondHalfMax(doses);
     cout << "maximum value in the second half is " << max << std::endl;
+
 	return 0;
 }
