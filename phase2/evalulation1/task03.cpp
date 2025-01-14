@@ -21,16 +21,24 @@ class Vaccination
     }   
 };
 
-void findSum(std::vector<Vaccination>& vaccinations, int& write_pipe)
+void server(std::vector<Vaccination>& vaccinations, int& write_end_fd)
 {
     int sum = 0;
 	for(int i = 0; i < vaccinations.size(); i++)
     {
         sum = sum + vaccinations[i].getVaccinations();
     }
-    write(write_pipe,&sum,sizeof(sum));
+    write(write_end_fd,&sum,sizeof(sum));
+    cout << "server sent sum " << sum << endl;
 }
 
+void client(int read_end_fd)
+{
+    int sum = 0;
+    read(read_end_fd, &sum, sizeof(sum));
+    std::cout << "Sum of doses " << sum << std::endl;
+    cout << "client received" << endl;
+}
 int main()
 {
 	std::vector<Vaccination> vaccinations;
@@ -47,20 +55,18 @@ int main()
         return 1;
     }
     pid_t pid = fork();
+    //child process
     if(pid == 0)
     {
         close(pipe_fd[0]);
-        findSum(vaccinations,pipe_fd[1]);
+        server(vaccinations,pipe_fd[1]);
         close(pipe_fd[1]);
     }
     else
     {
         close(pipe_fd[1]);
-        int sum = 0;
-        read(pipe_fd[0], &sum, sizeof(sum));
+        client(pipe_fd[0]);
         close(pipe_fd[0]);
-
-        std::cout << "sum is " << sum << std::endl;
     }
 	return 0;
 }
