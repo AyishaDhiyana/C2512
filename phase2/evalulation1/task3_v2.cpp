@@ -41,8 +41,8 @@ void server(int read_from_pipe, int write_to_pipe) {
     int sliceSize = num_vaccines / 3;
 
     thread thrSum1(sliceSum, doses, 0, sliceSize, std::ref(sum1));
-    thread thrSum2(sliceSum, doses, 0, 2 * sliceSize, std::ref(sum2));
-    thread thrSum3(sliceSum, doses, 0, 3 * sliceSize, std::ref(sum3));
+    thread thrSum2(sliceSum, doses, sliceSize, 2 * sliceSize, std::ref(sum2));
+    thread thrSum3(sliceSum, doses, 2 * sliceSize, num_vaccines,  std::ref(sum3));
 
     thrSum1.join();
     thrSum2.join();
@@ -64,7 +64,7 @@ void client(vector<Vaccination>& vaccinations, int write_to_pipe, int read_from_
     int num_vaccines = vaccinations.size();
     int doses[100];
 
-    for (int i = 0; i < num_vaccines; ++i) {
+    for (int i = 0; i < num_vaccines; i++) {
         doses[i] = vaccinations[i].getDosesAdministered();
     }
     write(write_to_pipe, &num_vaccines, sizeof(num_vaccines));
