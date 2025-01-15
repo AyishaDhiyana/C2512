@@ -9,7 +9,7 @@ using namespace std;
 
 class Vaccination {
 private:
-    string VaccinationId;
+    std::string VaccinationId;
     int DosesAdministered;
 
 public:
@@ -20,19 +20,18 @@ public:
     int getDosesAdministered() const { return DosesAdministered; } 
 };
 
-void server(vector<Vaccination>& vaccinations, int write_to_pipe) {
+void client(vector<Vaccination>& vaccinations, int write_to_pipe) {
     int sum = 0;
     for (const auto& vaccination : vaccinations) {
         sum += vaccination.getDosesAdministered();
     }
     write(write_to_pipe, &sum, sizeof(sum));
-    cout << "Server sent the sum to the client" << endl;
 }
 
-void client(int read_from_pipe) {
+void server(int read_from_pipe) {
     int sum = 0;
     read(read_from_pipe, &sum, sizeof(sum));
-    std::cout << "Client received sum of doses = " << sum  << "from server "<< std::endl;
+    std::cout << "Server received sum of doses = " << sum  << " from client "<< std::endl;
 }
 
 int main() {
@@ -64,7 +63,7 @@ int main() {
         close(pipe1[0]); 
         close(pipe2[1]); 
 
-        server(vaccinations, pipe1[1]);
+        client(vaccinations, pipe1[1]);
 
         close(pipe1[1]); 
         close(pipe2[0]); 
@@ -74,7 +73,7 @@ int main() {
         close(pipe1[1]); 
         close(pipe2[0]); 
 
-        client(pipe1[0]);
+        server(pipe1[0]);
 
         close(pipe1[0]); 
         close(pipe2[1]); 
