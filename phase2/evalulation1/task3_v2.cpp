@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <numeric>
 #include <thread>
 
 using namespace std;
@@ -11,23 +12,19 @@ using namespace std;
 class Vaccination {
 private:
     std::string VaccinationId;
-    int DosesAdministered;
+    long long DosesAdministered;
 
 public:
-    Vaccination(std::string p_VaccinationId, int p_DosesAdministered)
+    Vaccination(std::string p_VaccinationId, long long p_DosesAdministered)
         : VaccinationId(p_VaccinationId), DosesAdministered(p_DosesAdministered) {}
 
     string getVaccinationId() const { return VaccinationId; }
-    int getDosesAdministered() const { return DosesAdministered; }  
+    long long getDosesAdministered() const { return DosesAdministered; }  
 };
 
 void sliceSum(int* doses,int startIndex, int endIndex, int& sum)
 {
-    sum = 0;
-    for(int i = startIndex; i < endIndex; i++)
-    {
-        sum += doses[i];
-    }
+    sum = std::accumulate(doses + startIndex , doses + endIndex, 0);
 }
 void server(int read_from_pipe, int write_to_pipe) {
     int doses[100];
@@ -38,11 +35,11 @@ void server(int read_from_pipe, int write_to_pipe) {
     read(read_from_pipe, doses, sizeof(int) * num_vaccines);
 
     int sum1 = 0, sum2 = 0, sum3 = 0;
-    int sliceSize = num_vaccines / 3;
+    int sliceSize = (num_vaccines / 3);
 
-    thread thrSum1(sliceSum, doses, 0, sliceSize, std::ref(sum1));
-    thread thrSum2(sliceSum, doses, sliceSize, 2 * sliceSize, std::ref(sum2));
-    thread thrSum3(sliceSum, doses, 2 * sliceSize, num_vaccines,  std::ref(sum3));
+    std::thread thrSum1(sliceSum, doses, 0, sliceSize, std::ref(sum1));
+    std::thread thrSum2(sliceSum, doses, sliceSize, 2 * sliceSize, std::ref(sum2));
+    std::thread thrSum3(sliceSum, doses, 2 * sliceSize, num_vaccines,  std::ref(sum3));
 
     thrSum1.join();
     thrSum2.join();
@@ -50,7 +47,7 @@ void server(int read_from_pipe, int write_to_pipe) {
 
     int totalSum = sum1 + sum2 + sum3;
     write(write_to_pipe, &totalSum, sizeof(totalSum));
-   
+
 }
 
 void client(vector<Vaccination>& vaccinations, int write_to_pipe, int read_from_pipe) {
