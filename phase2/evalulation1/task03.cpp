@@ -7,7 +7,6 @@
 
 using namespace std;
 
-// Vaccination Class
 class Vaccination {
 private:
     string VaccinationId;
@@ -17,29 +16,23 @@ public:
     Vaccination(string p_VaccinationId, int p_DosesAdministered)
         : VaccinationId(p_VaccinationId), DosesAdministered(p_DosesAdministered) {}
 
-    int getVaccinations() { 
-        return DosesAdministered; 
-    }
+    string getVaccinationId() const { return VaccinationId; }
+    int getDosesAdministered() const { return DosesAdministered; } 
 };
 
-// Server Function
 void server(vector<Vaccination>& vaccinations, int write_to_pipe) {
     int sum = 0;
-    // Calculate the sum of doses
     for (const auto& vaccination : vaccinations) {
-        sum += vaccination.getVaccinations();
+        sum += vaccination.getDosesAdministered();
     }
-    // Write the sum to the pipe
     write(write_to_pipe, &sum, sizeof(sum));
-    cout << "Server: Sent the sum to the client." << endl;
+    cout << "Server sent the sum to the client" << endl;
 }
 
-// Client Function
 void client(int read_from_pipe) {
     int sum = 0;
-    // Read the sum from the pipe
     read(read_from_pipe, &sum, sizeof(sum));
-    cout << "Client: Received sum of doses = " << sum << endl;
+    std::cout << "Client received sum of doses = " << sum  << "from server "<< std::endl;
 }
 
 int main() {
@@ -50,9 +43,9 @@ int main() {
         {"V004", 6},
         {"V005", 10}
     };
-    // Create two pipes for communication
-    int pipe1[2]; // Used by server to send data to client
-    int pipe2[2]; // Used by client to acknowledge receipt (optional)
+
+    int pipe1[2]; //server-client
+    int pipe2[2]; //client-server
 
     if (pipe(pipe1) == -1 || pipe(pipe2) == -1) {
         perror("Pipe creation failed");
@@ -66,24 +59,27 @@ int main() {
         return 1;
     }
 
-    if (pid == 0) { // Child process: Server
-        close(pipe1[0]); // Close unused read end of pipe1
-        close(pipe2[1]); // Close unused write end of pipe2
+    if (pid == 0) 
+    { 
+        close(pipe1[0]); 
+        close(pipe2[1]); 
 
         server(vaccinations, pipe1[1]);
 
-        close(pipe1[1]); // Close write end of pipe1 after sending
-        close(pipe2[0]); // Close read end of pipe2 (not used)
-    } else { // Parent process: Client
-        close(pipe1[1]); // Close unused write end of pipe1
-        close(pipe2[0]); // Close unused read end of pipe2
+        close(pipe1[1]); 
+        close(pipe2[0]); 
+    } 
+    else
+    {    
+        close(pipe1[1]); 
+        close(pipe2[0]); 
 
         client(pipe1[0]);
 
-        close(pipe1[0]); // Close read end of pipe1 after reading
-        close(pipe2[1]); // Close write end of pipe2 (not used)
+        close(pipe1[0]); 
+        close(pipe2[1]); 
 
-        wait(nullptr); // Wait for the server process to finish
+        wait(nullptr); 
     }
 
     return 0;
