@@ -21,10 +21,10 @@ public:
     int getDosesAdministered() const { return DosesAdministered; }  
 };
 
-void sliceSum(int* doses;int startIndex; int endIndex; int& sum)
+void sliceSum(int* doses,int startIndex, int endIndex, int& sum)
 {
     sum = 0;
-    fot(int i = startIndex; i < endIndex; i++)
+    for(int i = startIndex; i < endIndex; i++)
     {
         sum += doses[i];
     }
@@ -37,7 +37,7 @@ void server(int read_from_pipe, int write_to_pipe) {
 
     read(read_from_pipe, doses, sizeof(int) * num_vaccines);
 
-    int sum1 = 0; sum2 = 0; sum3 = 0;
+    int sum1 = 0, sum2 = 0, sum3 = 0;
     int sliceSize = num_vaccines / 3;
 
     thread thrSum1(sliceSum, doses, 0, sliceSize, std::ref(sum1));
@@ -48,10 +48,9 @@ void server(int read_from_pipe, int write_to_pipe) {
     thrSum2.join();
     thrSum3.join();
 
-    write(write_to_pipe, &sum, sizeof(sum1));
-    write(write_to_pipe, &sum, sizeof(sum2));
-    write(write_to_pipe, &sum, sizeof(sum3));
-
+    int totalSum = sum1 + sum2 + sum3;
+    write(write_to_pipe, &totalSum, sizeof(totalSum));
+   
 }
 
 void client(vector<Vaccination>& vaccinations, int write_to_pipe, int read_from_pipe) {
