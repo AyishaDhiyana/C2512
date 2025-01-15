@@ -12,7 +12,7 @@ class Vaccination
 	
 	public:
 	Vaccination(std::string p_VaccinationId, int p_DosesAdministered) : VaccinationId(p_VaccinationId), DosesAdministered(p_DosesAdministered) {}
-    int getVaccinations() 
+    int getDosesAdministered() 
     { 
         return DosesAdministered;
     }
@@ -23,7 +23,7 @@ int findSum(std::vector<Vaccination>& vaccinations)
     int sum = 0;
 	for(int i = 0; i < vaccinations.size(); i++)
     {
-        sum = sum + vaccinations[i].getVaccinations();
+        sum = sum + vaccinations[i].getDosesAdministered();
     }
     return sum;
 }
@@ -33,9 +33,9 @@ int firstMinInHalf(std::vector<Vaccination>& vaccinations)
     int min = INT_MAX;
     for(size_t i = 0; i < vaccinations.size()/2; i++)
     {
-    if(vaccinations[i].getVaccinations() < min)
+    if(vaccinations[i].getDosesAdministered() < min)
     {
-        min = vaccinations[i].getVaccinations();
+        min = vaccinations[i].getDosesAdministered();
     }
     }
     return min;
@@ -45,9 +45,9 @@ int secondHalfMax(std::vector<Vaccination>& vaccinations)
 {  
 	int max = INT_MIN;
     for(size_t i = ((vaccinations.size())/2); i < vaccinations.size(); i++)
-    if(vaccinations[i].getVaccinations() > max)
+    if(vaccinations[i].getDosesAdministered() > max)
     {
-        max = vaccinations[i].getVaccinations(); 
+        max = vaccinations[i].getDosesAdministered(); 
     }
     return max;
 }
@@ -61,6 +61,7 @@ int main()
     vaccinations.emplace_back("V004", 6);
     vaccinations.emplace_back("V005", 10);
 
+    
     int sum = findSum(vaccinations);
     cout << "sum is " << sum << std::endl;
 
@@ -69,6 +70,7 @@ int main()
 
     int max = secondHalfMax(vaccinations);
     cout << "maximum value in the second half is " << max << std::endl;
+
 
 	return 0;
 }
