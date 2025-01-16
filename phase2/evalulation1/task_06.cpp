@@ -1,3 +1,5 @@
+== Using TCP socket
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,32 +23,27 @@ public:
     int getDosesAdministered() const { return DosesAdministered; }
 };
 
-// Server function
 void server(int port) {
     int server_fd, client_fd;
     sockaddr_in server_addr{}, client_addr{};
     socklen_t client_len = sizeof(client_addr);
 
-    // Create TCP socket
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd < 0) {
         perror("Socket creation failed");
         return;
     }
 
-    // Server address setup
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(port);
 
-    // Bind the socket to the server address
     if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed");
         close(server_fd);
         return;
     }
 
-    // Listen for incoming connections
     if (listen(server_fd, 5) < 0) {
         perror("Listen failed");
         close(server_fd);
@@ -55,7 +52,6 @@ void server(int port) {
 
     cout << "Server is listening on port " << port << "..." << endl;
 
-    // Accept a client connection
     client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_len);
     if (client_fd < 0) {
         perror("Accept failed");
@@ -73,38 +69,32 @@ void server(int port) {
         sum += buffer[i];
     }
 
-    // Send the sum back to the client
     write(client_fd, &sum, sizeof(sum));
 
     close(client_fd);
     close(server_fd);
 }
 
-// Client function
 void client(vector<Vaccination>& vaccinations, const char* server_ip, int port) {
     int sockfd;
     sockaddr_in server_addr{};
 
-    // Create TCP socket
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         perror("Socket creation failed");
         return;
     }
 
-    // Server address setup
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     inet_pton(AF_INET, server_ip, &server_addr.sin_addr);
 
-    // Connect to the server
     if (connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Connection failed");
         close(sockfd);
         return;
     }
 
-    // Add vaccination data
     vaccinations.emplace_back("V001", 3);
     vaccinations.emplace_back("V002", 4);
     vaccinations.emplace_back("V003", 5);
@@ -119,11 +109,10 @@ void client(vector<Vaccination>& vaccinations, const char* server_ip, int port) 
         buffer[i + 1] = vaccinations[i].getDosesAdministered();
     }
 
-    // Send the data to the server
     write(sockfd, buffer, sizeof(buffer));
 
     int sum;
-    // Receive the result from the server
+   
     read(sockfd, &sum, sizeof(sum));
 
     cout << "Sum of doses: " << sum << endl;
@@ -141,14 +130,14 @@ int main() {
     }
 
     if (pid == 0) {
-        // Child process: Act as the server
+       
         server(8080);
     } else {
-        // Parent process: Act as the client
-        sleep(1); // Ensure the server starts first
+       
+        sleep(1); 
         client(vaccinations, "127.0.0.1", 8080);
 
-        wait(nullptr); // Wait for the child process to finish
+        wait(nullptr); 
     }
 
     return 0;
