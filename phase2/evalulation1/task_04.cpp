@@ -1,3 +1,5 @@
+-Using Message queue
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,37 +23,31 @@ public:
     int getDosesAdministered() const { return DosesAdministered; }
 };
 
-// Define message structure
 struct message {
-    long msg_type;    // Message type
-    int data[102];    // Message data (max 100 doses + 2 for metadata)
-};
+    long msg_type;    
+    int data[102];    
 
 void server(int msg_id) {
     message msg;
 
-    // Receive the message from the client
     msgrcv(msg_id, &msg, sizeof(msg.data), 1, 0);
 
-    int num_vaccines = msg.data[0]; // First value is the number of vaccines
+    int num_vaccines = msg.data[0]; 
     int sum = 0;
 
     for (int i = 1; i <= num_vaccines; ++i) {
-        sum += msg.data[i]; // Calculate the sum of doses
+        sum += msg.data[i];
     }
 
-    // Prepare the response message
-    msg.msg_type = 2; // Response type
-    msg.data[0] = sum; // Write the sum into the first position
+    msg.msg_type = 2; 
+    msg.data[0] = sum; 
 
-    // Send the result back to the client
     msgsnd(msg_id, &msg, sizeof(msg.data), 0);
 }
 
 void client(vector<Vaccination>& vaccinations, int msg_id) {
     message msg;
-
-    // Add vaccination data
+    
     vaccinations.emplace_back("V001", 3);
     vaccinations.emplace_back("V002", 4);
     vaccinations.emplace_back("V003", 5);
@@ -59,26 +55,23 @@ void client(vector<Vaccination>& vaccinations, int msg_id) {
     vaccinations.emplace_back("V005", 10);
 
     int num_vaccines = vaccinations.size();
-    msg.msg_type = 1; // Request type
-    msg.data[0] = num_vaccines; // First value is the number of vaccines
+    msg.msg_type = 1; 
+    msg.data[0] = num_vaccines; 
 
     for (int i = 0; i < num_vaccines; ++i) {
-        msg.data[i + 1] = vaccinations[i].getDosesAdministered(); // Store doses
+        msg.data[i + 1] = vaccinations[i].getDosesAdministered(); 
     }
 
-    // Send the message to the server
     msgsnd(msg_id, &msg, sizeof(msg.data), 0);
 
-    // Wait for the server's response
     msgrcv(msg_id, &msg, sizeof(msg.data), 2, 0);
 
-    cout << "Sum of doses: " << msg.data[0] << endl; // Display the sum
+    cout << "Sum of doses: " << msg.data[0] << endl; 
 }
 
 int main() {
     vector<Vaccination> vaccinations;
 
-    // Create a message queue
     int msg_id = msgget(IPC_PRIVATE, IPC_CREAT | 0666);
     if (msg_id == -1) {
         perror("msgget");
@@ -92,16 +85,11 @@ int main() {
     }
 
     if (pid == 0) {
-        // Child process acts as the server
         server(msg_id);
     } else {
-        // Parent process acts as the client
         client(vaccinations, msg_id);
-
-        // Wait for the child process to finish
         wait(nullptr);
 
-        // Clean up the message queue
         msgctl(msg_id, IPC_RMID, nullptr);
     }
 
