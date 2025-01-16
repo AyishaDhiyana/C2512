@@ -1,3 +1,5 @@
+== Named Pipe ==
+    
 #include <iostream>
 #include <string>
 #include <vector>
@@ -95,7 +97,6 @@ int main() {
     const char* fifo1 = "/tmp/fifo1";
     const char* fifo2 = "/tmp/fifo2";
 
-    // Create the FIFOs
     if (mkfifo(fifo1, 0666) == -1 || mkfifo(fifo2, 0666) == -1) {
         perror("Error creating FIFOs");
         return 1;
@@ -108,15 +109,13 @@ int main() {
     }
 
     if (pid == 0) {
-        // Child process - server
         server(fifo1, fifo2);
     } else {
-        // Parent process - client
+      
         client(vaccinations, fifo1, fifo2);
-        wait(nullptr); // Wait for the child process to finish
+        wait(nullptr); 
     }
 
-    // Clean up FIFOs
     unlink(fifo1);
     unlink(fifo2);
 
