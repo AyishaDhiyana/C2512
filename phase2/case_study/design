@@ -1,0 +1,53 @@
+Hospital Management System 
+Admin App
+    Login 
+        Fields: Username (email), Password 
+        During Login: 
+            Is Username, Password? 
+            Yes: One of the Patient / Doctor / Help Desk / Admin Page   
+            No: Invalid Username / Password 
+    Patient Registration 
+      id, 
+      name, age, gender, phone, email, location, address,  
+      created_at,  updated_at 
+
+      phone number exist 
+      email exist
+
+      patient number will be generated which will be used as username 
+
+      editable fields : phone, email, address, location
+      after consultation non editable fields: name, age 
+    Patient Management 
+      [1] create [2] edit [3] delete [4] search [99] exit 
+      delete they may do if no consulation there 
+
+    Department Management 
+      id, 
+      name, description 
+      [1] create [2] edit [3] delete [4] search [99] exit 
+
+    Doctor Management 
+      id, 
+      name, department_id, doctor_number, 
+      phone, email, location, address
+      [1] create [2] edit [3] delete [4] search [5] deactive [99] exit
+    
+    Schedule Doctor
+      id, 
+      doctor_id, 
+      day, start_time, end_time 
+
+    Appointment 
+      id, patient_id, 
+      doctor_id, 
+      date, time, reason, status 
+
+    Consulation 
+      id, 
+      patient_id, doctor_id, 
+      date, diagnosis, treatement, prescription
+    
+    Payment 
+      history_id, patient_id, 
+      date, amount, status
