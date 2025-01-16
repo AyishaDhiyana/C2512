@@ -1,3 +1,5 @@
+-Using socket
+    
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,25 +23,21 @@ public:
     int getDosesAdministered() const { return DosesAdministered; }
 };
 
-// Server function
 void server(int port) {
     int sockfd;
     sockaddr_in server_addr{}, client_addr{};
     socklen_t client_len = sizeof(client_addr);
 
-    // Create UDP socket
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
         perror("Socket creation failed");
         return;
     }
 
-    // Server address setup
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(port);
 
-    // Bind the socket to the server address
     if (bind(sockfd, (const struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed");
         close(sockfd);
@@ -56,31 +54,26 @@ void server(int port) {
         sum += buffer[i];
     }
 
-    // Send the sum back to the client
     sendto(sockfd, &sum, sizeof(sum), 0, (const struct sockaddr*)&client_addr, client_len);
 
     close(sockfd);
 }
 
-// Client function
 void client(vector<Vaccination>& vaccinations, const char* server_ip, int port) {
     int sockfd;
     sockaddr_in server_addr{};
     socklen_t server_len = sizeof(server_addr);
 
-    // Create UDP socket
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
         perror("Socket creation failed");
         return;
     }
 
-    // Server address setup
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     inet_pton(AF_INET, server_ip, &server_addr.sin_addr);
 
-    // Add vaccination data
     vaccinations.emplace_back("V001", 3);
     vaccinations.emplace_back("V002", 4);
     vaccinations.emplace_back("V003", 5);
@@ -95,11 +88,10 @@ void client(vector<Vaccination>& vaccinations, const char* server_ip, int port) 
         buffer[i + 1] = vaccinations[i].getDosesAdministered();
     }
 
-    // Send the data to the server
     sendto(sockfd, buffer, sizeof(buffer), 0, (const struct sockaddr*)&server_addr, server_len);
 
     int sum;
-    // Receive the result from the server
+
     recvfrom(sockfd, &sum, sizeof(sum), 0, (struct sockaddr*)&server_addr, &server_len);
 
     cout << "Sum of doses: " << sum << endl;
@@ -117,14 +109,12 @@ int main() {
     }
 
     if (pid == 0) {
-        // Child process: Act as the server
         server(8080);
     } else {
-        // Parent process: Act as the client
-        sleep(1); // Ensure the server starts first
+        sleep(1); 
         client(vaccinations, "127.0.0.1", 8080);
 
-        wait(nullptr); // Wait for the child process to finish
+        wait(nullptr); 
     }
 
     return 0;
