@@ -1,0 +1,105 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+using namespace std;
+
+class Vaccination {
+private:
+    string VaccinationId;
+    int DosesAdministered;
+
+public:
+    Vaccination(string p_VaccinationId, int p_DosesAdministered)
+        : VaccinationId(p_VaccinationId), DosesAdministered(p_DosesAdministered) {}
+
+    string getVaccinationId() const { return VaccinationId; }
+    int getDosesAdministered() const { return DosesAdministered; }
+};
+
+// Server function to calculate the sum of doses
+void server(int shm_id) {
+    int* shared_memory = (int*)shmat(shm_id, nullptr, 0);
+
+    if (shared_memory == (void*)-1) {
+        perror("shmat");
+        return;
+    }
+
+    int num_vaccines = shared_memory[0]; // Read the number of vaccines
+    int sum = 0;
+
+    for (int i = 1; i <= num_vaccines; ++i) {
+        sum += shared_memory[i]; // Add doses from shared memory
+    }
+
+    shared_memory[num_vaccines + 1] = sum; // Write the sum back to shared memory
+    shmdt(shared_memory); // Detach shared memory
+}
+
+// Client function to write data into shared memory
+void client(vector<Vaccination>& vaccinations, int shm_id) {
+    int* shared_memory = (int*)shmat(shm_id, nullptr, 0);
+
+    if (shared_memory == (void*)-1) {
+        perror("shmat");
+        return;
+    }
+
+    // Add vaccination data
+    vaccinations.emplace_back("V001", 3);
+    vaccinations.emplace_back("V002", 4);
+    vaccinations.emplace_back("V003", 5);
+    vaccinations.emplace_back("V004", 6);
+    vaccinations.emplace_back("V005", 10);
+
+    int num_vaccines = vaccinations.size();
+    shared_memory[0] = num_vaccines; // Store the number of vaccines in shared memory
+
+    for (int i = 0; i < num_vaccines; ++i) {
+        shared_memory[i + 1] = vaccinations[i].getDosesAdministered(); // Store doses
+    }
+
+    // Wait for the server to write the result
+    sleep(1);
+
+    cout << "Sum of doses: " << shared_memory[num_vaccines + 1] << endl; // Read the sum
+    shmdt(shared_memory); // Detach shared memory
+}
+
+int main() {
+    vector<Vaccination> vaccinations;
+
+    // Create shared memory
+    int shm_id = shmget(IPC_PRIVATE, sizeof(int) * 102, IPC_CREAT | 0666); // Shared memory for up to 100 doses + metadata
+    if (shm_id == -1) {
+        perror("shmget");
+        return 1;
+    }
+
+    pid_t pid = fork();
+    if (pid == -1) {
+        perror("fork");
+        return 1;
+    }
+
+    if (pid == 0) {
+        // Child process acts as the server
+        server(shm_id);
+    } else {
+        // Parent process acts as the client
+        client(vaccinations, shm_id);
+
+        // Wait for the child process to finish
+        wait(nullptr);
+
+        // Clean up shared memory
+        shmctl(shm_id, IPC_RMID, nullptr);
+    }
+
+    return 0;
+}
