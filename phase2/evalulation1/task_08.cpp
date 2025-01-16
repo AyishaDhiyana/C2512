@@ -1,123 +1,160 @@
 == Named Pipe ==
     
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unistd.h>
+-------------------Client.cpp------------------------
+    
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/stat.h>
+#include <iostream>
 #include <fcntl.h>
+#include <cstring>
+#include <unistd.h>
+#include <vector>
 
 using namespace std;
 
-class Vaccination {
-private:
-    std::string VaccinationId;
-    int DosesAdministered;
+class Vaccination{
+	private:
+		string vaccinationId;
+		int dosesAdministered;
+	public:
+		Vaccination(string vaccinationId, int dosesAdministered){
+			this -> vaccinationId = vaccinationId;
+			this -> dosesAdministered = dosesAdministered;
+		}
 
-public:
-    Vaccination(std::string p_VaccinationId, int p_DosesAdministered)
-        : VaccinationId(p_VaccinationId), DosesAdministered(p_DosesAdministered) {}
+		int getDose(){ return this -> dosesAdministered; };
 
-    string getVaccinationId() const { return VaccinationId; }
-    int getDosesAdministered() const { return DosesAdministered; }
 };
 
-void server(const char* read_fifo, const char* write_fifo) {
-    int doses[100];
-    int num_vaccines;
+int main(){
+	vector<Vaccination> vaccinations;
+	vaccinations.emplace_back("V001", 3);
+	vaccinations.emplace_back("V002", 2);
+	vaccinations.emplace_back("V003", 1);
+	vaccinations.emplace_back("V004", 5);
+	vaccinations.emplace_back("V005", 4);
 
-    int read_fd = open(read_fifo, O_RDONLY);
-    if (read_fd == -1) {
-        perror("Error opening read FIFO");
-        return;
-    }
+	int doses[vaccinations.size()] = {0};
+	
+	for(int i = 0; i < vaccinations.size(); i++){
+		doses[i] = vaccinations[i].getDose();
+	}
 
-    read(read_fd, &num_vaccines, sizeof(num_vaccines));
-    read(read_fd, doses, sizeof(int) * num_vaccines);
+	
+	int numOfElements = vaccinations.size();
 
-    close(read_fd);
+	const char* pipe1 = "pipe1";
+	const char* pipe2 = "pipe2";
+	int pipe_two_read_fd, pipe_one_write_fd;
+	pipe_one_write_fd = open(pipe1, O_WRONLY);
+	pipe_two_read_fd = open(pipe2, O_RDONLY);
+        
+	if(pipe_one_write_fd == -1){
+		perror("pipe1 open failure at client");
+		return 1;
+	}
+	if(pipe_two_read_fd == -1){
+		perror("pipe2 open failure at client");
+		return 1;
+	}
 
-    int sum = 0;
-    for (int i = 0; i < num_vaccines; ++i) {
-        sum += doses[i];
-    }
+	write(pipe_one_write_fd, &numOfElements, sizeof(int));
+	cout << "Client sent number of elements: " << numOfElements << endl ;
 
-    int write_fd = open(write_fifo, O_WRONLY);
-    if (write_fd == -1) {
-        perror("Error opening write FIFO");
-        return;
-    }
+	write(pipe_one_write_fd, doses, sizeof(doses));
+	cout << "Client sent doses : ";
+	for(int dose:doses){
+		cout << dose << "\t";
+	}
+	cout << endl;
+	close(pipe_one_write_fd);
 
-    write(write_fd, &sum, sizeof(sum));
-    close(write_fd);
+	sleep(1);
+
+	int sum;
+	read(pipe_two_read_fd, &sum, sizeof(int));
+	cout << "sum received from server: " << sum << endl;
+
+	close(pipe_two_read_fd);
+	
+
+	return 0;
+}
+-----------------makepipe.cpp---------------------
+    #include <iostream>
+#include <sys/types.h>
+#include <sys/stat.h>
+using namespace std;
+
+int main(){
+	const char* pipe1 = "pipe1";
+	if(mkfifo(pipe1, 0666) == -1){
+		perror("pipe1 failure");
+		return 1;
+	}
+	cout << "pipe1 created successfully" << endl;
+	
+	const char* pipe2 = "pipe2";
+	if(mkfifo(pipe2, 0666) == -1){
+		perror("pipe2 failure");
+		return 1;
+	}
+	cout << "pipe2 created successfully" << endl;
+
+	return 0;
 }
 
-void client(vector<Vaccination>& vaccinations, const char* write_fifo, const char* read_fifo) {
-    vaccinations.emplace_back("V001", 3);
-    vaccinations.emplace_back("V002", 4);
-    vaccinations.emplace_back("V003", 5);
-    vaccinations.emplace_back("V004", 6);
-    vaccinations.emplace_back("V005", 10);
+------------------server.cpp--------------------
+    #include <iostream>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <vector>
 
-    int num_vaccines = vaccinations.size();
-    int doses[100];
+using namespace std;
 
-    for (int i = 0; i < num_vaccines; ++i) {
-        doses[i] = vaccinations[i].getDosesAdministered();
-    }
-
-    int write_fd = open(write_fifo, O_WRONLY);
-    if (write_fd == -1) {
-        perror("Error opening write FIFO");
-        return;
-    }
-
-    write(write_fd, &num_vaccines, sizeof(num_vaccines));
-    write(write_fd, doses, sizeof(int) * num_vaccines);
-    close(write_fd);
-
-    int sum;
-    int read_fd = open(read_fifo, O_RDONLY);
-    if (read_fd == -1) {
-        perror("Error opening read FIFO");
-        return;
-    }
-
-    read(read_fd, &sum, sizeof(sum));
-    close(read_fd);
-
-    cout << "Sum of doses: " << sum << endl;
+int findSum(int array[], int size){
+	int sum = 0;
+	for(int i = 0; i < size; i++){
+		sum += array[i];
+	}
+	return sum;
 }
 
-int main() {
-    vector<Vaccination> vaccinations;
+int main(){
+	const char* pipe1 = "pipe1";
+	const char* pipe2 = "pipe2";
+	int pipe_one_read_fd, pipe_two_write_fd;
+	pipe_one_read_fd = open(pipe1, O_RDONLY);
+	pipe_two_write_fd = open(pipe2, O_WRONLY);
+	if(pipe_one_read_fd == -1){
+		perror("pipe1 open failure");
+		return 1;
+	}	
+	
+	if(pipe_two_write_fd == -1){
+		perror("pipe2 open failure");
+		return 1;
+	}
 
-    const char* fifo1 = "/tmp/fifo1";
-    const char* fifo2 = "/tmp/fifo2";
+	int numOfElements;
+	read(pipe_one_read_fd, &numOfElements, sizeof(int));
+	cout << "Server received number of elements: "<< numOfElements << endl ;
+	
+	int doses[numOfElements] = {0};
+	read(pipe_one_read_fd, doses, sizeof(int) * numOfElements);
+	cout << "Server received doses: ";
+	for(int dose : doses){
+		cout << dose << "\t";
+	}
+	cout << endl;
+	close(pipe_one_read_fd);
+	
+	int sum = findSum(doses, numOfElements);
+	write(pipe_two_write_fd, &sum, sizeof(int));
+	cout << "Sum sent from server: " << sum << endl;
 
-    if (mkfifo(fifo1, 0666) == -1 || mkfifo(fifo2, 0666) == -1) {
-        perror("Error creating FIFOs");
-        return 1;
-    }
-
-    pid_t pid = fork();
-    if (pid == -1) {
-        perror("Error forking process");
-        return 1;
-    }
-
-    if (pid == 0) {
-        server(fifo1, fifo2);
-    } else {
-      
-        client(vaccinations, fifo1, fifo2);
-        wait(nullptr); 
-    }
-
-    unlink(fifo1);
-    unlink(fifo2);
-
-    return 0;
+	close(pipe_two_write_fd);
+	return 0;
 }
