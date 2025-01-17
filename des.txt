@@ -1,0 +1,381 @@
+        fields:
+        appointment_Number, 
+        patient_Number, doctor_Number, date, start_time, end_time, reason, status
+
+=========================== UI via ADMIN Portal ===========================
+
+[6] Appointment Management                                                         
+        [1] Create a new appointment
+        [2] View appointment
+        [3] Cancel appointment
+        [4] Reschedule appointment
+        [99] Exit 
+        
+        choice: 1
+        Appointment Management >> Create Appointment
+
+        Create by:
+            [1] Patient Number
+            [2] Patient Name
+
+        Choice: 1
+        patient_Number: PAT001
+        Select Doctor:
+            [1] By Number
+            [2] By Department
+        Choice: 2
+
+        Departments:
+            [1] Cardiology
+            [2] ENT
+            [3] Cardiology 
+        Choice: 2
+
+        Doctors:
+            [1] Dr. Abc
+            [2] Dr. Bcd
+            [3] Dr. Cde
+        Choice: 1
+
+        Reason: Sore Throat
+        consultation date: 12-02-2025
+
+        Available slots for 12-02-2025:
+            [1] 10:00 - 10:30
+            [2] 11:30 - 12:00
+            [3] 15:00 - 15:30
+
+        Slot: 2
+
+        Entered details:
+
+        Patient Number: PAT001
+        Department: ENT
+        Doctor: Dr. Abc
+        Reason: sore throat
+        Date: 12-02-2025
+        Time: 11:30 -12:00
+
+            [1] Change patient number
+            [2] Change Department
+            [4] Change Doctor
+            [8] Change Reason
+            [16] Change Date
+            [32] Change time
+            [64] Confirm Apppointment
+            Note: Use sum of choices for multiple field editing
+
+        Choice: 64
+        Appointment (APP003) booked succesfully with Dr. Abc (DOC020) on 12-02-2025 at 11:30
+
+=======================================================================================
+[6] Appointment Management                                                         
+        [1] Create a new appointment
+        [2] View appointment
+        [3] Cancel appointment
+        [4] Reschedule appointment
+        [99] Exit 
+
+        Choice: 2
+        Appointment Management >> View Appointment
+        View by:
+            [1] Appointment Number
+            [2] Patient Number
+            [3] Patient Name
+
+        Choice: 1
+        Appointment Management >> View Appointment 
+        Appointment Number: APP003
+
+        Appointment Details fetched:- 
+        Patient Number : PAT001     Patient Name: John
+        Doctor Number: DOC020       Doctor Name: Dr. Abc
+        Date: 12-02-2025        Time: 11:00 - 11:30
+
+=======================================================================================
+[6] Appointment Management                                                         
+        [1] Create a new appointment
+        [2] View appointment
+        [3] Cancel appointment
+        [4] Reschedule appointment
+        [99] Exit 
+
+        Choice: 3
+        Appointment Management >> Cancel Appointment
+        Cancel by:
+            [1] Appointment Number
+            [2] Patient Number
+            [3] Patient Name
+
+        Choice: 3
+        Patient Name: John
+
+        Choose Patient:
+
+                    Patient Number  Patient Name    Contact
+            [1]     PAT003      John            9123456789
+            [2]     PAT124      John Ebraham    9214323423
+        Choice: 1
+
+        Choose Patient:
+
+                    Patient Number  Patient Name    Contact
+            [1]     PAT003      John            9123456789
+            [2]     PAT124      John Ebraham    9214323423
+        Choice: 1
+
+        Choose Appointment:
+
+                    Appointment Number  Doctor Name    Department   Date         Time
+            [1]     APP003          Dr. Abc        ENT          12-02-2024   11:30
+            [2]     APP004          Dr. Bcd        Cardiology   14-03-2025   15:00
+        Choice: 2
+
+        Appointment (APP004) cancelled succesfully
+
+=======================================================================================
+[6] Appointment Management                                                         
+        [1] Create a new appointment
+        [2] View appointment
+        [3] Cancel appointment
+        [4] Reschedule appointment
+        [99] Exit 
+
+        Choice: 4
+        Appointment Management >> Reschedule Appointment
+        Reschedule by:
+            [1] Appointment Number
+            [2] Patient Number
+            [3] Patient Name
+        Choice: 2
+        Patient Number: PAT024
+        Choose Appointment:
+
+                    Appointment Number  Doctor Name    Department   Date         Time
+            [1]     APP003          Dr. Abc        ENT          12-02-2024   11:30
+            [2]     APP004          Dr. Bcd        Cardiology   14-03-2025   15:00
+        Choice: 1
+
+        current consultation date: 12-02-2025
+        new consultation date: 14-02-2025
+
+        Available slots for 14-02-2025:
+            [1] 11:30 - 12:00
+            [2] 15:00 - 15:30
+
+        Slot: 2
+
+        Appointment (APP003) booked succesfully with Dr. Abc (DOC020) on 14-02-2025 at 15:00
+
+=========================== UI via Patient Portal ===========================
+
+Patient Portal >> Book Appointment
+    Select Doctor:
+        [1] By Number
+        [2] By Department
+    Choice: 2
+
+    Departments:
+        [1] Cardiology
+        [2] ENT
+        [3] Oncology
+    Choice: 2
+
+    Doctors:
+        [1] Dr. Abc
+        [2] Dr. Bcd
+        [3] Dr. Cde
+    Choice: 1
+
+    Reason: Sore Throat
+    consultation date: 12-02-2025
+
+    Available slots for 12-02-2025:
+        [1] 10:00 - 10:30
+        [2] 11:30 - 12:00
+        [3] 15:00 - 15:30
+    Entered details:
+        Department: ENT
+        Doctor: Dr. Abc
+        Reason: sore throat
+        Date: 12-02-2025
+        Time: 11:30 -12:00
+
+            [1] Change Department
+            [2] Change Doctor
+            [4] Change Reason
+            [8] Change Date
+            [16] Change time
+            [32] Confirm Apppointment
+            Note: Use sum of choices for multiple field editing
+
+        Choice: 64
+        Appointment (APP003) booked succesfully with Dr. Abc (DOC020) on 12-02-2025 at 11:30
+    Slot: 2
+
+    Appointment (APP003) booked succesfully with Dr. Abc (DOC020) on 12-02-2025 at 11:30
+
+=======================================================================================
+
+Patient Portal >> Cancel Appointment
+    Choose Appointment:
+
+                Appointment Number  Doctor Name    Department   Date         Time
+        [1]     APP003              Dr. Abc        ENT          12-02-2024   11:30
+        [2]     APP004              Dr. Bcd        Cardiology   14-03-2025   15:00
+    Choice: 2
+
+    Appointment (APP004) cancelled succesfully.
+
+=======================================================================================
+
+Patient Portal >> Reschedule Appointment
+    Choose Appointment:
+
+                Appointment Number  Doctor Name    Department   Date         Time
+        [1]     APP003              Dr. Abc        ENT          12-02-2024   11:30
+        [2]     APP004              Dr. Bcd        Cardiology   14-03-2025   15:00
+    Choice: 2
+    
+    current consultation date: 12-02-2025
+    new consultation date: 14-02-2025
+
+    Available slots for 14-02-2025:
+        [1] 11:30 - 12:00
+        [2] 15:00 - 15:30
+    Choice: 2
+
+    Appointment (APP003) rescheduled succesfully with Dr. Bcd (DOC020) on 14-02-2025 at 15:00
+
+=========================== UI via Doctor Portal ===========================
+
+Doctor Portal >> View Future Appointments
+
+        Appointment Number     Patient Number      Patient Name     Date         Time               Reason
+        APP003                 PAT001              John             11-01-2025   11:00 - 11:30      Cough
+        APP004                 PAT003              Doe              12-01-2025   13:00 - 13:30      Fever
+
+=========================== UI via HelpDesk Portal ===========================
+
+Helpdesk Portal >> Create Appointment
+
+    Create by:
+        [1] Patient Number
+        [2] Patient Name
+
+        Choice: 1
+        patient_Number: PAT001
+        Select Doctor:
+            [1] By Number
+            [2] By Department
+        Choice: 2
+
+        Departments:
+            [1] Cardiology
+            [2] ENT
+            [3] Cardiology 
+        Choice: 2
+
+        Doctors:
+            [1] Dr. Abc
+            [2] Dr. Bcd
+            [3] Dr. Cde
+        Choice: 1
+
+        Reason: Sore Throat
+        consultation date: 12-02-2025
+
+        Available slots for 12-02-2025:
+            [1] 10:00 - 10:30
+            [2] 11:30 - 12:00
+            [3] 15:00 - 15:30
+
+        Slot: 2
+
+        Appointment (APP003) booked succesfully with Dr. Abc (DOC020) on 12-02-2025 at 11:30
+
+=======================================================================================
+HelpDesk Portal  >> View Appointment
+    View by:
+        [1] Appointment Number
+        [2] Patient Number
+        [3] Patient Name
+
+    Choice: 1
+    Appointment Management >> View Appointment 
+    Appointment Number: APP003
+
+    Appointment Details fetched:- 
+    Patient Number : PAT001     Patient Name: John
+    Doctor Number: DOC020       Doctor Name: Dr. Abc
+    Date: 12-02-2025        Time: 11:00 - 11:30
+
+=======================================================================================
+HelpDesk Portal  >> Cancel Appointment
+    Cancel by:
+        [1] Appointment Number
+        [2] Patient Number
+        [3] Patient Name
+
+    Choice: 3
+    Patient Name: John
+
+    Choose Patient:
+
+                Patient Number  Patient Name    Contact
+        [1]     PAT003          John            9123456789
+        [2]     PAT124          John Ebraham    9214323423
+    Choice: 1
+
+    Choose Patient:
+
+                Patient Number  Patient Name    Contact
+        [1]     PAT003          John            9123456789
+        [2]     PAT124          John Ebraham    9214323423
+    Choice: 1
+
+    Choose Appointment:
+
+                Appointment Number  Doctor Name    Department   Date         Time
+        [1]     APP003              Dr. Abc        ENT          12-02-2024   11:30
+        [2]     APP004              Dr. Bcd        Cardiology   14-03-2025   15:00
+    Choice: 2
+
+    Appointment (APP004) cancelled succesfully
+
+=======================================================================================
+HelpDesk Portal  >> Reschedule Appointment
+    Reschedule by:
+        [1] Appointment Number
+        [2] Patient Number
+        [3] Patient Name
+    Choice: 2
+    Patient Number: PAT024
+    Choose Appointment:
+
+                Appointment Number  Doctor Name    Department   Date         Time
+        [1]     APP003              Dr. Abc        ENT          12-02-2024   11:30
+        [2]     APP004              Dr. Bcd        Cardiology   14-03-2025   15:00
+    Choice: 1
+
+    current consultation date: 12-02-2025
+    new consultation date: 14-02-2025
+
+    Available slots for 14-02-2025:
+        [1] 11:30 - 12:00
+        [2] 15:00 - 15:30
+
+    Slot: 2
+
+    Appointment (APP003) booked succesfully with Dr. Abc (DOC020) on 14-02-2025 at 15:00
+
+
+
+            
+
+
+            
+            
+
+
+        
