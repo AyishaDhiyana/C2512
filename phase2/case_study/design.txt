@@ -1,5 +1,5 @@
-============================================//////// Patient Management \\\\\\\\\\==============================================
-
+============================================//////// PATIENT MANAGEMENT \\\\\\\\\\==============================================
+================================================================================================================================
 [1] Create new Patient
 [2] Change Password
 [3] Book Appointment
@@ -8,6 +8,9 @@
 [6] Payment
 [7] View Medical History
 [8] Logout 
+=================================================================================================================================
+
+Enter your choice: 1
 [1] Create new Patient
 
 Name     : Ayisha Dhiyana 
@@ -26,7 +29,7 @@ Patient created succesfully...
 Generated Patient ID : AY001
 Redirect to Patient Profile...
 
-if Already Exists
+-- if Already Exists --
 
 Enter username :
 Enter Password : 
@@ -34,6 +37,9 @@ Enter Password :
 Welcome User...
 Redirect to the Patient Profile
 
+================================================================================================================================
+
+Enter your choice: 2
 [2] Change Password
 
 Enter username         : ay001
@@ -43,7 +49,9 @@ Enter new Password    : ******
 Re-enter new Password : ******
 
 Password updated succesfully....
+==================================================================================================================================
 
+Enter your choice: 3
 [3] Book Appointment
 
 Enter Patient ID : AY001
@@ -55,6 +63,9 @@ Reason           : Fever and Cough
 Booking Created succesfully...
 Appointment ID : APT001
 
+===============================================================================================================================
+
+Enter your choice: 4
 [4] Cancel Appointment
 
 Enter Appointment ID to cancel : 
@@ -67,7 +78,9 @@ Time    : 10:30 AM
 
 Are you sure you need to cancel appointment(Y/N) : Y
 Appointment cancelled succesfully...
+==============================================================================================================================
 
+Enter your choice: 5
 [5] Reschedule Appointment
 
 Enter Appointment ID : APT001
@@ -94,7 +107,9 @@ Patient : Ayisha Dhiyana PS
 Doctor  : Dr.Dhaheen Rahman
 Date    : 2025-01-19
 Time    : 12:00 PM
+===============================================================================================================================
 
+Enter your choice: 6
 [6] Make Payment
 
 Enter appointment id : 
@@ -110,7 +125,9 @@ Payment details :-
 Patient ID id AY001
 Paid amount is 500
 Payment Date is 2025-01-19 , 8:00 AM
+=================================================================================================================================
 
+Enter your choice: 7
 [7] View Medical History
 
 Enter username : AY001
@@ -127,12 +144,10 @@ Diagnosis       : viral fever
 Treatment       : Monitored Temperature
 Prescrpition    : Paracetamol
 Date & Time     : 2025-01-19 12:30 PM
+==============================================================================================================================
 
+Enter your choice: 8
 [8] Logout 
 
 Logging out from the Patient Portal...
 Redirect to main menu
-
-
-
-
