@@ -1,17 +1,17 @@
 ============================================//////// PATIENT MANAGEMENT \\\\\\\\\\==============================================
 ================================================================================================================================
-[1] Create new Patient
-[2] Change Password
-[3] Book Appointment
-[4] Cancel Appointment
-[5] Reschedule Appointment
-[6] Payment
-[7] View Medical History
-[8] Logout 
+[1] Create Patient
+[2] Edit Patient
+[3] Change Password
+[4] Book Appointment
+[5] Cancel Appointment
+[6] Reschedule Appointment
+[7] Payment
+[8] View Medical History
+[9] Logout 
 =================================================================================================================================
 
-Enter your choice: 1
-[1] Create new Patient
+Patient Management > Create new Patient
 
 Name     : Ayisha Dhiyana 
 Age      : 22
@@ -26,71 +26,145 @@ Check the details once before saving
 Save the details
 
 Patient created succesfully...
-Generated Patient ID : AY001
+Generated Patient code AY001
 Redirect to Patient Profile...
-
--- if Already Exists --
-
-Enter username :
-Enter Password : 
 
 Welcome User...
 Redirect to the Patient Profile
+===============================================================================================================================
+Patient Management > Edit
+
+Enter patient no : 12334
+
+Fetching the details...
+
+Patient Details :
+
+Name              : Ayisha Dhiyana 
+Age               : 21
+Gender            : Female
+email             : ayishadhiyanaps@gmail.com
+Phone No          : 8976632100
+Address           : Padiyath House
+Location          : Ernakulam
+Enter Password    : 
+Re-enter Password : 
+
+Select the field you need to edit :
+
+[1] Name     
+[2] Age     
+[3] Gender  
+[4] email    
+[5] Phone No 
+[6] Address  
+[7] Location 
+
+Enter your choice : 1
+
+Enter name : Ayisha
+
+Enter your choice : 2
+
+Enter age : 22
+
+Enter your choice : 3
+
+Enter Gender : Female
+
+Enter your choice : 4
+
+Enter email : ayishadhiyanaps@gmail.com
+
+Enter your choice : 5
+
+Enter Phone No : 898867676
+
+Enter your choice : 6
+
+Enter Address : Padiyath House
+
+Enter your choice : 7
+
+Enter Location : Edavanakkad
+
+Check the details once before saving 
+Save the changes
+
+After editing..
+
+Name     : Ayisha Dhiyana 
+Age      : 22
+Gender   : Female
+email    : ayishadhiyanaps@gmail.com
+Phone No : 898867676
+Address  : Padiyath House
+Location : Edavanakkad
 
 ================================================================================================================================
 
-Enter your choice: 2
-[2] Change Password
+Patient Management > Change Password
 
-Enter username         : ay001
-Enter current Password : ******
+Enter patient no : 1212
 
+Are you sure to change the Password(Y/N) : Y
+
+Enter old Password    : ******
 Enter new Password    : ******
 Re-enter new Password : ******
 
 Password updated succesfully....
 ==================================================================================================================================
 
-Enter your choice: 3
-[3] Book Appointment
+Patient Management > Book Appointment
 
-Enter Patient ID : AY001
-Enter Doctor ID  : DR001
-Appointment Date : 2025-01-18
-Appointment Time : 10:30 AM
-Reason           : Fever and Cough
+Enter Patient no  : AY001
+Enter Doctor code : DR001
+Ailment           : Fever and Cough
+Appointment Date  : 2025-01-18
+Appointment Time  : 10:30 AM
 
 Booking Created succesfully...
-Appointment ID : APT001
-
+Appointment ID   : APT001
+Patient Name     : Ayisha Dhiyana
+Doctor Name      : Dhaheen Rahman
+Appointment Date : 2025-01-18
+Appointment Time : 10:30 AM
+Status           : Booked
 ===============================================================================================================================
 
-Enter your choice: 4
-[4] Cancel Appointment
+Patient Management > Cancel Appointment
 
-Enter Appointment ID to cancel : 
+Enter Appointment ID to cancel : AY001
 Fetching appointment details..
 
-Patient : Ayisha Dhiyana PS
-Doctor  : Dr.Dhaheen Rahman
-Date    : 2025-01-19
-Time    : 10:30 AM
+Patient             : Ayisha Dhiyana PS
+Doctor              : Dr.Dhaheen Rahman
+Appointment Date    : 2025-01-19
+Appointment Time    : 10:30 AM
+Status              : Booked
 
 Are you sure you need to cancel appointment(Y/N) : Y
 Appointment cancelled succesfully...
+
+Patient             : Ayisha Dhiyana PS
+Doctor              : Dr.Dhaheen Rahman
+Appointment Date    : 2025-01-19
+Appointment Time    : 10:30 AM
+Status              : Cancelled
 ==============================================================================================================================
 
-Enter your choice: 5
-[5] Reschedule Appointment
+Patient Management > Reschedule Appointment
 
 Enter Appointment ID : APT001
 Fetching appointment details..
 
-Current Appointment Details :
+Current Appointment Details
 Patient : Ayisha Dhiyana PS
 Doctor  : Dr.Dhaheen Rahman
 Date    : 2025-01-18
 Time    : 10:30 AM
+Status  : Not Booked
 
 Do you want to rescedule the appointment(Y/N) : Y
 
@@ -109,26 +183,29 @@ Date    : 2025-01-19
 Time    : 12:00 PM
 ===============================================================================================================================
 
-Enter your choice: 6
-[6] Make Payment
+Patient Management > Make Payment
 
-Enter appointment id : 
+Select the mode of payment
+[1] UPI
+[2] Credit Card 
+[3] Paytm
+Enter your choice :
+
+Mode of Payement :  
+
 Your consultation fee is 500
-Mode of Payement :  UPI
-
 Do you want to proceed with payment(Y/N) : Y
 
 Processing Payment..
-Payement completed successfully
+Payement completed successfully.....
 
 Payment details :-
-Patient ID id AY001
+Patient Id is AY001
 Paid amount is 500
 Payment Date is 2025-01-19 , 8:00 AM
 =================================================================================================================================
 
-Enter your choice: 7
-[7] View Medical History
+Patient Management > View Medical History
 
 Enter username : AY001
 Enter Password : ******
@@ -146,8 +223,7 @@ Prescrpition    : Paracetamol
 Date & Time     : 2025-01-19 12:30 PM
 ==============================================================================================================================
 
-Enter your choice: 8
-[8] Logout 
+Patient Management > Logout 
 
 Logging out from the Patient Portal...
 Redirect to main menu
