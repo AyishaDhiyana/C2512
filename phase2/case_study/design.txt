@@ -1,0 +1,77 @@
+===========Patient Management=============
+
+Patient Management 
+
+[1] create 
+[2] edit 
+[3] search 
+[99] exit 
+      
+
+[1] View Profile
+[2] View Medical History
+[3] Book Appointment
+[4] Change Password
+[5] Logout
+
+[1] Create new Patient
+
+Name     : Ayisha Dhiyana 
+Age      : 22
+Gender   : Female
+email    : ayishadhiyanaps@gmail.com
+Phone No : 8976632100
+Address  : Padiyath House
+Location : Ernakulam
+
+Edit..
+Check the details once before saving
+Save the details
+
+Patient created succesfully...
+Redirect to Patient Profile...
+
+[2] Already Exists
+
+Enter username :
+Enter Password : 
+
+Welcome User...
+Redirect to the Patient Profile
+
+[3] Change Password
+
+Enter username         :
+Enter current Password :
+
+Enter new Password    :
+Re-enter new Password :  
+
+Password updated succesfully....
+
+[4] Book Appointment
+
+Enter Patient ID :
+Enter Doctor ID  : 
+Appointment Date :
+Appointment Time :
+Reason           :
+
+Booking Created succesfully...
+
+[5] Cancel Appointment
+
+Enter Patient ID :
+
+[6] View Medical History
+
+Enter username :
+Enter Password :
+
+Welcome User.....
+
+[7] Logout 
+
+Logging out from the Patient Portal...
+
+
