@@ -1,11 +1,13 @@
-===========Patient Management=============
+============================================//////// Patient Management \\\\\\\\\\==============================================
 
-[1] View Profile
-[2] View Medical History
+[1] Create new Patient
+[2] Change Password
 [3] Book Appointment
-[4] Change Password
-[5] Logout
- 
+[4] Cancel Appointment
+[5] Reschedule Appointment
+[6] Payment
+[7] View Medical History
+[8] Logout 
 [1] Create new Patient
 
 Name     : Ayisha Dhiyana 
@@ -24,7 +26,7 @@ Patient created succesfully...
 Generated Patient ID : AY001
 Redirect to Patient Profile...
 
-[2] Already Exists
+if Already Exists
 
 Enter username :
 Enter Password : 
@@ -32,7 +34,7 @@ Enter Password :
 Welcome User...
 Redirect to the Patient Profile
 
-[3] Change Password
+[2] Change Password
 
 Enter username         : ay001
 Enter current Password : ******
@@ -42,7 +44,7 @@ Re-enter new Password : ******
 
 Password updated succesfully....
 
-[4] Book Appointment
+[3] Book Appointment
 
 Enter Patient ID : AY001
 Enter Doctor ID  : DR001
@@ -53,20 +55,63 @@ Reason           : Fever and Cough
 Booking Created succesfully...
 Appointment ID : APT001
 
-[5] Cancel Appointment
+[4] Cancel Appointment
 
 Enter Appointment ID to cancel : 
 Fetching appointment details..
 
 Patient : Ayisha Dhiyana PS
 Doctor  : Dr.Dhaheen Rahman
-Date    : 2025-01-18
+Date    : 2025-01-19
 Time    : 10:30 AM
 
 Are you sure you need to cancel appointment(Y/N) : Y
 Appointment cancelled succesfully...
 
-[6] View Medical History
+[5] Reschedule Appointment
+
+Enter Appointment ID : APT001
+Fetching appointment details..
+
+Current Appointment Details :
+Patient : Ayisha Dhiyana PS
+Doctor  : Dr.Dhaheen Rahman
+Date    : 2025-01-18
+Time    : 10:30 AM
+
+Do you want to rescedule the appointment(Y/N) : Y
+
+Enter New Appointment Date : 2025-01-19
+Enter New Appointment Time : 12:00 PM
+
+Checking the doctor availability..
+
+Doctor is avalilable..
+Appointment rescheduled succesfully...
+
+New Appointment Details:
+Patient : Ayisha Dhiyana PS
+Doctor  : Dr.Dhaheen Rahman
+Date    : 2025-01-19
+Time    : 12:00 PM
+
+[6] Make Payment
+
+Enter appointment id : 
+Your consultation fee is 500
+Mode of Payement :  UPI
+
+Do you want to proceed with payment(Y/N) : Y
+
+Processing Payment..
+Payement completed successfully
+
+Payment details :-
+Patient ID id AY001
+Paid amount is 500
+Payment Date is 2025-01-19 , 8:00 AM
+
+[7] View Medical History
 
 Enter username : AY001
 Enter Password : ******
@@ -75,9 +120,15 @@ Welcome User.....
 Fetching Medical History..
 
 Medical History:
-1. Date : 2025-01-10  ,  Doctor: Dr.Dhaheen Rahman  ,  Ailment : Fever and Cough  Prescripion : Paracetamol
 
-[7] Logout 
+Medical History for patient ID AY001
+Initial Ailment : cough
+Diagnosis       : viral fever
+Treatment       : Monitored Temperature
+Prescrpition    : Paracetamol
+Date & Time     : 2025-01-19 12:30 PM
+
+[8] Logout 
 
 Logging out from the Patient Portal...
 Redirect to main menu
