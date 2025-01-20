@@ -1,0 +1,582 @@
+
+Design final :-
+  
+POC: User, Login 
+designs, uicode, app 
+
+::Application::
+
+    ::Patient Registration::
+        - page title :
+                    - form : name, age, gender, email, password, 
+                        phone, address, location, relation 
+                        - fields: (caption, error message(s))
+                            name {required}
+                            age {required, minimum=0, maximum=160}
+                            gender {selectable}
+                            email {required, isEmail, isExist}
+                                if email exists: ask relationship from original one
+                            relation: Father (if phone/email not exist before, field is empty ie not displayable field)
+                            password {required, strength}
+                            phone {required, 10-digits isPhoneNumber, isExist}
+                                display automatically if you entered the relationship 
+                            address
+                                display automatically if you entered the relationship 
+                            location
+                                display automatically if you entered the relationship 
+                    - on form submit: 
+                        - allow to edit field / group of fields !XXX
+                        - OR Confirm  
+                        - OR Exit  
+                    - after form submit:
+                        - successful message 
+                            - generate the patient number
+                            -  Athira "PA001" registered successfully.
+    ::Login::
+        - page title
+        - form : username, password (caption, error message(s))
+            - fields 
+                username {required}
+                password {required}
+            - on form submit 
+                - Logging Into App 
+                OR
+                - Invalid Username / Password message.
+            - after form submit: 
+                - successful message welcoming the user 
+                - DISPATCH / ROUTE to the page 
+        
+        ::Admin Page::[1.1]
+            ::Home::
+                Welcome sooraj!
+                -Nav Pages:
+                [1] User Management [2] Doctor Management [3] Schedule Management
+                [4] Department Management 
+
+                    ::User Management::[1.1.1]
+                        -Nav Pages:
+                        [1] Create [2] Edit [3] Delete [4] Search
+                        [5] Change Password [99] Exit
+
+                        ::User Management > Create 
+                            -page title "User Management > Create user"
+                            -form :  name, email, password, phone,  role
+                            -fields:(caption, error message(s))
+                                name , "Enter name" {required,[Name is empty.Please enter name]}
+                                email {required, isEmail, isExist}
+                                password {required, strength}
+                                phone {required, 10-digits isPhoneNumber, isExist}
+                                role {selectable}
+                                                - on form submit: 
+                            - allow to edit field / group of fields !XXX
+                                - OR Confirm  
+                                - OR Exit  
+                            - after form submit:
+                                - successful message 
+                                - login
+
+                        ::User Management > Edit 
+                            - page title 
+                            - starts with Search: 
+                            - display the fields of an user
+                            - edit field / group of fields !XXX
+                            - on form submit: 
+                                - OR Confirm  
+                                - OR Exit  
+                            - after form submit:
+                                - successful message 
+
+                        ::User Management > Delete::
+                            - page title 
+                            - starts with Search: 
+                            - display the fields of an user                    -
+                            - on form submit: 
+                                - OR Confirm  
+                                - OR Exit  
+                            - after form submi t:
+                                - successful message 
+
+                        ::User Management > Search:: 
+                            - page title 
+                            - starts with Search: 
+                            - display the users in tabular format 
+                            - pagination if more than one page, here page = 20 business objects  
+
+                        ::User Management > Change Password::
+                            - page title 
+                            - starts with Search: 
+                            - display the fields of an user
+                            - new_password field {required}
+                            - on form submit: 
+                                - OR Confirm  
+                                - OR Exit  
+                            - after form submit:
+                                - successful message 
+
+                    ::Doctor Management::[1.1.2]
+                        -Nav Pages:
+                        [1] Create [2] Edit  [3] View [4] Search [5] Deactivate
+                        [99] Exit
+
+                        ::Doctor Management > Create::
+                            - page title
+                            - form : name, department, phone, email, password, address, location 
+                            - fields: (caption, error message(s))
+                                    name {required}
+                                    department {searchable}
+                                    !Display as "Cardialogy, heart is very important for life...."
+                                    email {required, isEmail, isExist}
+                                    password {required, strength}
+                                    phone {required, 10-digits isPhoneNumber, isExist}
+                                    address
+                                    location
+                            - on form submit: 
+                                - allow to edit field / group of fields !XXX
+                                - OR Confirm  
+                                - OR Exit  
+                            - after form submit:
+                                - successful message 
+                                    - generate the Doctor CODE
+
+                        ::Doctor Management > Edit::
+                            - page title
+                            - form : name, department, phone, email, password, address, location 
+                                - fields: (caption, error message(s))
+                                    name {required}
+                                    department {searchable}
+                                    !Display as "Cardialogy, heart is very important for life...."
+                                    email {required, isEmail, isExist}
+                                    password {required, strength}
+                                    phone {required, 10-digits isPhoneNumber, isExist}
+                                    address
+                                    location
+                            - on form submit: 
+                                - allow to edit field / group of fields 
+                                - OR Confirm to edit 
+                                - OR Exit  
+                            - after form submit:
+                                - edit successful message 
+
+                        ::Doctor Management > View::
+                            - page title
+                            - form : Doctor CODE 
+                                - fields: (caption, error message(s))
+                            - on form submit:
+                                - Confirm
+                                - OR Exit  
+                            - after form submit:
+                                - view Doctor details
+                                - name,
+                                - department
+                                - email, 
+                                - password, 
+                                - phone, 
+                                - address, 
+                                - location
+         
+                        ::Doctor Management > Search::
+                            - page title
+                            - form : Doctor CODE, Doctor name 
+                                - fields: (caption, error message(s))
+                                    { Doctor name or Doctor code partially or fully matching }
+                                    (If multiple doctors with same name exists, error message(s))
+                                    
+                            - on form submit: 
+                                - Confirm
+                                - OR Exit  
+                            - after form submit:
+                                - view Doctor details
+                                - name,
+                                - department,
+                                - email, 
+                                - password, 
+                                - phone, 
+                                - address, 
+                                - location
+
+                        ::Doctor Management > Deactivate::
+                            - page title
+                            - form : Doctor CODE
+                                - fields: (caption, error message(s))
+                            - on form submit: 
+                            - view Doctor details
+                                - name,
+                                - department
+                                - email, 
+                                - password, 
+                                - phone, 
+                                - address, 
+                                - location,  
+
+                            - Confirm to Deactivate
+                            - OR Exit  
+                            - after form submit:
+                                - Doctor Deactivated successfull message
+
+                    ::Schedule Management::[1.1.3] 
+                        -Nav Pages      
+                        [1] Create  [2] View [3] Edit [4] Delete [99] Exit 
+
+                        ::Schedule Management > Create::
+                            - page title
+                            - form : doctor_code, day, start_time, end_time
+                            - fields: (caption, error message(s))
+                                doctor_code {required}
+                                day  {required}
+                                start_time {required} 
+                                end_time {required}
+                            - on form submit: 
+                                - allow to edit field / group of fields !XXX
+                                - OR Confirm  
+                                - OR Exit  
+                                - after form submit:
+                                    - successful message 
+                                        - generate the schedule number
+                        
+                        ::Schedule Management > View::
+                                - page title
+                                - Display schedule for the Doctor 
+                                                    
+                        ::Schedule Management > Edit::
+                            - page title
+                            - form : new day, new start_time, new end_time 
+                                - fields: (caption, error message(s))
+                                    new day  {required}
+                                    new start_time {required} 
+                                    new end_time {required}
+                                - on form submit: 
+                                    - allow to edit field / group of fields !XXX
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+
+                        ::Schedule Management > Delete::
+                            - page title
+                            - form : Schedule_number, doctor_code
+                                -fields: (caption, error message(s))
+                                    Schedule_number {required}
+                                    Doctor_code {required}
+                                - on form submit: 
+                                    - Select schedule to Delete
+                                -after form submit 
+                                    - success message after deletiing.
+
+                    ::Department Management::[1.1.4] 
+                    -Nav Pages
+                    [1] Create [2] Edit [3] View [4] Delete [99] Exit 
+
+                        ::Department Management > Create::
+                        -Nav Pages
+                            [1] Add Department [2] Add Doctor
+                            [3] Assign Head    [99] Exit
+
+                            ::Department Management > Create Department > Add Department::
+                                - page title
+                                - form : name, description
+                                    - fields: (caption, error message(s))
+                                        name  {required}
+                                        description  {required}
+                                - on form submit:
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+                                        - Department Cardiology(Department Number) created successfully.
+
+                            ::Department Management > Create Department > Add Doctor::
+                                - page title
+                                - form : Department_Number, Doctor_Code
+                                    - fields: (caption, error message(s))
+                                        Department_Number  {required}
+                                        Doctor_Code        {required}
+                                - on form submit:
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+                                        - Doctor DOC2001 added successfully to department 
+                                            Cardiology(Department Number).
+
+                            ::Department Management > Create Department > Assign Head::
+                                - page title
+                                - form : Department_Number, Doctor_Code
+                                    - fields: (caption, error message(s))
+                                        Department_Number  {required}
+                                        Doctor_Code        {required}
+
+                                - on form submit:
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+                                        - Department Head created successfully.
+                    
+                        ::Department Management > Edit::
+                        - page title
+                                - form : Department name, Department Head
+                                - fields: (caption, error message(s))
+                                    Department name {required}
+                                    Department Head {required}
+                                - on form submit:
+                                - - allow to edit field / group of fields !XXX
+                                - OR Confirm  
+                                - OR Exit  
+                                - after form submit:
+                                - successful message   
+
+                        ::Department Management > View::
+                        - page title
+                            - form : Department_Number
+                                - fields: (caption, error message(s))
+                                    Department_Number  {required}
+                                    
+                            - on form submit:
+                                - OR Confirm  
+                                - OR Exit  
+                            - after form submit:
+                                - Display department details.
+                                    - Display department name, doctor, description.
+                        
+                        ::Department Management > Delete::
+                        - page title
+                            - form : Department_Number or Department name
+                                - fields: (caption, error message(s))
+                                    Department_Number  {required}
+                                    or
+                                    Department name {required}
+                                    
+                            - on form submit:
+                                    - Confirm to delete department
+                            - after form submit:
+                                    - success message
+
+                ::Front Desk Page::[1.2]
+                    ::Home::
+                        Welcome sooraj!
+                        -Nav Pages:
+                        [1] Patient Registration [2] Appointment Management [3] Department Management
+
+                        ::Patient Registration::[1.2.1]
+                            same as in Registering new Patient 
+
+                        ::Appointment Management::[1.2.2]
+                        -Nav Pages
+                            [1] Create  [2] View [3] Cancel [99] Exit 
+
+                            ::Appointment Management > Create::
+                            - page title
+                                - form : Doctor_code, reason, date, slot 
+                                - fields: (caption, error message(s))
+                                    Doctor_code [or name] {required}
+                                    reason 
+                                    date {required}
+                                    slot {selectable required}
+                                - on form submit: 
+                                    - allow to edit field / group of fields !XXX
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+                                        - generate the appointment number
+
+                            ::Appointment Management > View::     
+                                Display appointments for the day
+                            
+                            ::Appointment Management > Cancel ::
+                                - page title
+                                - form : Appointment_number 
+                                - fields: 
+                                    Appointment Number {selectable from table}
+                                - on form submit: 
+                                    - Confirm Cancellation  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+
+                            :: Department Management:: [1.2.3]
+                            -Nav Pages:
+                            [1] View [99] Exit
+
+                                ::Department Management > View::
+                                    same as in admin page.
+                
+                ::Doctor Page::[1.3]
+                    ::Home::
+                        Welcome sooraj!
+                        -Nav Pages:
+                        [1] Patient Management [2] Doctor Management 
+                        [3] Consultation Management [4] Appointment Management
+
+                        ::Patient Management::[1.3.1]
+                                -Nav Pages:
+                                [1] View [99] Exit
+
+                                ::Patient Management > View::
+                                - page title
+                                        - form : Patient number or patient name
+                                        - fields: 
+                                            Patient Number {required}
+                                            Patient name {required, selectable from table}
+                                        - on form submit: 
+                                            - OR Confirm 
+                                            - OR Exit  
+                                        - after form submit:
+                                            - display patient details which includes 
+                                              patient number, name, age, gender.
+                                
+                        ::Doctor Management::[1.3.2]
+                                -Nav Pages:
+                                [1] View [2] Edit [99] Exit
+
+                                ::Doctor Management > View::
+                                    same as the admin page 
+
+                                ::Doctor Management > Edit::
+                                    same as the admin page 
+
+                        ::Consultation Management::[1.3.3]
+                            -Nav Pages
+                            [1] Create [2] View  [99] Exit
+
+                            ::Consultation Management > Create::
+                            - page title
+                                        - form : Diagnosis, Treatment, Prescription
+                                        - fields: 
+                                            Diagnosis {required}
+                                            Treatment {required}
+                                            Prescription {required}
+                                        - on form submit: 
+                                            - OR Confirm 
+                                            - OR Exit  
+                                        - after form submit:
+                                            - success message
+
+                            ::Consultation Management > View::
+                            - page title
+                                - form : Patient_Number  
+                                    - fields: (caption, error message(s))
+                                        Patient_Number  {required}
+                                - on form submit:
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message 
+                                        - View patient medical history details.
+
+                        ::Appointment Management::[1.3.3]
+                        -Nav Pages:
+                            [1] view  [99] Exit
+
+                            ::Appointment Management > view::
+                                same as Front desk page.
+
+                ::Patient Page::[1.4]
+                    ::Home::
+                        Welcome sooraj!
+                        -Nav Pages:
+                        [1] Patient Management [2]Appointment Management [3] Consultation Management
+                        [5] Payment Management [6] Change password 
+
+                        ::Patient Management::[1.4.1]
+                        -Nav Pages:
+                        [1]View [2] edit [99] Exit
+
+                        ::Patient Management > View::
+                            same as Front desk page.
+
+                        ::Patient Management > Edit::
+                            same as Front desk page.
+
+                        ::Appointment Management::[1.4.2]
+                        -Nav Pages:
+                        [1] Create  [2] View [3] Cancel [99] Exit 
+
+                            ::Appointment Management > Create:: 
+                                same as front desk.
+                            ::Appointment Management > View:: 
+                                same as front desk.
+                            ::Appointment Management > Cancel:: 
+                                same as front desk.
+                        
+                        ::Consultation Management::[1.4.3]
+                        -Nav Pages
+                        [1] View [99] Exit
+
+                        ::Consultation Management > View
+                            same as doctor page.
+                        
+                        ::Payment Management::[1.4.4]
+                        -Nav Pages:
+                        [1] Create [2] View [99] Exit
+
+                        ::Payment Management > Create::
+                        - page title
+                                - form : Appointment number, Payment mode, 
+                                -fields : (caption, error message(s))
+                                    Appointment number {required}
+                                    Payment mode {required upi/bank transfer..}
+
+                                -on form submit:
+                                    - OR Confirm
+                                    - OR Exit
+                                
+                                after form submit:
+                                    -successful message
+                                        - Payment successful
+                                        - generate Payment id
+                        
+                        ::Payment Management > View::
+                        - page title
+                                - form : Payment id
+                                -fields : (caption, error message(s))
+                                    Payment id  {required}
+
+                                -on form submit:
+                                    - OR Confirm
+                                    - OR Exit
+                                
+                                after form submit:
+                                    - Display Payment details of patient
+                                        - Displ Payment id, patient number, status ,
+                                        amount paid, date and time.
+                        
+                        ::Change Password::[1.4.5]
+                        - page title 
+                            - starts with Search: 
+                                - display the fields of an user
+                                - new_password field {required}
+                                - on form submit: 
+                                    - OR Confirm  
+                                    - OR Exit  
+                                - after form submit:
+                                    - successful message
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+
+                        
+                               
+
+
+                            
