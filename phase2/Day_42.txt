@@ -1,0 +1,455 @@
+
+========================================================================================================================================
+                                            Front Desk Portal 
+========================================================================================================================================
+------------------------------------------------------
+Front Desk  >> Patient Management 
+------------------------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Exit
+
+Enter your choice : 1 
+
+------------------------------------------------------
+Front Desk  >> Patient Management >> Register Patient
+------------------------------------------------------
+
+Enter Name            : Ayisha Dhiyana 
+Enter Age             : 22
+Select Gender(M/F/O)  : F
+Enter email           : ayishadhiyanaps@gmail.com
+Enter Phone No        : 8976632100
+Enter Address         : Padiyath House
+Enter Location        : Ernakulam
+
+Check the details once before saving:
+
+Name            : Ayisha Dhiyana 
+Age             : 22
+Gender          : F
+email           : ayishadhiyanaps@gmail.com
+Phone No        : 8976632100
+Address         : Padiyath House
+Location        : Ernakulam
+
+[1] Change Name
+[2] Change Age
+[4] Change Gender
+[8] Change email
+[16] Change Phone No
+[32] Change Address
+[64] Change Location
+[128] Confirm to create
+
+Note :- Use sum of choices for changing multiple fields (Eg: To change name[1] and email[8], Enter [9] as choice (1 + 8))
+
+Enter your choice : 128 
+
+Patient registered succesfully...
+
+Generated Patient number PAT001
+
+Note: If phone number or email already exist use alternate number and email
+=================================================================================================================
+------------------------------------------------------
+Front Desk  >> Patient Management 
+------------------------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Exit
+
+Enter your choice : 2
+
+------------------------------------------------------
+Front Desk  >> Patient Management >> Edit Patient
+------------------------------------------------------
+
+Enter patient number to edit PAT- : 1231
+
+Note : If the patient dosent exist enter valid code.
+
+Fetching the details...
+
+Patient Details :
+
+Name              : Ayisha Dhiyana 
+Age               : 21
+Gender            : Female
+email             : ayishadhiyanaps@gmail.com
+Phone No          : 8976632100
+Address           : Padiyath House
+Location          : Ernakulam
+
+Select the field you need to edit :
+
+[1] Change Name
+[2] Change Age
+[4] Change email
+[8] Change Phone No
+[16] Change Address
+[32] Change Location
+
+Note :- Use sum of choices for changing multiple fields (Eg: To change name[1] and email[4], Enter [5] as choice (1 + 4))
+
+choice : 32
+
+Current location: Ernakulam
+Enter new location: Vipin
+
+Check the details once before saving:
+
+Location        : Vipin
+
+[1] Change Location
+[2] Save Changes
+
+Enter your choice : 2
+
+Saving the changes
+
+Patient updated succesfully...
+
+------------------------------------
+Front Desk  >> Patient Management 
+------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Exit
+
+Enter your choice : 3
+
+----------------------------------------
+Front Desk >> Patient Management >> View
+----------------------------------------
+
+Enter Patient data : PAT101 
+
+Note:- Enter Patient Code, Name or Contact number in the above field
+
+Fetching the patient details..
+
+Patient details:
+
+Name              : Ayisha Dhiyana 
+Age               : 21
+Gender            : Female
+email             : ayishadhiyanaps@gmail.com
+Phone No          : 8976632100
+Address           : Padiyath House
+Location          : Ernakulam
+
+------------------------------------
+Front Desk  >> Patient Management 
+------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Exit
+
+Enter your choice : 4
+
+-------------------------------------------
+Front Desk >> Patient Management >> Exit
+-------------------------------------------
+[99] Logout...
+
+choice : 99
+
+Logging out....
+
+=================================================================================================================
+                                            Admin Portal
+=================================================================================================================
+------------------------------------------------------
+Admin  >> Patient Management 
+------------------------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Search Patient
+[5] Reset Password
+[6] Exit
+
+Enter your choice : 1 
+
+------------------------------------------------------
+Admin  >> Patient Management >> Register Patient
+------------------------------------------------------
+
+Enter Name            : Ayisha Dhiyana 
+Enter Age             : 22
+Select Gender(M/F/O)  : F
+Enter email           : ayishadhiyanaps@gmail.com
+Enter Phone No        : 8976632100
+Enter Address         : Padiyath House
+Enter Location        : Ernakulam
+
+Check the details once before saving:
+
+Name            : Ayisha Dhiyana 
+Age             : 22
+Gender          : F
+email           : ayishadhiyanaps@gmail.com
+Phone No        : 8976632100
+Address         : Padiyath House
+Location        : Ernakulam
+
+[1] Change Name
+[2] Change Age
+[4] Change Gender
+[8] Change email
+[16] Change Phone No
+[32] Change Address
+[64] Change Location
+[128] Confirm to create
+
+Note :- Use sum of choices for changing multiple fields (Eg: To change name[1] and email[8], Enter [9] as choice (1 + 8))
+
+Enter your choice : 128 
+
+Patient registered succesfully...
+
+Generated Patient number PAT001
+
+Note: If phone number or email already exist use alternate number and email
+=================================================================================================================
+------------------------------------------------------
+Admin  >> Patient Management 
+------------------------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Search Patient
+[5] Reset Password
+[6] Exit
+
+Enter your choice : 2
+
+------------------------------------------------------
+Admin  >> Patient Management >> Edit Patient
+------------------------------------------------------
+
+Enter patient number to edit PAT- : 1231
+
+Note : If the patient dosent exist enter valid code.
+
+Fetching the details...
+
+Patient Details :
+
+Name              : Ayisha Dhiyana 
+Age               : 21
+Gender            : Female
+email             : ayishadhiyanaps@gmail.com
+Phone No          : 8976632100
+Address           : Padiyath House
+Location          : Ernakulam
+
+Select the field you need to edit :
+
+[1] Change Name
+[2] Change Age
+[4] Change email
+[8] Change Phone No
+[16] Change Address
+[32] Change Location
+
+Note :- Use sum of choices for changing multiple fields (Eg: To change name[1] and email[4], Enter [5] as choice (1 + 4))
+
+choice : 32
+
+Current location: Ernakulam
+Enter new location: Vipin
+
+Check the details once before saving:
+
+Location        : Vipin
+
+[1] Change Location
+[2] Save Changes
+
+Enter your choice : 2
+
+Saving the changes
+
+Patient updated succesfully...
+
+------------------------------------------------------
+Admin  >> Patient Management 
+------------------------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Search Patient
+[5] Reset Password
+[6] Exit
+
+Enter your choice : 2
+
+------------------------------------------------------
+Admin  >> Patient Management >> View Patient
+------------------------------------------------------
+
+View Patient by:
+
+Enter Patient data : PAT101 
+
+Note:- Enter Patient Code, Name or Contact number in the above field
+
+Fetching the patient details..
+
+Patient details:
+
+Name              : Ayisha Dhiyana 
+Age               : 21
+Gender            : Female
+email             : ayishadhiyanaps@gmail.com
+Phone No          : 8976632100
+Address           : Padiyath House
+Location          : Ernakulam
+
+------------------------------------
+Admin  >> Patient Management 
+------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Search Patient
+[5] Reset Password
+[6] Exit
+
+Enter your choice : 4
+
+----------------------------------------------
+Admin >> Patient Management >> Search Patient
+----------------------------------------------
+
+Search patient:
+
+[1] By ID
+[2] By name
+
+choice : 1 
+
+Fetching Patient details...
+
+Name            : Ayisha Dhiyana 
+Age             : 22
+Gender(M/F/O)   : F
+
+choice : 2
+
+Fetching Patient details...
+There are multiple patient with same name 
+
+[1] Patient Number : 101, Name : Ayisha Dhiyana , Age : 22, Gender(M/F/O) : F
+[2] Patient Number : 102, Name : Ayisha , Age : 21, Gender(M/F/O) : F
+[3] Patient Number : 103, Name : Ayisha zyba, Age : 12, Gender(M/F/o) : Female
+
+choice :  select your choice
+
+Note : can select the details of correct patient from the list
+
+------------------------------------
+Admin  >> Patient Management 
+------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Search Patient
+[5] Reset Password
+[6] Exit
+
+Enter your choice : 5
+----------------------------------------------
+Admin  >> Patient Management >> Reset Password
+----------------------------------------------
+
+[1] Register Patient
+[2] Edit Patient
+[3] View Patient
+[4] Search Patient
+[5] Reset Password
+[6] Exit
+
+Enter your choice : 5
+
+[1] Change Password
+
+choice : 1 
+Are you sure to change the Password(Y/N) : Y
+
+Enter old Password    : ******
+Enter new Password    : ******
+Re-enter new Password : ******
+
+[91] Confirm to reset password
+
+choice : 91
+
+Password updated succesfully....
+
+Note : If the new Password and re-entered password didnt match or new password same as old password 
+       Password will not update and print error meassage.
+
+-------------------------------------------
+Admin  >> Patient Management >> Exit
+-------------------------------------------
+[99] Logout...
+
+choice : 99
+
+Logging out....
+
+=================================================================================================================
+                                            Doctor Portal
+=================================================================================================================
+
+[1] Search Patient
+
+Enter your choice : 1
+
+-------------------------------------------
+Doctor  >> Patient Management >> Search
+-------------------------------------------
+
+Search patient:
+
+[1] By ID
+[2] By name
+
+choice : 1 
+
+Fetching Patient details...
+
+Name            : Ayisha Dhiyana 
+Age             : 22
+Gender(M/F/O)   : F
+
+choice : 2
+
+Fetching Patient details...
+There are multiple patient with same name 
+
+[1] Patient Number : 101, Name : Ayisha Dhiyana , Age : 22, Gender(M/F/O) : F
+[2] Patient Number : 102, Name : Ayisha , Age : 21, Gender(M/F/O) : F
+[3] Patient Number : 103, Name : Ayisha zyba, Age : 12, Gender(M/F/o) : Female
+
+choice :  select your choice accordingly.
+
+Note : can select the details of correct patient from the list
+
+=================================================================================================================
