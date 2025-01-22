@@ -1,0 +1,27 @@
+std::string PatientController::getValidGender() {
+    int genderOption;
+    std::string gender;
+    while (true) {
+        std::cout << "Select gender:" << std::endl;
+        std::cout << "1 - Male" << std::endl;
+        std::cout << "2 - Female" << std::endl;
+        std::cout << "3 - Other" << std::endl;
+        genderOption = uiCommon.in.Int("Enter your choice (1, 2, or 3):");
+        switch (genderOption) {
+            case 1:
+                gender = "Male";
+                break;
+            case 2:
+                gender = "Female";
+                break;
+            case 3:
+                gender = "Other";
+                break;
+            default:
+                std::cout << "Invalid choice. Please select 1, 2, or 3." << std::endl;
+                continue;
+        }
+        break;
+    }
+    return gender;
+}
