@@ -1,0 +1,274 @@
+{
+    "1": {
+        "source": [
+            "1024"
+        ]
+    },
+    "2": {
+        "root": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/all",
+                "container": "yes",
+                "containerPath": "",
+                "name": "All",
+                "playable": "no",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/art",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Artists",
+                "playable": "no",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/alb",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Albums",
+                "playable": "no",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/gen",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Genres",
+                "playable": "no",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/pla",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Playlists",
+                "playable": "no",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Browse Folders",
+                "playable": "no",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "3": {
+        "root->Browse Folders": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/U26_latest",
+                "container": "yes",
+                "containerPath": "",
+                "name": "U26_latest",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation",
+                "container": "yes",
+                "containerPath": "",
+                "name": "TestAutomation",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/U25 build(1.583.161)",
+                "container": "yes",
+                "containerPath": "",
+                "name": "U25 build(1.583.161)",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "4": {
+        "root->Browse Folders->TestAutomation": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3",
+                "container": "yes",
+                "containerPath": "",
+                "name": "MP3",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "5": {
+        "root->Browse Folders->TestAutomation->MP3": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Kawasaki NAS",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "6": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Mr.Hess",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "7": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport",
+                "container": "yes",
+                "containerPath": "",
+                "name": "CodecSupport",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "8": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)",
+                "container": "yes",
+                "containerPath": "",
+                "name": "MP3(MPEG1 Layer3)",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "9": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)": [
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 3(Fs48)",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Test 3(Fs48)",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 1(Fs32)",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Test 1(Fs32)",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            },
+            {
+                "cid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 2(Fs44)",
+                "container": "yes",
+                "containerPath": "",
+                "name": "Test 2(Fs44)",
+                "playable": "yes",
+                "playback": "none",
+                "reason": "none"
+            }
+        ]
+    },
+    "10": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 3(Fs48)": [
+            {
+                "bitrate": "96000",
+                "bitsPerSample": "",
+                "container": "no",
+                "containerPath": "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 3(Fs48)",
+                "format": "",
+                "mid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 3(Fs48)/20v_48k_150kbps.mp3",
+                "name": "20v_48k_150kbps.mp3",
+                "playable": "yes",
+                "playback": "failure",
+                "reason": "playback progress events missing",
+                "sampleFrequency": "48000",
+                "ultraHD": "no"
+            }
+        ]
+    },
+    "11": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 1(Fs32)": [
+            {
+                "bitrate": "64000",
+                "bitsPerSample": "",
+                "container": "no",
+                "containerPath": "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 1(Fs32)",
+                "format": "",
+                "mid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 1(Fs32)/20v_32k_150kbps.mp3",
+                "name": "20v_32k_150kbps.mp3",
+                "playable": "yes",
+                "playback": "failure",
+                "reason": "playback progress events missing",
+                "sampleFrequency": "32000",
+                "ultraHD": "no"
+            },
+            {
+                "bitrate": "64000",
+                "bitsPerSample": "",
+                "container": "no",
+                "containerPath": "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 1(Fs32)",
+                "format": "",
+                "mid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 1(Fs32)/19v_32k_48kbps.mp3",
+                "name": "19v_32k_48kbps.mp3",
+                "playable": "yes",
+                "playback": "success",
+                "reason": "none",
+                "sampleFrequency": "32000",
+                "ultraHD": "no"
+            }
+        ]
+    },
+    "12": {
+        "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 2(Fs44)": [
+            {
+                "bitrate": "80000",
+                "bitsPerSample": "",
+                "container": "no",
+                "containerPath": "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 2(Fs44)",
+                "format": "",
+                "mid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 2(Fs44)/19v_44k_48kbps.mp3",
+                "name": "19v_44k_48kbps.mp3",
+                "playable": "yes",
+                "playback": "success",
+                "reason": "none",
+                "sampleFrequency": "44100",
+                "ultraHD": "no"
+            },
+            {
+                "bitrate": "80000",
+                "bitsPerSample": "",
+                "container": "no",
+                "containerPath": "root->Browse Folders->TestAutomation->MP3->Kawasaki NAS->Mr.Hess->CodecSupport->MP3(MPEG1 Layer3)->Test 2(Fs44)",
+                "format": "",
+                "mid": "m-06465c41-563b-3800-b8ae-7f01d3824975/fol/TestAutomation/MP3/Kawasaki NAS/Mr.Hess/CodecSupport/MP3(MPEG1 Layer3)/Test 2(Fs44)/20v_44k_150kbps.mp3",
+                "name": "20v_44k_150kbps.mp3",
+                "playable": "yes",
+                "playback": "success",
+                "reason": "none",
+                "sampleFrequency": "44100",
+                "ultraHD": "no"
+            }
+        ]
+    }
+}
