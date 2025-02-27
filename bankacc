@@ -1,0 +1,76 @@
+class BankAccount:
+    def __init__(self, account_number, balance, date_of_opening, customer_name):
+        self.account_number = account_number
+        self.balance = float(balance)  # Ensure balance is stored as a number
+        self.date_of_opening = date_of_opening
+        self.customer_name = customer_name
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Account {self.account_number} credited with ₹{amount}. New balance: ₹{self.balance}")
+        else:
+            print("Enter a valid deposit amount.")
+
+    def withdraw(self, amount):
+        if amount > 0:
+            if amount <= self.balance:
+                self.balance -= amount
+                print(f"Account {self.account_number} debited by ₹{amount}. New balance: ₹{self.balance}")
+            else:
+                print("Insufficient balance.")
+        else:
+            print("Enter a valid withdrawal amount.")
+
+    def check_balance(self):
+        print(f"Account {self.account_number} balance: ₹{self.balance}")
+
+
+# Create multiple accounts
+accounts = []
+total_accounts = int(input("Enter number of accounts: "))
+
+for _ in range(total_accounts):
+    account_number = input("Enter account number: ")
+    account_balance = float(input("Enter the account balance: "))  # Ensure it's a number
+    date_of_opening = input("Enter the date of opening (format: DD-MM-YYYY): ")
+    account_holder_name = input("Enter the account holder name: ")
+
+    accounts.append(BankAccount(account_number, account_balance, date_of_opening, account_holder_name))
+
+# Banking Operations Menu
+while True:
+    print("\nChoose an option:")
+    print("1. Make a Deposit")
+    print("2. Withdraw Money")
+    print("3. Check Balance")
+    print("4. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice in ["1", "2", "3"]:
+        acc_number = input("Enter account number: ")
+        found = False
+
+        for acc in accounts:
+            if acc.account_number == acc_number:
+                found = True
+                if choice == "1":
+                    amount = float(input("Enter deposit amount: "))
+                    acc.deposit(amount)
+                elif choice == "2":
+                    amount = float(input("Enter withdrawal amount: "))
+                    acc.withdraw(amount)
+                elif choice == "3":
+                    acc.check_balance()
+                break
+
+        if not found:
+            print("Account number not found.")
+
+    elif choice == "4":
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice. Please enter a valid option.")
